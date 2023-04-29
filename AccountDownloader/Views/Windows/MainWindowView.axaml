@@ -1,0 +1,52 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI"
+        xmlns:app="clr-namespace:AccountDownloader"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:p="clr-namespace:AccountDownloader.Properties"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="650"
+        Width="800" Height="650"
+        x:Class="AccountDownloader.Views.MainWindowView"
+        xmlns:vm="using:AccountDownloader.ViewModels"
+        x:DataType="vm:MainWindowViewModel"
+        x:CompileBindings="True"
+        TransparencyLevelHint="AcrylicBlur"
+        WindowStartupLocation="CenterScreen"
+		
+        Title="{x:Static p:Resources.AppName}"
+		Icon="/Assets/AppIcon.ico">
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                     BackgroundSource="Digger"
+                     TintColor="Black"
+                     TintOpacity="1"
+                     MaterialOpacity="0.65" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+		<StackPanel>
+            <Menu Items="{Binding MenuItems}" Background="DarkSlateGray" x:DataType="vm:MenuItemViewModel" x:CompileBindings="False">
+                <Menu.Styles>
+                    <Style Selector="MenuItem">
+                        <Setter Property="Header" Value="{Binding Header}"/>
+                        <Setter Property="Items" Value="{Binding Items}"/>
+                        <Setter Property="Command" Value="{Binding Command}"/>
+                        <Setter Property="CommandParameter" Value="{Binding CommandParameter}"/>
+                    </Style>
+                </Menu.Styles>
+            </Menu>
+            <StackPanel VerticalAlignment="Center">
+                <rxui:RoutedViewHost Router="{Binding Router}" Margin="10">
+                    <rxui:RoutedViewHost.DefaultContent>
+                        <TextBlock>DEFAULT CONTENT</TextBlock>
+                    </rxui:RoutedViewHost.DefaultContent>
+                    <rxui:RoutedViewHost.ViewLocator>
+                        <app:AppViewLocator />
+                    </rxui:RoutedViewHost.ViewLocator>
+                </rxui:RoutedViewHost>
+            </StackPanel>
+        </StackPanel>
+    </Panel>
+</Window>

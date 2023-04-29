@@ -1,0 +1,30 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:ad="clr-namespace:AccountDownloader"
+             xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AccountDownloader.Views.UserProfileView"
+			 d:DataContext="{x:Static ad:DesignData.DesignProfileViewModel}"
+             xmlns:vm="using:AccountDownloader.ViewModels"
+             x:DataType="vm:UserProfileViewModel"
+             x:CompileBindings="True">
+    <Grid>
+        <StackPanel Orientation="Horizontal" Spacing="5">
+            <Panel Width="54" Height="54">
+                <Border Background="Gray"
+                    BorderBrush="Gray"
+                    BorderThickness="4"
+                    CornerRadius="25">
+                    <Image Width="50" Height="50" asyncImageLoader:ImageLoader.Source="{Binding Profile.PictureURI}">
+                        <Image.Clip>
+                            <EllipseGeometry Rect="0,0,50,50" />
+                        </Image.Clip>
+                    </Image>
+                </Border>
+            </Panel>
+            <TextBlock FontSize="25" Text="{Binding Profile.UserName}" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,33 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ad="clr-namespace:AccountDownloader"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AccountDownloader.Views.FailedRecordsView"
+             d:DataContext="{x:Static ad:DesignData.DesignFailedRecordsViewModel}"
+             xmlns:p="clr-namespace:AccountDownloader.Properties"
+             xmlns:vm="using:AccountDownloader.ViewModels"
+             x:DataType="vm:FailedRecordsViewModel"
+             x:CompileBindings="True">
+<StackPanel>
+    <DataGrid Items="{Binding FailedRecords}" AutoGenerateColumns="False" >
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="{x:Static p:Resources.RecordId}"
+                                Binding="{Binding RecordId}"
+                                Width="1*"/>
+            <DataGridTextColumn Header="{x:Static p:Resources.Owner}"
+                                Binding="{Binding OwnerId}"
+                                Width="1*"/>
+            <DataGridTextColumn Header="{x:Static p:Resources.Name}"
+                                Binding="{Binding RecordName}"
+                                Width="1*"/>
+            <DataGridTextColumn Header="{x:Static p:Resources.RecordPath}"
+                                Binding="{Binding RecordPath}"/>
+            <DataGridTextColumn Header="{x:Static p:Resources.FailureReason}"
+                                Binding="{Binding FailureReason}"
+                                Width="2*"/>
+        </DataGrid.Columns>
+    </DataGrid>
+</StackPanel>
+</UserControl>

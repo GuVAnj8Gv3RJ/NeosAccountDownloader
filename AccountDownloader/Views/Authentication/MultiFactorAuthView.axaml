@@ -1,0 +1,20 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:p="clr-namespace:AccountDownloader.Properties"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AccountDownloader.Views.MultiFactorAuthView"
+             xmlns:vm="using:AccountDownloader.ViewModels"
+             x:DataType="vm:MultiFactorAuthViewModel"
+             x:CompileBindings="True">
+    <StackPanel VerticalAlignment="Center" Spacing="20">
+        <TextBlock Text="{x:Static p:Resources.OTPPrompt}" />
+        <TextBox Name="OTPBox" Text="{Binding TOTPToken}" Watermark="{x:Static p:Resources.OTPWatermark}" Width="300"/>
+
+        <Button Width="150" Command="{Binding SubmitTOTP}" HorizontalAlignment="Center">
+            <TextBlock Text="{x:Static p:Resources.Continue}" HorizontalAlignment="Center"></TextBlock>
+        </Button>
+    </StackPanel>
+</UserControl>
+

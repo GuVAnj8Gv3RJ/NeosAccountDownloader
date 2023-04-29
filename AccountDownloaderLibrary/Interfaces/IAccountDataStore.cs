@@ -1,0 +1,82 @@
+﻿using CloudX.Shared;
+
+namespace AccountDownloaderLibrary
+{
+    public readonly struct GroupData
+    {
+        public readonly Group group;
+        public readonly Storage storage;
+
+        public GroupData(Group group, Storage storage)
+        {
+            this.group = group;
+            this.storage = storage;
+        }
+    }
+
+    public readonly struct MemberData
+    {
+        public readonly Member member;
+        public readonly Storage storage;
+
+        public MemberData(Member member, Storage storage)
+        {
+            this.member = member;
+            this.storage = storage;
+        }
+    }
+
+    public class RecordStatusCallbacks
+    {
+        public Action<AssetDiff> AssetToUploadAdded;
+        public Action<long> BytesUploaded;
+        public Action AssetUploaded;
+        public Action<string> AssetMissing;
+    }
+
+    public interface IAccountDataGatherer
+    {
+        public string Name { get; }
+        public string UserId { get; }
+        public string Username { get; }
+
+        public event Action<string> ProgressMessage;
+
+        int FetchedRecordCount(string ownerId);
+        int FetchedGroupCount { get; }
+        Task Prepare(CancellationToken token);
+        Task Complete();
+
+        // Prepare and Complete represent Start and Finish and need to do certain cleanup.
+        // Here we expose Cancel as well which lets Stores handle anything they need to do when a cancellation occurs
+        Task Cancel();
+
+        Task<long> GetAssetSize(string hash);
+        Task DownloadAsset(string hash, string targetPath);
+        Task<string> GetAsset(string hash);
+        Task<AssetData> ReadAsset(string hash);
+
+        Task<List<CloudVariableDefinition>> GetVariableDefinitions(string ownerId);
+        Task<CloudVariable> GetVariable(string ownerId, string path);
+        Task<List<CloudVariable>> GetVariables(string ownerId);
+        IAsyncEnumerable<GroupData> GetGroups();
+        Task<List<MemberData>> GetMembers(string groupId);
+        Task<Record> GetRecord(string ownerId, string recordId);
+        IAsyncEnumerable<Record> GetRecords(string ownerId, DateTime? from);
+        Task<List<Friend>> GetContacts();
+        IAsyncEnumerable<Message> GetMessages(string contactId, DateTime? from);
+        Task<DateTime?> GetLatestRecordTime(string ownerId);
+        Task<DateTime> GetLatestMessageTime(string contactId);
+    }
+
+    public interface IAccountDataStore: IAccountDataGatherer
+    {
+        Task StoreDefinitions(List<CloudVariableDefinition> definition);
+        Task StoreVariables(List<CloudVariable> variable);
+        Task StoreGroup(Group group, Storage storage);
+        Task StoreMember(Group group, Member member, Storage storage);
+        Task<string> StoreRecord(Record record, IAccountDataGatherer source, RecordStatusCallbacks statusCallbacks = null, bool forceConflictOverwrite = false);
+        Task StoreContact(Friend friend);
+        Task StoreMessage(Message message);
+    }
+}

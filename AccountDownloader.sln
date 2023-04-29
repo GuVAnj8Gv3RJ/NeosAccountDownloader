@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountDownloader", "AccountDownloader\AccountDownloader.csproj", "{D84700D7-4311-4496-A0EB-A757B2E0948F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountDownloaderLibrary", "AccountDownloaderLibrary\AccountDownloaderLibrary.csproj", "{413AD70F-E394-478A-8D75-947E53F87524}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountDownloader.Generators", "AccountDownloader.Generators\AccountDownloader.Generators.csproj", "{172677B2-0C40-4C10-B669-61DFB09178F4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		ReleaseNative|Any CPU = ReleaseNative|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D84700D7-4311-4496-A0EB-A757B2E0948F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D84700D7-4311-4496-A0EB-A757B2E0948F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D84700D7-4311-4496-A0EB-A757B2E0948F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D84700D7-4311-4496-A0EB-A757B2E0948F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D84700D7-4311-4496-A0EB-A757B2E0948F}.ReleaseNative|Any CPU.ActiveCfg = ReleaseNative|Any CPU
+		{D84700D7-4311-4496-A0EB-A757B2E0948F}.ReleaseNative|Any CPU.Build.0 = ReleaseNative|Any CPU
+		{413AD70F-E394-478A-8D75-947E53F87524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{413AD70F-E394-478A-8D75-947E53F87524}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{413AD70F-E394-478A-8D75-947E53F87524}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{413AD70F-E394-478A-8D75-947E53F87524}.Release|Any CPU.Build.0 = Release|Any CPU
+		{413AD70F-E394-478A-8D75-947E53F87524}.ReleaseNative|Any CPU.ActiveCfg = ReleaseNative|Any CPU
+		{413AD70F-E394-478A-8D75-947E53F87524}.ReleaseNative|Any CPU.Build.0 = ReleaseNative|Any CPU
+		{172677B2-0C40-4C10-B669-61DFB09178F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{172677B2-0C40-4C10-B669-61DFB09178F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{172677B2-0C40-4C10-B669-61DFB09178F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{172677B2-0C40-4C10-B669-61DFB09178F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{172677B2-0C40-4C10-B669-61DFB09178F4}.ReleaseNative|Any CPU.ActiveCfg = ReleaseNative|Any CPU
+		{172677B2-0C40-4C10-B669-61DFB09178F4}.ReleaseNative|Any CPU.Build.0 = ReleaseNative|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4C014776-AE96-49A1-BF44-4BBE21144407}
+	EndGlobalSection
+EndGlobal

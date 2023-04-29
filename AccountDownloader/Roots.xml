@@ -1,0 +1,3 @@
+﻿<linker>
+  <assembly fullname="Avalonia.Themes.Fluent" preserve="All" />
+</linker>

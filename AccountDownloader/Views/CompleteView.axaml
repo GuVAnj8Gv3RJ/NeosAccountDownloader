@@ -1,0 +1,29 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AccountDownloader.Views.CompleteView"
+             xmlns:v="clr-namespace:AccountDownloader.Views"
+			 xmlns:p="clr-namespace:AccountDownloader.Properties"
+             xmlns:vm="using:AccountDownloader.ViewModels"
+             x:DataType="vm:CompleteViewModel"
+             x:CompileBindings="True">
+    <StackPanel Spacing="10">
+        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Text="{x:Static p:Resources.DownloadCompleteDescription}"/>
+        <v:ProgressStatisticsView DataContext="{Binding ProgressStatistics}" HorizontalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" IsVisible="{Binding HasFailedRecords}" Text="{x:Static p:Resources.DownloadCompleteRecordFailureDescription}" />
+        <ScrollViewer Height="150" IsVisible="{Binding HasFailedRecords}" HorizontalAlignment="Center">
+                <v:FailedRecordsView DataContext="{Binding FailedRecords}" HorizontalAlignment="Center"/>
+        </ScrollViewer>
+        <TextBlock HorizontalAlignment="Center" Text="{x:Static p:Resources.WouldYouLikeToStartAnotherDownload}" TextWrapping="Wrap"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="25">
+            <Button Width="100" Command="{Binding StartAnotherDownload}" HorizontalAlignment="Center">
+                <TextBlock Text="{x:Static p:Resources.Yes}" HorizontalAlignment="Center"></TextBlock>
+            </Button>
+            <Button Width="100" Command="{Binding Exit}" HorizontalAlignment="Center">
+                <TextBlock Text="{x:Static p:Resources.No}" HorizontalAlignment="Center"></TextBlock>
+            </Button>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,136 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <RuntimeIdentifiers>win-x64;win-x86</RuntimeIdentifiers>
+    <Nullable>enable</Nullable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+
+    <RootNamespace>AccountDownloader</RootNamespace>
+    <AssemblyName>Neos Account Downloader</AssemblyName>
+    <Company>GuVAnj8Gv3RJ</Company>
+    <Version>0.4.2</Version>
+
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+    <GenerateAssemblyVersionAttribute>True</GenerateAssemblyVersionAttribute>
+    <ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
+
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\$(Configuration)\$(TargetFramework)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
+    <Configurations>Debug;Release;ReleaseNative</Configurations>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <PublishReadyToRun>true</PublishReadyToRun>
+
+    <!-- Should kill PDB -->
+    <DebugType>none</DebugType>
+    <DebugSymbols>False</DebugSymbols>
+    <CopyOutputSymbolsToPublishDirectory>false</CopyOutputSymbolsToPublishDirectory>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNative|AnyCPU'">
+    <SelfContained>true</SelfContained>
+    <!-- AOT -->
+    <PublishAot>true</PublishAot>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>full</TrimMode>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+    <None Remove=".gitignore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\AppIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.0.0-preview6" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview6" />
+
+    <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.0.0-preview6" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.0-preview6" />
+
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-preview6" />
+    <PackageReference Include="Avalonia.Themes.Simple" Version="11.0.0-preview6" />
+
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-preview6" />
+
+    <!-- Reactive UI Stuff-->
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview6" />
+    <PackageReference Include="ReactiveUI.Fody" Version="18.4.26" />
+    <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
+
+    <PackageReference Include="Splat" Version="14.6.8" />
+
+    <!-- Logging -->
+    <PackageReference Include="Serilog" Version="3.0.0-dev-01927" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="SerilogTraceListener" Version="3.2.1-dev-00011" />
+
+    <!-- Avalonia addons -->
+    <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.0.0-avalonia11-preview3" />
+    <PackageReference Include="MessageBox.Avalonia" Version="2.3.1-prev6" />
+    <PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.10.0-preview20230326001" />
+
+    <ProjectReference Include="..\AccountDownloaderLibrary\AccountDownloaderLibrary.csproj" />
+
+    <!-- Generator Stuff -->
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <ProjectReference Include="..\AccountDownloader.Generators\AccountDownloader.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+
+    <!-- External Libraries from Steam Build Stuff -->
+    <Reference Include="CodeX">
+      <HintPath>..\ExternalLibraries\CodeX.dll</HintPath>
+    </Reference>
+    <Reference Include="BaseX">
+      <HintPath>..\ExternalLibraries\BaseX.dll</HintPath>
+    </Reference>
+    <Reference Include="CloudX.Shared">
+      <HintPath>..\ExternalLibraries\CloudX.Shared.dll</HintPath>
+    </Reference>
+
+    <!-- Reference some dependencies that CloudX.Shared needs -->
+    <!-- TODO: Is there a smarterway to include them? -->
+    <PackageReference Include="System.Text.Json" Version="7.0.0.0" />
+    <PackageReference Include="System.Security.Permissions" Version="7.0.0" />
+    <PackageReference Include="System.Threading.Tasks.Dataflow" Version="7.0.0" />
+    <PackageReference Include="Octokit" Version="4.0.3.0" />
+    <PackageReference Include="SignalR.Strong" Version="0.3.0.0" />
+    <PackageReference Include="MessageFormat" Version="6.0.2" />
+    <PackageReference Include="Ben.Demystifier" Version="0.4.1" />
+
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DownloadSelectionView.axaml.cs">
+      <DependentUpon>DownloadSelectionView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Windows\AboutWindowView.axaml.cs">
+      <DependentUpon>AboutWindowView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Windows\MainWindowView.axaml.cs">
+      <DependentUpon>MainWindowView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,19 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:p="clr-namespace:AccountDownloader.Properties"
+             xmlns:v="clr-namespace:AccountDownloader.Views"
+             x:Class="AccountDownloader.Views.GettingStartedView"
+             xmlns:vm="using:AccountDownloader.ViewModels"
+             x:DataType="vm:GettingStartedViewModel"
+             x:CompileBindings="True">
+<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="40">
+<TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"
+Text="{x:Static p:Resources.GettingStartedDescription}"/>
+    <Button Width="200" Command="{Binding Login}" HorizontalAlignment="Center">
+        <TextBlock Text="{x:Static p:Resources.GetStarted}" HorizontalAlignment="Center"></TextBlock>
+     </Button>
+</StackPanel>
+</UserControl>

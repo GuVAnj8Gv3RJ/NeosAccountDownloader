@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RuntimeIdentifiers>win-x64;win-x86</RuntimeIdentifiers>
+    <Version>0.0.1</Version>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Configurations>Debug;Release;ReleaseNative</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <!-- Should kill PDB -->
+    <DebugType>none</DebugType>
+    <DebugSymbols>False</DebugSymbols>
+    <CopyOutputSymbolsToPublishDirectory>false</CopyOutputSymbolsToPublishDirectory>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseNative|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>False</DebugSymbols>
+    <CopyOutputSymbolsToPublishDirectory>false</CopyOutputSymbolsToPublishDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DistributedLock.FileSystem" Version="1.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CodeX">
+      <HintPath>..\ExternalLibraries\CodeX.dll</HintPath>
+    </Reference>
+    <Reference Include="BaseX">
+      <HintPath>..\ExternalLibraries\BaseX.dll</HintPath>
+    </Reference>
+    <Reference Include="CloudX.Shared">
+      <HintPath>..\ExternalLibraries\CloudX.Shared.dll</HintPath>
+    </Reference>
+
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client.Core" Version="5.0.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Connections.Client" Version="5.0.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="5.0.1.0" />
+  </ItemGroup>
+
+  
+</Project>

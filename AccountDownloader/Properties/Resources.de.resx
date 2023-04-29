@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>Über</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Neos Konto Downloader</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Bist du sicher?</value>
+  </data>
+  <data name="AreYouSureDownloadCancel" xml:space="preserve">
+    <value>Bist du sicher, dass du den Download abbrechen möchtest?</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="CloudVariableDefinitions" xml:space="preserve">
+    <value>Definitionen für Cloud-Variablen</value>
+  </data>
+  <data name="CloudVariableValues" xml:space="preserve">
+    <value>Werte von Cloud-Variablen</value>
+  </data>
+  <data name="CompleteQuestion" xml:space="preserve">
+    <value>Dein Download ist abgeschlossen. Möchtest du einen weiteren starten?</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Kontakte</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Weiter</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Wird heruntergeladen</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="Errors.BlankPassword" xml:space="preserve">
+    <value>Das Passwort darf nicht leer sein.</value>
+  </data>
+  <data name="Errors.BlankUsername" xml:space="preserve">
+    <value>Der Benutzername darf nicht leer sein.</value>
+  </data>
+  <data name="Errors.CannotSelectFolder" xml:space="preserve">
+    <value>Es ist nicht möglich, Ordner auszuwählen. Bitte gib einen manuell ein.</value>
+  </data>
+  <data name="Errors.DownloadCancelled" xml:space="preserve">
+    <value>Konto-Download abgebrochen!</value>
+  </data>
+  <data name="Errors.DownloadFailure" xml:space="preserve">
+    <value>Der Download ist aufgrund von {0} fehlgeschlagen. Bitte schau in die Protokolldateien für weitere Details und/oder versuche es erneut.</value>
+  </data>
+  <data name="Errors.NoFolderSelected" xml:space="preserve">
+    <value>Kein Ordner ausgewählt.</value>
+  </data>
+  <data name="Errors.NoMainWindow" xml:space="preserve">
+    <value>Hauptfenster konnte nicht gefunden werden.</value>
+  </data>
+  <data name="Errors.UnexpectedLoginError" xml:space="preserve">
+    <value>Unerwarteter Fehler beim Anmelden.</value>
+  </data>
+  <data name="Errors.UnknownError" xml:space="preserve">
+    <value>Unbekannter Fehler</value>
+  </data>
+  <data name="GetStarted" xml:space="preserve">
+    <value>Beginnen</value>
+  </data>
+  <data name="GettingStartedDescription" xml:space="preserve">
+    <value>Dieses Tool lädt den gesamten Inhalt deines Neos-Kontos herunter. Je nachdem, wie viel dein Konto enthält, kann dies eine Weile dauern. Bitte versuche, diesen Vorgang nicht zu unterbrechen, sobald er gestartet wurde. Lass es einfach laufen, bis es dich informiert, dass es abgeschlossen ist.</value>
+  </data>
+  <data name="GroupsOnlyAdmin" xml:space="preserve">
+    <value>Du kannst nur Gruppen herunterladen, von denen du ein Administrator bist.</value>
+  </data>
+  <data name="GroupsQuestion" xml:space="preserve">
+    <value>Welchen Gruppeninhalt möchtest du herunterladen?</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="InventoryWorlds" xml:space="preserve">
+    <value>Inventar &amp; Welten</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Einloggen</value>
+  </data>
+  <data name="LoginPrompt" xml:space="preserve">
+    <value>Bitte melde dich bei deinem Neos-Konto an.</value>
+  </data>
+  <data name="MessageHistory" xml:space="preserve">
+    <value>Nachrichtenverlauf</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="NoGroupsFound" xml:space="preserve">
+    <value>Keine Gruppen gefunden.</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OpenFolder_Failed" xml:space="preserve">
+    <value>Fehler beim Öffnen des Ordners.</value>
+  </data>
+  <data name="OpenFolder_UnsupportedPlatform" xml:space="preserve">
+    <value>Das Öffnen eines Ordners wird auf dieser Plattform nicht unterstützt. Du kannst manuell zu dem Ordner navigieren unter: {0}</value>
+  </data>
+  <data name="OpenLogFolder" xml:space="preserve">
+    <value>Open Log Folder</value>
+  </data>
+  <data name="OTPPrompt" xml:space="preserve">
+    <value>Bitte gib das Einmalpasswort aus deiner Authenticator-App ein.</value>
+  </data>
+  <data name="OTPWatermark" xml:space="preserve">
+    <value>Einmalpasswort</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Passwort</value>
+  </data>
+  <data name="SelectFolder" xml:space="preserve">
+    <value>Ordner auswählen</value>
+  </data>
+  <data name="StartDownload" xml:space="preserve">
+    <value>Download starten</value>
+  </data>
+  <data name="StorageRequired" xml:space="preserve">
+    <value>Download benötigt mindestens {0} an Speicherplatz.</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Benutzername</value>
+  </data>
+  <data name="WhatDownload" xml:space="preserve">
+    <value>Was möchtest du herunterladen?</value>
+  </data>
+  <data name="WhereDownload" xml:space="preserve">
+    <value>Wo möchtest du es herunterladen?</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Hilfe</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+</root>

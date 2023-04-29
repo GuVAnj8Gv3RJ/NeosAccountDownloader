@@ -1,0 +1,18 @@
+# Set default behavior to automatically normalize line endings.
+* text=auto
+
+# Non-code files
+*.gitattributes text
+.gitignore      text
+*.md            text diff=markdown
+*.config diff=xml
+
+# Code!
+*.cs     diff=csharp
+*.tt     diff=csharp
+*.xaml diff=xml
+*.axaml diff=xml
+
+# Special files from Visual Studio, These need crlf
+*.sln       merge=binary eol=crlf
+*.csproj    merge=binary eol=crlf

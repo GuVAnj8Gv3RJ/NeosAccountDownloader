@@ -1,0 +1,74 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:p="clr-namespace:AccountDownloader.Properties"
+             x:Class="AccountDownloader.Views.ProgressStatisticsView"
+             xmlns:vm="using:AccountDownloader.ViewModels"
+             x:DataType="vm:ProgressStatisticsViewModel"
+             x:CompileBindings="True">
+    <StackPanel>
+        <TextBlock IsVisible="{Binding Config.Contacts}">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0}: {1} / {2}">
+                    <Binding Source="{x:Static p:Resources.Contacts}" />
+                    <Binding Path="Status.DownloadedContactCount"/>
+                    <Binding Path="Status.TotalContactCount" Converter="{StaticResource ZeroConverter}" ConverterParameter="{x:Static p:Resources.Pending}"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+        <TextBlock IsVisible="{Binding Config.MessageHistory}">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0}: {1}">
+                    <Binding Source="{x:Static p:Resources.MessageHistory}" />
+                    <Binding Path="Status.DownloadedMessageCount" Converter="{StaticResource ZeroConverter}" ConverterParameter="{x:Static p:Resources.Pending}" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+        <TextBlock IsVisible="{Binding Config.CloudVariableDefinitions}">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0}: {1}">
+                    <Binding Source="{x:Static p:Resources.CloudVariableDefinitions}" />
+                    <Binding Path="Status.UserVariablesStatus.DownloadedVariableDefinitionCount" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+        <TextBlock IsVisible="{Binding Config.CloudVariableValues}">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0}: {1}">
+                    <Binding Source="{x:Static p:Resources.CloudVariableValues}" />
+                    <Binding Path="Status.UserVariablesStatus.DownloadedVariableCount" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+        <TextBlock IsVisible="{Binding Config.InventoryWorlds}">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0}: {1} / {2}">
+                    <Binding Source="{x:Static p:Resources.InventoryWorlds}" />
+                    <Binding Path="Status.TotalDownloadedRecordCount" />
+                    <Binding Path="Status.TotalRecordCount" Converter="{StaticResource ZeroConverter}" ConverterParameter="{x:Static p:Resources.Pending}"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+        <!-- TODO: Assets is currently broken
+        <TextBlock IsVisible="{Binding Config.InventoryWorlds}">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0}: {1} / {2}">
+                    <Binding Source="{x:Static p:Resources.Assets}" />
+                    <Binding Path="Status.TotalDownloadedAssetCount" />
+                    <Binding Path="Status.TotalAssetCount" Converter="{StaticResource ZeroConverter}" ConverterParameter="{x:Static p:Resources.Pending}"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+        -->
+        <TextBlock>
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0}: {1}">
+                    <Binding Source="{x:Static p:Resources.DownloadRate}" />
+                    <Binding Path="Status.RecordsPerMinute" Converter="{StaticResource ZeroConverter}" ConverterParameter="{x:Static p:Resources.Pending}" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+    </StackPanel>
+</UserControl>
