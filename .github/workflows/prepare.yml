@@ -17,7 +17,6 @@ jobs:
             ExternalLibraries/CloudX.Shared.dll
             ExternalLibraries/CodeX.dll
           key: neos-dlls
-          lookup-only: true
           enableCrossOsArchive: true
       - name: Download Neos
         if: steps.cache-neos-dlls.cache-hit != 'true'

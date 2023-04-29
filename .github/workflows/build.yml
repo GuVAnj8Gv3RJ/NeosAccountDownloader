@@ -27,6 +27,7 @@ jobs:
           ExternalLibraries/CodeX.dll
         key: neos-dlls
         fail-on-cache-miss: true
+        enableCrossOsArchive: true
     - name: Install dependencies
       run: dotnet restore
     - name: Build
