@@ -32,8 +32,17 @@ namespace AccountDownloader.Services
         private ILogger Logger { get; }
 
         //TODO: is there a way to auto-generate this? 
-        public static HashSet<string> AvailableLocaleCodes = new HashSet<string>() { "en", "de", "ja", "ko"};
-        public static HashSet<string> MachineTranslatedCodes = new HashSet<string>() { "ja", "ko" };
+        public static HashSet<string> AvailableLocaleCodes = new()
+        {
+            "en",
+            "de",
+            "ja",
+            "ko",
+            "fr",
+            //"ru",
+            "es"
+        };
+        public static HashSet<string> MachineTranslatedCodes = new() { "ja", "ko" };
 
         public List<LocaleModel> AvailableLocales { get; }
 
@@ -68,9 +77,9 @@ namespace AccountDownloader.Services
 
         private LocaleModel CreateLocaleModel(string code)
         {
-            var cultureName = CultureInfo.GetCultureInfo(code).NativeName;
-            if (MachineTranslatedCodes.Contains(code))
-                cultureName += " (Machine Translated)";
+            string cultureName = !MachineTranslatedCodes.Contains(code) ?
+                                 $"{CultureInfo.GetCultureInfo(code).NativeName}" :
+                                 $"{CultureInfo.GetCultureInfo(code).NativeName} (Machine Translated)";
 
             return new LocaleModel(cultureName, code);
         }
