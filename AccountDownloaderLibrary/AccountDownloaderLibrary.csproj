@@ -6,6 +6,7 @@
     <Version>0.0.1</Version>
     <ImplicitUsings>enable</ImplicitUsings>
     <Configurations>Debug;Release;ReleaseNative</Configurations>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

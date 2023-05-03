@@ -6,23 +6,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AccountDownloaderLibrary;
+using AccountDownloaderLibrary.Interfaces;
 using Avalonia.Threading;
 using CloudX.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace AccountDownloader.Services;
-public class DownloadResult : IDownloadResult
-{
-    public string? Error { get; }
-
-    public DownloadResultType Result { get; }
-
-    public DownloadResult(DownloadResultType result, string? error)
-    {
-        Result = result;
-        Error = error;
-    }
-}
 public class AccountDownloadManager : IAccountDownloader
 {
     private CloudXInterface Interface { get;}
@@ -102,18 +91,19 @@ public class AccountDownloadManager : IAccountDownloader
     private async Task<IDownloadResult> StartDownload()
     {
         var result = await Controller!.Download(CancelTokenSource!.Token);
-        DownloadResultType type = result ? DownloadResultType.Sucessful : DownloadResultType.Error;
-        if (CancelTokenSource.IsCancellationRequested)
-            type = DownloadResultType.Cancelled;
-
-        this.Logger.LogInformation("Download Finished with result: {result}", result);
+        this.Logger.LogInformation("Download Finished with result: {result}", result.Result.ToString());
 
         StatsTimer.Stop();
 
-        if (result == false)
+        if (result.Result == DownloadResultType.Error)
+        {
             this.Logger.LogError(Controller?.Status?.Error);
+            if (result.Exception != null)
+                // Log the whole damn exception too!
+                this.Logger.LogError(result.Exception.ToString());
+        }
 
-        return new DownloadResult(type, result ? null : Controller?.Status?.Error); 
+        return result;
     }
 
     private static AccountDownloadConfig CreateConfigFromIAccountDownloadConfig(IAccountDownloadConfig config)

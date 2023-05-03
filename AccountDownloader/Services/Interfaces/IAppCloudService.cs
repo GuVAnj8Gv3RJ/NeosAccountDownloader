@@ -1,4 +1,5 @@
 ﻿using AccountDownloaderLibrary;
+using AccountDownloaderLibrary.Interfaces;
 using CloudX.Shared;
 using ReactiveUI;
 using System;
@@ -55,19 +56,6 @@ namespace AccountDownloader.Services
         public Task<AuthResult> SubmitTOTP(string TOTP);
 
         public IUserProfile Profile { get; }
-    }
-
-    public enum DownloadResultType
-    {
-        Error = 0,
-        Cancelled,
-        Sucessful,
-    }
-
-    public interface IDownloadResult
-    {
-        public DownloadResultType Result { get; }
-        public string? Error { get; }
     }
 
     public interface IAccountDownloader

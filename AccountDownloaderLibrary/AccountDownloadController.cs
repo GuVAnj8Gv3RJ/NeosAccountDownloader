@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks.Dataflow;
 using CloudX.Shared;
 using AccountDownloaderLibrary.Extensions;
+using AccountDownloaderLibrary.Interfaces;
 
 namespace AccountDownloaderLibrary
 {
@@ -56,7 +57,7 @@ namespace AccountDownloaderLibrary
             await target.Cancel();
         }
 
-        public async Task<bool> Download(CancellationToken cancellationToken)
+        public async Task<IDownloadResult> Download(CancellationToken cancellationToken)
         {
             try
             {
@@ -80,7 +81,7 @@ namespace AccountDownloaderLibrary
                 if (cancellationToken.IsCancellationRequested)
                 {
                     await HandleCancel();
-                    return false;
+                    return DownloadResult.Cancelled;
                 }
 
                 // Status.Phase for this segment is set in the method
@@ -92,7 +93,7 @@ namespace AccountDownloaderLibrary
                 if (cancellationToken.IsCancellationRequested)
                 {
                     await HandleCancel();
-                    return false;
+                    return DownloadResult.Cancelled;
                 }
 
                 // download all stuff from the groups the user owns
@@ -102,7 +103,7 @@ namespace AccountDownloaderLibrary
                     {
                         Status.Phase = "Groups";
                         if (cancellationToken.IsCancellationRequested)
-                            return false;
+                            return DownloadResult.Cancelled;
 
                         var group = groupData.group;
 
@@ -120,13 +121,13 @@ namespace AccountDownloaderLibrary
                         await target.StoreGroup(group, groupData.storage).ConfigureAwait(false);
 
                         if (cancellationToken.IsCancellationRequested)
-                            return false;
+                            return DownloadResult.Cancelled;
 
                         Status.Phase = "Group Members";
                         await DownloadMembers(group, groupStatus, cancellationToken).ConfigureAwait(false);
 
                         if (cancellationToken.IsCancellationRequested)
-                            return false;
+                            return DownloadResult.Cancelled;
 
                         Status.Phase = "Group Records";
                         await DownloadOwned(group.GroupId,
@@ -141,7 +142,7 @@ namespace AccountDownloaderLibrary
                 if (cancellationToken.IsCancellationRequested)
                 {
                     await HandleCancel();
-                    return false;
+                    return DownloadResult.Cancelled;
                 }
 
 
@@ -157,7 +158,7 @@ namespace AccountDownloaderLibrary
 
                 Status.Phase = "Complete";
 
-                return true;
+                return DownloadResult.Successful;
             }
             catch (Exception ex)
             {
@@ -168,7 +169,9 @@ namespace AccountDownloaderLibrary
                 // Cancel the download on an error
                 await HandleCancel();
 
-                return false;
+                // Pass both the string message and the whole exception up
+                // This lets us deal with things nicely.
+                return new DownloadResult(DownloadResultType.Error, ex.Message, ex);
             }
             finally
             {

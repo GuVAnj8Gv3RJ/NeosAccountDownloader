@@ -2,6 +2,7 @@
 using AccountDownloader.Utilities;
 using AccountDownloader.Views;
 using AccountDownloaderLibrary;
+using AccountDownloaderLibrary.Interfaces;
 using Avalonia;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -115,7 +116,6 @@ public class ProgressViewModel : ViewModelBase
 
     private async Task HandleFailure(IDownloadResult result)
     {
-        // The error here might be a full stack trace.
         await GlobalInteractions.ShowMessageBox.Handle(new MessageBoxRequest(string.Format(Res.Errors_DownloadFailure, result.Error)));
         await Router.Navigate.Execute(new GettingStartedViewModel());
     }
