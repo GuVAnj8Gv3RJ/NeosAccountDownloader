@@ -2,6 +2,8 @@
 
 namespace AccountDownloaderLibrary;
 
+#nullable enable
+
 // Some errors might not generate a full exception, but some might. This lets us wrap both.
 // Generically use Error for Message boxes and the full exception for logging.
 public class DownloadResult : IDownloadResult

@@ -1,5 +1,5 @@
 ﻿namespace AccountDownloaderLibrary.Interfaces;
-
+#nullable enable
 public enum DownloadResultType
 {
     Error = 0,
