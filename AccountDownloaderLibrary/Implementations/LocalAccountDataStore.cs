@@ -3,6 +3,7 @@ using System.Text.Json;
 using CloudX.Shared;
 using AccountDownloaderLibrary.Extensions;
 using Medallion.Threading.FileSystem;
+using ConcurrentCollections;
 
 namespace AccountDownloaderLibrary
 {
@@ -21,7 +22,7 @@ namespace AccountDownloaderLibrary
         }
 
         ActionBlock<AssetJob> downloadProcessor;
-        readonly HashSet<string> scheduledAssets = new();
+        readonly ConcurrentHashSet<string> scheduledAssets = new();
 
         public string Name => "Local Data Store";
         public string UserId { get; private set; }
