@@ -77,9 +77,9 @@ namespace AccountDownloader.Services
 
         private LocaleModel CreateLocaleModel(string code)
         {
-            string cultureName = !MachineTranslatedCodes.Contains(code) ?
-                                 $"{CultureInfo.GetCultureInfo(code).NativeName}" :
-                                 $"{CultureInfo.GetCultureInfo(code).NativeName} (Machine Translated)";
+            var cultureName = CultureInfo.GetCultureInfo(code).NativeName;
+            if (MachineTranslatedCodes.Contains(code))
+                cultureName += " (Machine Translated)";
 
             return new LocaleModel(cultureName, code);
         }
