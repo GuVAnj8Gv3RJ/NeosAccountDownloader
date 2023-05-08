@@ -32,8 +32,16 @@ namespace AccountDownloader.Services
         private ILogger Logger { get; }
 
         //TODO: is there a way to auto-generate this? 
-        public static HashSet<string> AvailableLocaleCodes = new HashSet<string>() { "en", "de", "ja", "ko"};
-        public static HashSet<string> MachineTranslatedCodes = new HashSet<string>() { "ja", "ko" };
+        public static HashSet<string> AvailableLocaleCodes = new()
+        {
+            "en",
+            "de",
+            "ja",
+            "ko",
+            "fr",
+            "es"
+        };
+        public static HashSet<string> MachineTranslatedCodes = new() { "ja", "ko" };
 
         public List<LocaleModel> AvailableLocales { get; }
 

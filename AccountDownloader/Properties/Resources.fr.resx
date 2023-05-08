@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>À propos</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Téléchargeur de compte Neos</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Êtes-vous sûr?</value>
+  </data>
+  <data name="AreYouSureDownloadCancel" xml:space="preserve">
+    <value>Êtes-vous sûr de vouloir annuler le téléchargement?</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="CloudVariableDefinitions" xml:space="preserve">
+    <value>Définitions des variables nuage</value>
+  </data>
+  <data name="CloudVariableValues" xml:space="preserve">
+    <value>Données des variables nuage</value>
+  </data>
+  <data name="CompleteQuestion" xml:space="preserve">
+    <value>Téléchargement terminé, Voulez-vous en initier un autre?</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Contacts</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continuer</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Téléchargement</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Erreur</value>
+  </data>
+  <data name="Errors.BlankPassword" xml:space="preserve">
+    <value>Mot de passe ne peut pas être vide.</value>
+  </data>
+  <data name="Errors.BlankUsername" xml:space="preserve">
+    <value>Utilisateur ne peut pas être vide.</value>
+  </data>
+  <data name="Errors.CannotSelectFolder" xml:space="preserve">
+    <value>Impossible de sélectioner le dossier, sélectionez manuellement.</value>
+  </data>
+  <data name="Errors.DownloadCancelled" xml:space="preserve">
+    <value>Téléchargement du compte annulé!</value>
+  </data>
+  <data name="Errors.DownloadFailure" xml:space="preserve">
+    <value>Une erreur de téléchargement est survenue, causé par {0}. Consultez les fichiers log pour plus de détails, ou retentez le téléchargement.</value>
+  </data>
+  <data name="Errors.NoFolderSelected" xml:space="preserve">
+    <value>Aucun dossier sélectioné.</value>
+  </data>
+  <data name="Errors.NoMainWindow" xml:space="preserve">
+    <value>Fenêtre principale manquante.</value>
+  </data>
+  <data name="Errors.UnexpectedLoginError" xml:space="preserve">
+    <value>Une erreur de connexion est survenue.</value>
+  </data>
+  <data name="Errors.UnknownError" xml:space="preserve">
+    <value>Une erreur inconnue est survenue</value>
+  </data>
+  <data name="GetStarted" xml:space="preserve">
+    <value>Commancer</value>
+  </data>
+  <data name="GettingStartedDescription" xml:space="preserve">
+    <value>Cet outils télécharge le contenu de votre compte Neos. Tout dépendant du nombre de contenu, cela peut prendre du temps. Veuillez ne pas interrompre le processus une foit celui-ci initié. Vous serez informé quand il sera terminé.</value>
+  </data>
+  <data name="GroupsOnlyAdmin" xml:space="preserve">
+    <value>Vous ne pouvez télécharger le contenu de groupe que si vous êtes un administrateur de celui-ci.</value>
+  </data>
+  <data name="GroupsQuestion" xml:space="preserve">
+    <value>Sélectionez le contenu du groupe à télécharger?</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Aide</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="InventoryWorlds" xml:space="preserve">
+    <value>Inventaire et Mondes</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Langue</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Connexion</value>
+  </data>
+  <data name="LoginPrompt" xml:space="preserve">
+    <value>Veuillez vous connecter a votre compte Neos.</value>
+  </data>
+  <data name="MessageHistory" xml:space="preserve">
+    <value>Historique de messages</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Non</value>
+  </data>
+  <data name="NoGroupsFound" xml:space="preserve">
+    <value>Aucun groupes trouvé.</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>Okay</value>
+  </data>
+  <data name="OpenFolder_Failed" xml:space="preserve">
+    <value>Impossible d'ouvrir le dossier.</value>
+  </data>
+  <data name="OpenFolder_UnsupportedPlatform" xml:space="preserve">
+    <value>Ouvrir un dossier est impossible sur cette platforme. Vous pouvez manuellement naviguer le dossier à: {0}</value>
+  </data>
+  <data name="OpenLogFolder" xml:space="preserve">
+    <value>Ouvrir le dossier log</value>
+  </data>
+  <data name="OTPPrompt" xml:space="preserve">
+    <value>Entrez le mot de passe unique de votre application d'authentication en deux étapes.</value>
+  </data>
+  <data name="OTPWatermark" xml:space="preserve">
+    <value>Mot de passe 2FA</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Mot de passe</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>En cours</value>
+  </data>
+  <data name="SelectFolder" xml:space="preserve">
+    <value>Sélectionez un dossier</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
+  <data name="StartDownload" xml:space="preserve">
+    <value>Initier le téléchargement</value>
+  </data>
+  <data name="StorageRequired" xml:space="preserve">
+    <value>Le téléchargement nécessitera {0} en espace de stockage.</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Utilisateur</value>
+  </data>
+  <data name="WhatDownload" xml:space="preserve">
+    <value>Que voulez-vous télécharger?</value>
+  </data>
+  <data name="WhereDownload" xml:space="preserve">
+    <value>Destination du téléchargement?</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Oui</value>
+  </data>
+  <data name="DownloadRate" xml:space="preserve">
+    <value>Vitesse (Objets/Mondes par minute)</value>
+  </data>
+  <data name="DownloadComplete" xml:space="preserve">
+    <value>Téléchargement completé!</value>
+  </data>
+  <data name="DownloadReport" xml:space="preserve">
+    <value>Statistiques du téléchargement</value>
+  </data>
+  <data name="DownloadCompleteDescription" xml:space="preserve">
+    <value>Téléchargement completé. Voici un rapport détaillé des statistiques du téléchargement. Une copie à également été écrite dans les fichiers log</value>
+  </data>
+  <data name="DownloadCompleteRecordFailureDescription" xml:space="preserve">
+    <value>Certain Records ont échoué le téléchargement, leur détails sont écrits ci-dessous, ou vérifiez les logs pour plus d'information.</value>
+  </data>
+  <data name="UserRecords" xml:space="preserve">
+    <value>Records de l'utilisateur</value>
+  </data>
+  <data name="WouldYouLikeToStartAnotherDownload" xml:space="preserve">
+    <value>Initier un autre téléchargement?</value>
+  </data>
+  <data name="FailureReason" xml:space="preserve">
+    <value>Raison de l'échec</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Propriétaire</value>
+  </data>
+  <data name="RecordId" xml:space="preserve">
+    <value>Record ID</value>
+  </data>
+  <data name="RecordPath" xml:space="preserve">
+    <value>Destination du Record</value>
+  </data>
+  <data name="Assets" xml:space="preserve">
+    <value>Assets</value>
+  </data>
+</root>
