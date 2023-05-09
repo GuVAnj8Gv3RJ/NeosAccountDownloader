@@ -11,10 +11,12 @@ Backing up Neos content given the current circumstances seemed wise.
 No.
 
 ## What can I do with the downloaded files?
-The files are mostly machine readable collections of entities from your account, feel free to poke around but you can't really do much with them.
+The files are mostly machine readable collections of entities from your account, feel free to poke around.
+
+You could however, write additional tools that do stuff with them.
 
 ## Can I import downloaded content into Unity?
-This is not a supported use case. No effort will be made to support this.
+This is not a supported use case of this utility. No effort will be made to support this. You could make your own tooling to do that though.
 
 ## Should I use a new folder for each user I download?
 Ideally no, the local store that this app builds will in some cases handle duplicate assets in a way that will reduce total file size if you use the same folder for multiple accounts.
