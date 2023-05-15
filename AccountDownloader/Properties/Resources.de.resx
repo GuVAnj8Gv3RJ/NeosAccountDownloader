@@ -187,6 +187,9 @@
   <data name="Username" xml:space="preserve">
     <value>Benutzername</value>
   </data>
+  <data name="UserMetadata" xml:space="preserve">
+    <value>Benutzer-Metadaten</value>
+  </data>
   <data name="WhatDownload" xml:space="preserve">
     <value>Was möchtest du herunterladen?</value>
   </data>
