@@ -3,6 +3,11 @@
     public class AccountDownloadConfig
     {
         /// <summary>
+        /// Should user metadata be downloaded?
+        /// </summary>
+        public bool DownloadUserMetadata { get; set; } = true;
+
+        /// <summary>
         /// Should contacts be downloaded?
         /// </summary>
         public bool DownloadContacts { get; set; } = true;

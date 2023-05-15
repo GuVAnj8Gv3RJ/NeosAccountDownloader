@@ -72,6 +72,7 @@ namespace AccountDownloader.Services
 
     public interface IAccountDownloadConfig: IReactiveNotifyPropertyChanged<IReactiveObject>
     {
+        public bool UserMetadata { get; }
         public bool Contacts { get; }
         public bool MessageHistory { get; }
         public bool InventoryWorlds { get; }

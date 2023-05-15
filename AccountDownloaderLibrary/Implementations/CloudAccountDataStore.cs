@@ -192,6 +192,8 @@ namespace AccountDownloaderLibrary
             }
         }
 
+        public virtual User GetUserMetadata() => Cloud.CurrentUser;
+
         public virtual async Task<List<CloudVariableDefinition>> GetVariableDefinitions(string ownerId)
         {
             var definitions = await Cloud.ListVariableDefinitions(ownerId).ConfigureAwait(false);

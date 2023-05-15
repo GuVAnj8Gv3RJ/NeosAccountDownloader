@@ -112,6 +112,7 @@ public class AccountDownloadManager : IAccountDownloader
         {
             DownloadCloudVariableDefinitions = config.CloudVariableDefinitions,
             DownloadCloudVariables = config.CloudVariableValues,
+            DownloadUserMetadata = config.UserMetadata,
             DownloadContacts = config.Contacts,
             DownloadMessageHistory = config.MessageHistory,
             DownloadUserRecords = config.InventoryWorlds,
