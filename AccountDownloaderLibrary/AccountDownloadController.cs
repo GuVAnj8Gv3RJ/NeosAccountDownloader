@@ -396,7 +396,7 @@ namespace AccountDownloaderLibrary
             SetProgressMessage("Downloading user metadata");
 
             var userMetadata = source.GetUserMetadata();
-            target.StoreUserMetadata(userMetadata);
+            await target.StoreUserMetadata(userMetadata);
         }
 
         public async Task DownloadContacts(CancellationToken cancellationToken)
