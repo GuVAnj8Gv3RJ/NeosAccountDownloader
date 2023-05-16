@@ -111,6 +111,8 @@ namespace AccountDownloaderLibrary
             });
         }
 
+        public User GetUserMetadata() => GetEntity<User>(UserMetadataPath(UserId));
+
         public Task<List<Friend>> GetContacts() => GetEntities<Friend>(ContactsPath(UserId));
 
         public async IAsyncEnumerable<Message> GetMessages(string contactId, DateTime? from)
@@ -226,6 +228,8 @@ namespace AccountDownloaderLibrary
                 await StoreEntity(variable, Path.Combine(VariablePath(variable.VariableOwnerId), variable.Path)).ConfigureAwait(false);
         }
 
+        public Task StoreUserMetadata(User user) => StoreEntity(user, Path.Combine(UserMetadataPath(user.Id)));
+
         public Task StoreContact(Friend cotnact) => StoreEntity(cotnact, Path.Combine(ContactsPath(cotnact.OwnerId), cotnact.FriendUserId));
 
         public Task StoreMessage(Message message) => StoreEntity(message, Path.Combine(MessagesPath(message.OwnerId, message.GetOtherUserId()), message.Id));
@@ -273,6 +277,7 @@ namespace AccountDownloaderLibrary
 
         string VariableDefinitionPath(string ownerId) => Path.Combine(BasePath, ownerId, "VariableDefinitions");
         string VariablePath(string ownerId) => Path.Combine(BasePath, ownerId, "Variables");
+        string UserMetadataPath(string ownerId) => Path.Combine(BasePath, ownerId, "User");
         string ContactsPath(string ownerId) => Path.Combine(BasePath, ownerId, "Contacts");
         string MessagesPath(string ownerId, string contactId) => Path.Combine(BasePath, ownerId, "Messages", contactId);
         string RecordsPath(string ownerId) => Path.Combine(BasePath, ownerId, "Records");

@@ -29,6 +29,9 @@ public class DownloadSelectionViewModel : ViewModelBase, IAccountDownloadConfig
     // IAccountDownloadConfig stuff
     // Is bound from the UI to select what data to download
     [Reactive]
+    public bool UserMetadata { get; set; } = false;
+
+    [Reactive]
     public bool Contacts { get; set; } = false;
 
     private bool PreviousMessageHistory = false;
@@ -79,12 +82,13 @@ public class DownloadSelectionViewModel : ViewModelBase, IAccountDownloadConfig
 
         // This is kinda gross
         var hasDownloadSelection = this.WhenAnyValue(
+            x => x.UserMetadata,
             x => x.Contacts,
             x => x.MessageHistory,
             x => x.InventoryWorlds,
             x => x.CloudVariableDefinitions,
             x => x.CloudVariableValues,
-            (contacts, messagehistory, inventoryWorlds, cloudVariableDefinitions, cloudVariableValues) => contacts || messagehistory || inventoryWorlds || cloudVariableDefinitions || cloudVariableValues
+            (userMetadata, contacts, messagehistory, inventoryWorlds, cloudVariableDefinitions, cloudVariableValues) => userMetadata || contacts || messagehistory || inventoryWorlds || cloudVariableDefinitions || cloudVariableValues
         );
         var hasFilePath = this.WhenAnyValue(x => x.FilePath, filePath => !string.IsNullOrEmpty(filePath));
 

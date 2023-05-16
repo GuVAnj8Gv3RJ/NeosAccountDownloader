@@ -63,6 +63,7 @@ namespace AccountDownloaderLibrary
         Task<List<MemberData>> GetMembers(string groupId);
         Task<Record> GetRecord(string ownerId, string recordId);
         IAsyncEnumerable<Record> GetRecords(string ownerId, DateTime? from);
+        User GetUserMetadata();
         Task<List<Friend>> GetContacts();
         IAsyncEnumerable<Message> GetMessages(string contactId, DateTime? from);
         Task<DateTime?> GetLatestRecordTime(string ownerId);
@@ -76,6 +77,7 @@ namespace AccountDownloaderLibrary
         Task StoreGroup(Group group, Storage storage);
         Task StoreMember(Group group, Member member, Storage storage);
         Task<string> StoreRecord(Record record, IAccountDataGatherer source, RecordStatusCallbacks statusCallbacks = null, bool forceConflictOverwrite = false);
+        Task StoreUserMetadata(User user);
         Task StoreContact(Friend friend);
         Task StoreMessage(Message message);
     }

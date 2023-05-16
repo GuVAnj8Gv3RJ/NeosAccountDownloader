@@ -574,6 +574,15 @@ namespace AccountDownloader.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User Metadata.
+        /// </summary>
+        public static string UserMetadata {
+            get {
+                return ResourceManager.GetString("UserMetadata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string Username {

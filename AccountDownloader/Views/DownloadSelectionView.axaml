@@ -13,8 +13,9 @@
         <v:UserProfileView Name="Profile" DataContext="{Binding ProfileViewModel}"></v:UserProfileView>
         <TextBlock Text="{x:Static p:Resources.WhatDownload}" FontSize="16"/>
         <StackPanel>
+            <CheckBox IsChecked="{Binding UserMetadata}" Content="{x:Static p:Resources.UserMetadata}"></CheckBox>
             <CheckBox IsChecked="{Binding Contacts}" Content="{x:Static p:Resources.Contacts}"></CheckBox>
-			<CheckBox IsEnabled="{Binding Contacts}" Margin="15,0,0,0" IsChecked="{Binding MessageHistory}" Content="{x:Static p:Resources.MessageHistory}"></CheckBox>
+			      <CheckBox IsEnabled="{Binding Contacts}" Margin="15,0,0,0" IsChecked="{Binding MessageHistory}" Content="{x:Static p:Resources.MessageHistory}"></CheckBox>
             <CheckBox IsChecked="{Binding InventoryWorlds}" Content="{x:Static p:Resources.InventoryWorlds}"></CheckBox>
             <CheckBox IsChecked="{Binding CloudVariableDefinitions}" Content="{x:Static p:Resources.CloudVariableDefinitions}"></CheckBox>
             <CheckBox IsChecked="{Binding CloudVariableValues}" Content="{x:Static p:Resources.CloudVariableValues}"></CheckBox>

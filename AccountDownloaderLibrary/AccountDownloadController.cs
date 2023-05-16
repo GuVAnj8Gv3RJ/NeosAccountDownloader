@@ -74,6 +74,10 @@ namespace AccountDownloaderLibrary
 
                 Status.CurrentlyDownloadingName = source.Username;
 
+                // Status.Phase for this step is set in the method
+                if (config.DownloadUserMetadata)
+                    await DownloadUserMetadata(cancellationToken).ConfigureAwait(false);
+
                 // Status.Phase for this step is set in DownloadContacts
                 if (config.DownloadContacts)
                     await DownloadContacts(cancellationToken).ConfigureAwait(false);
@@ -384,6 +388,15 @@ namespace AccountDownloaderLibrary
             await recordProcessing.Completion.ConfigureAwait(false);
 
             SetProgressMessage($"Downloaded {count} records.");
+        }
+
+        public async Task DownloadUserMetadata(CancellationToken cancellationToken)
+        {
+            Status.Phase = "User Metadata";
+            SetProgressMessage("Downloading user metadata");
+
+            var userMetadata = source.GetUserMetadata();
+            await target.StoreUserMetadata(userMetadata);
         }
 
         public async Task DownloadContacts(CancellationToken cancellationToken)
