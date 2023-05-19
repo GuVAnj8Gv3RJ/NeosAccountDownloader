@@ -62,7 +62,7 @@
     <value>バージョン情報</value>
   </data>
   <data name="AppName" xml:space="preserve">
-    <value>ネオスアカウントダウンローダー！</value>
+    <value>Neosアカウントダウンローダー！</value>
   </data>
   <data name="AreYouSure" xml:space="preserve">
     <value>よろしいですか?</value>
@@ -77,13 +77,13 @@
     <value>クラウド変数の定義</value>
   </data>
   <data name="CloudVariableValues" xml:space="preserve">
-    <value>クラウド変数値！</value>
+    <value>クラウド変数の値</value>
   </data>
   <data name="CompleteQuestion" xml:space="preserve">
-    <value>ダウンロードが完了しました。別のダウンロードを開始しますか？</value>
+    <value>ダウンロードが完了しました。別のものをダウンロードしますか？</value>
   </data>
   <data name="Contacts" xml:space="preserve">
-    <value>連絡先</value>
+    <value>フレンド</value>
   </data>
   <data name="Continue" xml:space="preserve">
     <value>続行</value>
@@ -92,10 +92,10 @@
     <value>ダウンロード中</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>#エラー</value>
+    <value>エラー</value>
   </data>
   <data name="Errors.BlankPassword" xml:space="preserve">
-    <value>パスワードを空白にすることはできません。</value>
+    <value>パスワードは空白にできません。</value>
   </data>
   <data name="Errors.BlankUsername" xml:space="preserve">
     <value>ユーザー名は空白にできません。</value>
@@ -122,13 +122,13 @@
     <value>不明なエラー</value>
   </data>
   <data name="GetStarted" xml:space="preserve">
-    <value>はじめに</value>
+    <value>はじめる</value>
   </data>
   <data name="GettingStartedDescription" xml:space="preserve">
-    <value>このツールは、NEOSアカウントのコンテンツ全体をダウンロードします。アカウントに含まれる金額によっては、しばらく時間がかかる場合があります。このプロセスが開始されたら、中断しないようにしてください。それが完了したことを知らせるまで、それを実行したままにしておいてください。</value>
+    <value>このツールは、Neosアカウントのコンテンツ全体をダウンロードします。アカウントに含まれるデータ容量によっては、しばらく時間がかかる場合があります。ダウンロードが開始されたら、中断しないようにしてください。ダウンロードが完了するまで、アプリを実行したままにしておいてください。</value>
   </data>
   <data name="GroupsOnlyAdmin" xml:space="preserve">
-    <value>管理者であるグループのみをダウンロードできます。</value>
+    <value>あなたが管理者であるグループのみをダウンロードできます。</value>
   </data>
   <data name="GroupsQuestion" xml:space="preserve">
     <value>どのグループのコンテンツをダウンロードしますか？</value>
@@ -140,7 +140,7 @@
     <value>情報</value>
   </data>
   <data name="InventoryWorlds" xml:space="preserve">
-    <value>インベントリと世界！</value>
+    <value>インベントリとワールド</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>言語:</value>
@@ -149,7 +149,7 @@
     <value>ログイン</value>
   </data>
   <data name="LoginPrompt" xml:space="preserve">
-    <value>ログインして、アカウントにアクセスしてください！</value>
+    <value>ログインしてください。</value>
   </data>
   <data name="MessageHistory" xml:space="preserve">
     <value>メッセージの履歴</value>
@@ -164,13 +164,13 @@
     <value>OK</value>
   </data>
   <data name="OpenFolder_Failed" xml:space="preserve">
-    <value>フォルダを開けませんでした。!</value>
+    <value>フォルダを開けませんでした。</value>
   </data>
   <data name="OpenFolder_UnsupportedPlatform" xml:space="preserve">
     <value>このプラットフォームでは、フォルダを開くことはサポートされていません。次のフォルダに手動で移動できます: {0}</value>
   </data>
   <data name="OpenLogFolder" xml:space="preserve">
-    <value>ログフォルダを開いて…</value>
+    <value>ログフォルダを開く</value>
   </data>
   <data name="OTPPrompt" xml:space="preserve">
     <value>認証アプリからワンタイムパスワードを入力してください。</value>
@@ -182,16 +182,16 @@
     <value>パスワード</value>
   </data>
   <data name="SelectFolder" xml:space="preserve">
-    <value>フォルダーの選択</value>
+    <value>フォルダー選択</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>設定</value>
   </data>
   <data name="StartDownload" xml:space="preserve">
-    <value>ダウンロードの開始</value>
+    <value>ダウンロード開始</value>
   </data>
   <data name="StorageRequired" xml:space="preserve">
-    <value>ダウンロードには少なくとも{0}のファイル容量が必要です。</value>
+    <value>ダウンロードには少なくとも{0}の空き容量が必要です。</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>ユーザー名:</value>
