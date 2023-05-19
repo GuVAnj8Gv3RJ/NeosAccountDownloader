@@ -4,7 +4,6 @@ on:
   workflow_call
 
 jobs:
-# The IFs fail here for some reason, I don't know why. This means we re-cache the dlls unecessarily
   cache-dlls:
     runs-on: windows-latest
     steps:
@@ -19,17 +18,17 @@ jobs:
           key: neos-dlls
           enableCrossOsArchive: true
       - name: Download Neos
-        if: steps.cache-neos-dlls.cache-hit != 'true'
+        if: steps.cache-neos-dlls.outputs.cache-hit != 'true'
         shell: pwsh
         run: Invoke-WebRequest -Uri "https://assets.neos.com/install/Pro/Data/2022.1.28.1310_SSL_FIX.7z" -OutFile Neos.7z
       - name: Extract Neos
-        if: steps.cache-neos-dlls.cache-hit != 'true'
+        if: steps.cache-neos-dlls.outputs.cache-hit != 'true'
         shell: cmd
         run: |
           7z x -y Neos.7z -oNeos
           del Neos.7z
       - name: Relocate DLLS
-        if: steps.cache-neos-dlls.cache-hit != 'true'
+        if: steps.cache-neos-dlls.outputs.cache-hit != 'true'
         shell: cmd
         run: |
           mkdir ExternalLibraries
@@ -37,7 +36,7 @@ jobs:
           mv Neos/Neos_Data/Managed/CloudX.Shared.dll ExternalLibraries/
           mv Neos/Neos_Data/Managed/CodeX.dll ExternalLibraries/
       - name: Save Needed DLLs to Cache
-        if: steps.cache-neos-dlls.cache-hit != 'true'
+        if: steps.cache-neos-dlls.outputs.cache-hit != 'true'
         id: save-cache
         uses: actions/cache/save@v3
         with:
