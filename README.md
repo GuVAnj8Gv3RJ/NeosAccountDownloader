@@ -4,6 +4,9 @@ A small tool/utility to download your Neos Account contents to your local comput
 
 # FAQ
 
+## How do I download this?
+Use the [releases tab](https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/releases), grab the latest.
+
 ## Why does this exist?
 Backing up Neos content given the current circumstances seemed wise.
 
