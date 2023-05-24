@@ -65,12 +65,8 @@ namespace AccountDownloader.Services
 
                 if (group.IsOK)
                 {
-                    // Only if the user is an admin of the group!
-                    if (group.Entity.AdminUserId == Interface.CurrentUser.Id)
-                    {
-                        var groupRecord = new GroupRecord(group.Entity.GroupId, group.Entity.Name, StorageService.GetGroupStorage(group.Entity.GroupId));
-                        groups.Add(groupRecord);
-                    }
+                    var groupRecord = new GroupRecord(group.Entity.GroupId, group.Entity.Name, StorageService.GetGroupStorage(group.Entity.GroupId));
+                    groups.Add(groupRecord);
                 }
             }
 

@@ -34,6 +34,5 @@
 			    </ItemsRepeater.ItemTemplate>
 		    </ItemsRepeater>
         </ScrollViewer>
-		<TextBlock FontStyle="Italic" Text="{x:Static p:Resources.GroupsOnlyAdmin}" FontSize="13"></TextBlock>
 	</StackPanel>
 </UserControl>
