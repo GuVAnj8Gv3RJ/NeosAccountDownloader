@@ -96,6 +96,7 @@ namespace AccountDownloader.Services
     {
         public string Name { get; }
         public string Id { get; }
+        public bool IsAdmin { get; }
 
         public IStorageRecord Storage { get; }
 

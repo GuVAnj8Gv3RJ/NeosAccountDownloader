@@ -127,6 +127,9 @@
   <data name="GettingStartedDescription" xml:space="preserve">
     <value>このツールはNeosアカウントのコンテンツ全体をダウンロードします。アカウントに含まれるデータ容量によっては、しばらく時間がかかる場合があります。ダウンロードが開始されたら、中断しないようにしてください。ダウンロードが完了するまで、アプリを実行したままにしておいてください。</value>
   </data>
+  <data name="GroupsAdminIndicator" xml:space="preserve">
+    <value>（管理者）</value>
+  </data>
   <data name="GroupsQuestion" xml:space="preserve">
     <value>どのグループのコンテンツをダウンロードしますか？</value>
   </data>

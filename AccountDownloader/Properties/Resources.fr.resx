@@ -186,6 +186,9 @@
   <data name="GettingStartedDescription" xml:space="preserve">
     <value>Cet outils télécharge le contenu de votre compte Neos. Tout dépendant du nombre de contenu, cela peut prendre du temps. Veuillez ne pas interrompre le processus une foit celui-ci initié. Vous serez informé quand il sera terminé.</value>
   </data>
+  <data name="GroupsAdminIndicator" xml:space="preserve">
+    <value> (administrateur)</value>
+  </data>
   <data name="GroupsQuestion" xml:space="preserve">
     <value>Sélectionez le contenu du groupe à télécharger?</value>
   </data>
