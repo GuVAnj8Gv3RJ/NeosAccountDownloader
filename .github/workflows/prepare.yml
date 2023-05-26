@@ -20,7 +20,7 @@ jobs:
       - name: Download Neos
         if: steps.cache-neos-dlls.outputs.cache-hit != 'true'
         shell: pwsh
-        run: Invoke-WebRequest -Uri "https://assets.neos.com/install/Pro/Data/2022.1.28.1310_SSL_FIX.7z" -OutFile Neos.7z
+        run: Invoke-WebRequest -Uri "https://assets.neos.com/install/Pro/Data/2022.1.28.1310_YTDLP.7z" -OutFile Neos.7z
       - name: Extract Neos
         if: steps.cache-neos-dlls.outputs.cache-hit != 'true'
         shell: cmd
