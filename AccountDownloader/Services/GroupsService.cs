@@ -14,6 +14,8 @@ namespace AccountDownloader.Services
 
         public string Id { get; }
 
+        public bool IsAdmin { get; }
+
         [Reactive]
         public bool ShouldDownload { get; set; } = false;
 
@@ -22,10 +24,11 @@ namespace AccountDownloader.Services
 
         public long RequiredBytes => Storage.UsedBytes; 
 
-        public GroupRecord(string id, string name, IStorageRecord storage)
+        public GroupRecord(string id, string name, bool isAdmin, IStorageRecord storage)
         {
             Name = name;
             Id = id;
+            IsAdmin = isAdmin;
             Storage = storage;
         }
     }
@@ -65,12 +68,8 @@ namespace AccountDownloader.Services
 
                 if (group.IsOK)
                 {
-                    // Only if the user is an admin of the group!
-                    if (group.Entity.AdminUserId == Interface.CurrentUser.Id)
-                    {
-                        var groupRecord = new GroupRecord(group.Entity.GroupId, group.Entity.Name, StorageService.GetGroupStorage(group.Entity.GroupId));
-                        groups.Add(groupRecord);
-                    }
+                    var groupRecord = new GroupRecord(group.Entity.GroupId, group.Entity.Name, group.Entity.AdminUserId == Interface.CurrentUser.Id, StorageService.GetGroupStorage(group.Entity.GroupId));
+                    groups.Add(groupRecord);
                 }
             }
 

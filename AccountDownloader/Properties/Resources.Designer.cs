@@ -333,9 +333,9 @@ namespace AccountDownloader.Properties {
         /// <summary>
         ///   Looks up a localized string similar to You can only download groups you are an admin of..
         /// </summary>
-        public static string GroupsOnlyAdmin {
+        public static string GroupsAdminIndicator {
             get {
-                return ResourceManager.GetString("GroupsOnlyAdmin", resourceCulture);
+                return ResourceManager.GetString("GroupsAdminIndicator", resourceCulture);
             }
         }
         

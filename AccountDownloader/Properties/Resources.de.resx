@@ -127,8 +127,8 @@
   <data name="GettingStartedDescription" xml:space="preserve">
     <value>Dieses Tool lädt den gesamten Inhalt deines Neos-Kontos herunter. Je nachdem, wie viel dein Konto enthält, kann dies eine Weile dauern. Bitte versuche, diesen Vorgang nicht zu unterbrechen, sobald er gestartet wurde. Lass es einfach laufen, bis es dich informiert, dass es abgeschlossen ist.</value>
   </data>
-  <data name="GroupsOnlyAdmin" xml:space="preserve">
-    <value>Du kannst nur Gruppen herunterladen, von denen du ein Administrator bist.</value>
+  <data name="GroupsAdminIndicator" xml:space="preserve">
+    <value> (Administrator)</value>
   </data>
   <data name="GroupsQuestion" xml:space="preserve">
     <value>Welchen Gruppeninhalt möchtest du herunterladen?</value>

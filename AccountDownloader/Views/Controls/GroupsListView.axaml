@@ -18,22 +18,24 @@
                     <UniformGridLayout Orientation="Horizontal"
                                        MinColumnSpacing="10"
                                        MinRowSpacing="10"
-                                       MinItemHeight="20"
+                                       MinItemHeight="30"
                                        MinItemWidth="150"
                                        ItemsStretch="Uniform"/>
                 </ItemsRepeater.Layout>
 			    <ItemsRepeater.ItemTemplate>
 				    <DataTemplate>
 					    <CheckBox IsChecked="{Binding ShouldDownload}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}"/>
-                                <TextBlock Text="{Binding Storage.FormattedUsed, StringFormat=' ({0})'}"/>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Name}"/>
+                                    <TextBlock Text="{x:Static p:Resources.GroupsAdminIndicator}" IsVisible="{Binding IsAdmin}"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding Storage.FormattedUsed, StringFormat='({0})'}"/>
                             </StackPanel>
                         </CheckBox>
 				    </DataTemplate>
 			    </ItemsRepeater.ItemTemplate>
 		    </ItemsRepeater>
         </ScrollViewer>
-		<TextBlock FontStyle="Italic" Text="{x:Static p:Resources.GroupsOnlyAdmin}" FontSize="13"></TextBlock>
 	</StackPanel>
 </UserControl>

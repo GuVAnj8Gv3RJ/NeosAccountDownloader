@@ -103,10 +103,6 @@ namespace AccountDownloaderLibrary
             {
                 var group = await Cloud.GetGroup(membership.GroupId).ConfigureAwait(false);
 
-                // ignore groups that the user isn't admin of
-                if (group.Entity.AdminUserId != Cloud.CurrentUser.Id)
-                    continue;
-
                 var storage = await Cloud.GetStorage(membership.GroupId).ConfigureAwait(false);
 
                 yield return new GroupData(group.Entity, storage.Entity);
