@@ -1,3 +1,5 @@
+$ProgressPreference = 'SilentlyContinue'
+
 Invoke-WebRequest -Uri "https://assets.neos.com/install/Pro/Data/2022.1.28.1310_SSL_FIX.7z" -OutFile Neos.7z
 7z x -y Neos.7z -oNeos
 del Neos.7z
