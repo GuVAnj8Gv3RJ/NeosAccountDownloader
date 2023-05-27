@@ -59,7 +59,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>Über</value>
+    <value>About</value>
   </data>
   <data name="AppName" xml:space="preserve">
     <value>Neos Konto Downloader</value>
@@ -101,13 +101,13 @@
     <value>Der Benutzername darf nicht leer sein.</value>
   </data>
   <data name="Errors.CannotSelectFolder" xml:space="preserve">
-    <value>Es ist nicht möglich, Ordner auszuwählen. Bitte gib einen manuell ein.</value>
+    <value>Es ist nicht möglich, die Ordner auszuwählen. Bitte gib einen manuell ein.</value>
   </data>
   <data name="Errors.DownloadCancelled" xml:space="preserve">
     <value>Konto-Download abgebrochen!</value>
   </data>
   <data name="Errors.DownloadFailure" xml:space="preserve">
-    <value>Der Download ist aufgrund von {0} fehlgeschlagen. Bitte schau in die Protokolldateien für weitere Details und/oder versuche es erneut.</value>
+    <value>Der Download ist aufgrund von {0} fehlgeschlagen. Bitte schau in die Logdateien für weitere Details und/oder versuche es erneut.</value>
   </data>
   <data name="Errors.NoFolderSelected" xml:space="preserve">
     <value>Kein Ordner ausgewählt.</value>
@@ -128,16 +128,22 @@
     <value>Dieses Tool lädt den gesamten Inhalt deines Neos-Kontos herunter. Je nachdem, wie viel dein Konto enthält, kann dies eine Weile dauern. Bitte versuche, diesen Vorgang nicht zu unterbrechen, sobald er gestartet wurde. Lass es einfach laufen, bis es dich informiert, dass es abgeschlossen ist.</value>
   </data>
   <data name="GroupsAdminIndicator" xml:space="preserve">
-    <value> (Administrator)</value>
+    <value> (Admin)</value>
   </data>
   <data name="GroupsQuestion" xml:space="preserve">
     <value>Welchen Gruppeninhalt möchtest du herunterladen?</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Hilfe</value>
   </data>
   <data name="Information" xml:space="preserve">
     <value>Information</value>
   </data>
   <data name="InventoryWorlds" xml:space="preserve">
     <value>Inventar &amp; Welten</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Sprache</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Einloggen</value>
@@ -164,7 +170,7 @@
     <value>Das Öffnen eines Ordners wird auf dieser Plattform nicht unterstützt. Du kannst manuell zu dem Ordner navigieren unter: {0}</value>
   </data>
   <data name="OpenLogFolder" xml:space="preserve">
-    <value>Open Log Folder</value>
+    <value>Log-Ordner öffnen</value>
   </data>
   <data name="OTPPrompt" xml:space="preserve">
     <value>Bitte gib das Einmalpasswort aus deiner Authenticator-App ein.</value>
@@ -175,14 +181,20 @@
   <data name="Password" xml:space="preserve">
     <value>Passwort</value>
   </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Wird bearbeitet</value>
+  </data>
   <data name="SelectFolder" xml:space="preserve">
     <value>Ordner auswählen</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Einstellungen</value>
   </data>
   <data name="StartDownload" xml:space="preserve">
     <value>Download starten</value>
   </data>
   <data name="StorageRequired" xml:space="preserve">
-    <value>Download benötigt mindestens {0} an Speicherplatz.</value>
+    <value>Dein Download benötigt mindestens {0} an Speicherplatz.</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Benutzername</value>
@@ -194,18 +206,48 @@
     <value>Was möchtest du herunterladen?</value>
   </data>
   <data name="WhereDownload" xml:space="preserve">
-    <value>Wo möchtest du es herunterladen?</value>
+    <value>Wohin möchtest du es herunterladen?</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Ja</value>
   </data>
-  <data name="Help" xml:space="preserve">
-    <value>Hilfe</value>
+  <data name="DownloadRate" xml:space="preserve">
+    <value>Rate (Items/Welten pro Minute)</value>
   </data>
-  <data name="Language" xml:space="preserve">
-    <value>Sprache</value>
+  <data name="DownloadComplete" xml:space="preserve">
+    <value>Download Abgeschlossen!</value>
   </data>
-  <data name="Settings" xml:space="preserve">
-    <value>Einstellungen</value>
+  <data name="DownloadReport" xml:space="preserve">
+    <value>Download-Bericht</value>
+  </data>
+  <data name="DownloadCompleteDescription" xml:space="preserve">
+    <value>Dein Download wurde abgeschlossen. Im Folgenden findest du einen Bericht, der einige Statistiken deines Downloads detailiert. Eine Kopie dieses Berichts wurde auch in den Logdateien gespeichert.</value>
+  </data>
+  <data name="DownloadCompleteRecordFailureDescription" xml:space="preserve">
+    <value>Dein Download konnte ein paar Aufzeichnungen nicht herunterladen, Details findest du weiter unten oder in den Logdateien.</value>
+  </data>
+  <data name="UserRecords" xml:space="preserve">
+    <value>Benutzer-Aufzeichnungen</value>
+  </data>
+  <data name="WouldYouLikeToStartAnotherDownload" xml:space="preserve">
+    <value>Möchtest du einen weiteren Download starten?</value>
+  </data>
+  <data name="FailureReason" xml:space="preserve">
+    <value>Fehlschlagsgrund</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Besitzer</value>
+  </data>
+  <data name="RecordId" xml:space="preserve">
+    <value>Aufzeichnungs-ID</value>
+  </data>
+  <data name="RecordPath" xml:space="preserve">
+    <value>Aufzeichnungspfad</value>
+  </data>
+  <data name="Assets" xml:space="preserve">
+    <value>Assets</value>
   </data>
 </root>
