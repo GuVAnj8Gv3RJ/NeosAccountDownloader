@@ -39,7 +39,8 @@ namespace AccountDownloader.Services
             "ja",
             "ko",
             "fr",
-            "es"
+            "es",
+            "ru"
         };
         public static HashSet<string> MachineTranslatedCodes = new() { "ja", "ko" };
 
