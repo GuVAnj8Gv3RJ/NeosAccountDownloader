@@ -61,5 +61,10 @@
         /// Optional list of groups to download. If empty, all of them will be downloaded.
         /// </summary>
         public HashSet<string> GroupsToDownload { get; set; }
+
+        /// <summary>
+        /// Parallelism for download jobs
+        /// </summary>
+        public int MaxDegreeOfParallelism = 8;
     }
 }
