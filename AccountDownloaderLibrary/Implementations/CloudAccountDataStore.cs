@@ -24,6 +24,7 @@ namespace AccountDownloaderLibrary
         private CancellationToken CancelToken;
 
         private const string DB_PREFIX = "neosdb:///";
+        private HttpClient WebClient = new HttpClient();
 
         private readonly AccountDownloadConfig Config;
 
@@ -261,9 +262,8 @@ namespace AccountDownloaderLibrary
         }
 
         public virtual async Task DownloadAsset(string hash, string targetPath)
-        {
-            using var webClient = new HttpClient();
-            await webClient.DownloadFileTaskAsync(
+        {            
+            await WebClient.DownloadFileTaskAsync(
                 CloudXInterface.NeosDBToHttp(new Uri($"{DB_PREFIX}{hash}"), NeosDB_Endpoint.Default), targetPath);
         }
 
