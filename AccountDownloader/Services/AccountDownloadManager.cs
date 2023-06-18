@@ -72,10 +72,12 @@ public class AccountDownloadManager : IAccountDownloader
         this.Logger.LogInformation("With config {config}", config);
         CancelTokenSource = new CancellationTokenSource();
 
+        var libraryConfig = CreateConfigFromIAccountDownloadConfig(config);
+
         // We do not include the user's username here as CloudX takes care of this.
         // It'll store items owned by a user in a folder based on their User ID.
-        var local = new LocalAccountDataStore(Interface.CurrentUser.Id, config.FilePath, config.FilePath + "/Assets");
-        Controller = new AccountDownloadController(new CloudAccountDataStore(Interface), local, CreateConfigFromIAccountDownloadConfig(config));
+        var local = new LocalAccountDataStore(Interface.CurrentUser.Id, config.FilePath, config.FilePath + "/Assets", libraryConfig);
+        Controller = new AccountDownloadController(new CloudAccountDataStore(Interface, libraryConfig), local, libraryConfig);
         Controller.ProgressMessagePosted += SurfaceProgressMessage;
         StatsTimer.Start();
 

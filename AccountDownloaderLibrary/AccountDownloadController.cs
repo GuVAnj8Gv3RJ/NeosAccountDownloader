@@ -7,9 +7,9 @@ namespace AccountDownloaderLibrary
 {
     public class AccountDownloadController
     {
-        readonly IAccountDataGatherer source;
-        readonly IAccountDataStore target;
-        readonly AccountDownloadConfig config;
+        readonly IAccountDataGatherer Source;
+        readonly IAccountDataStore Target;
+        readonly AccountDownloadConfig Config;
 
         #region PROGRESS REPORT
 
@@ -23,13 +23,13 @@ namespace AccountDownloaderLibrary
 
         public AccountDownloadController(IAccountDataGatherer source, IAccountDataStore target, AccountDownloadConfig config)
         {
-            this.source = source;
-            this.target = target;
+            this.Source = source;
+            this.Target = target;
 
-            this.config = config;
+            this.Config = config;
 
-            this.source.ProgressMessage += str => ProgressMessagePosted?.Invoke(str);
-            this.target.ProgressMessage += str => ProgressMessagePosted?.Invoke(str);
+            this.Source.ProgressMessage += str => ProgressMessagePosted?.Invoke(str);
+            this.Target.ProgressMessage += str => ProgressMessagePosted?.Invoke(str);
         }
 
         void SetProgressMessage(string message)
@@ -45,16 +45,16 @@ namespace AccountDownloaderLibrary
 #pragma warning restore IDE0060 // Remove unused parameter
         bool ProcessGroup(Group group)
         {
-            if (config.GroupsToDownload == null || config.GroupsToDownload.Count == 0)
+            if (Config.GroupsToDownload == null || Config.GroupsToDownload.Count == 0)
                 return true;
 
-            return config.GroupsToDownload.Contains(group.GroupId);
+            return Config.GroupsToDownload.Contains(group.GroupId);
         }
 
         private async Task HandleCancel()
         {
-            await source.Cancel();
-            await target.Cancel();
+            await Source.Cancel();
+            await Target.Cancel();
         }
 
         public async Task<IDownloadResult> Download(CancellationToken cancellationToken)
@@ -67,19 +67,19 @@ namespace AccountDownloaderLibrary
                 Status.StartedOn = DateTimeOffset.UtcNow;
 
                 SetProgressMessage("Preparing data source");
-                await source.Prepare(cancellationToken).ConfigureAwait(false);
+                await Source.Prepare(cancellationToken).ConfigureAwait(false);
 
                 SetProgressMessage("Preparing data target");
-                await target.Prepare(cancellationToken).ConfigureAwait(false);
+                await Target.Prepare(cancellationToken).ConfigureAwait(false);
 
-                Status.CurrentlyDownloadingName = source.Username;
+                Status.CurrentlyDownloadingName = Source.Username;
 
                 // Status.Phase for this step is set in the method
-                if (config.DownloadUserMetadata)
+                if (Config.DownloadUserMetadata)
                     await DownloadUserMetadata(cancellationToken).ConfigureAwait(false);
 
                 // Status.Phase for this step is set in DownloadContacts
-                if (config.DownloadContacts)
+                if (Config.DownloadContacts)
                     await DownloadContacts(cancellationToken).ConfigureAwait(false);
 
                 if (cancellationToken.IsCancellationRequested)
@@ -89,9 +89,9 @@ namespace AccountDownloaderLibrary
                 }
 
                 // Status.Phase for this segment is set in the method
-                await DownloadOwned(source.UserId,
+                await DownloadOwned(Source.UserId,
                     Status.UserRecordsStatus, Status.UserVariablesStatus,
-                    config.RecordsToDownload, config.VariablesToDownload,
+                    Config.RecordsToDownload, Config.VariablesToDownload,
                     cancellationToken).ConfigureAwait(false);
 
                 if (cancellationToken.IsCancellationRequested)
@@ -101,9 +101,9 @@ namespace AccountDownloaderLibrary
                 }
 
                 // download all stuff from the groups the user owns
-                if (config.DownloadGroups)
+                if (Config.DownloadGroups)
                 {
-                    await foreach (var groupData in source.GetGroups())
+                    await foreach (var groupData in Source.GetGroups())
                     {
                         Status.Phase = "Groups";
                         if (cancellationToken.IsCancellationRequested)
@@ -111,7 +111,7 @@ namespace AccountDownloaderLibrary
 
                         var group = groupData.group;
 
-                        Status.TotalGroupCount = source.FetchedGroupCount;
+                        Status.TotalGroupCount = Source.FetchedGroupCount;
 
                         if (!ProcessGroup(group))
                             continue;
@@ -122,7 +122,7 @@ namespace AccountDownloaderLibrary
 
                         SetProgressMessage($"Downloading group {group.Name} ({group.GroupId})");
 
-                        await target.StoreGroup(group, groupData.storage).ConfigureAwait(false);
+                        await Target.StoreGroup(group, groupData.storage).ConfigureAwait(false);
 
                         if (cancellationToken.IsCancellationRequested)
                             return DownloadResult.Cancelled;
@@ -156,7 +156,7 @@ namespace AccountDownloaderLibrary
                 // So we basically just say "uh we're waiting for stuff to finish".
 
                 Status.Phase = "Waiting for queued jobs to finish";
-                await target.Complete().ConfigureAwait(false);
+                await Target.Complete().ConfigureAwait(false);
 
                 SetProgressMessage("Download complete");
 
@@ -190,7 +190,7 @@ namespace AccountDownloaderLibrary
             List<string> recordsToDownload, List<string> variablesToDownload,
             CancellationToken cancellationToken)
         {
-            if (config.DownloadCloudVariableDefinitions)
+            if (Config.DownloadCloudVariableDefinitions)
             {
                 Status.Phase = "Cloud Variable Definitions";
                 await DownloadVariableDefinitions(ownerId, variablesStatus, cancellationToken).ConfigureAwait(false);
@@ -200,7 +200,7 @@ namespace AccountDownloaderLibrary
                 return;
 
             Status.Phase = "Cloud Variables";
-            if (config.DownloadCloudVariables)
+            if (Config.DownloadCloudVariables)
             {
                 if (variablesToDownload?.Count > 0)
                 {
@@ -208,13 +208,13 @@ namespace AccountDownloaderLibrary
 
                     foreach (var path in variablesToDownload)
                     {
-                        var variable = await source.GetVariable(ownerId, path).ConfigureAwait(false);
+                        var variable = await Source.GetVariable(ownerId, path).ConfigureAwait(false);
 
                         if (variable != null)
                             variables.Add(variable);
                     }
 
-                    await target.StoreVariables(variables).ConfigureAwait(false);
+                    await Target.StoreVariables(variables).ConfigureAwait(false);
 
                     variablesStatus.DownloadedVariableCount = variables.Count;
                 }
@@ -226,8 +226,9 @@ namespace AccountDownloaderLibrary
                 return;
 
             Status.Phase = "Queueing Record Downloads";
-            if (config.DownloadUserRecords || IdUtil.GetOwnerType(ownerId) != OwnerType.User)
+            if (Config.DownloadUserRecords || IdUtil.GetOwnerType(ownerId) != OwnerType.User)
             {
+                // If specific records are specied
                 if (recordsToDownload?.Count > 0)
                 {
                     var callbacks = SetupCallbacks(recordsStatus);
@@ -236,13 +237,14 @@ namespace AccountDownloaderLibrary
 
                     foreach (var recordId in recordsToDownload)
                     {
-                        var record = await source.GetRecord(ownerId, recordId).ConfigureAwait(false);
+                        SetProgressMessage($"Queueing: {recordId}");
+                        var record = await Source.GetRecord(ownerId, recordId).ConfigureAwait(false);
 
                         if (record != null)
                         {
                             Status.CurrentlyDownloadingItem = $"Record {record.Name} ({record.CombinedRecordId})";
 
-                            var error = await target.StoreRecord(record, source, callbacks, config.ForceOverwrite).ConfigureAwait(false);
+                            var error = await Target.StoreRecord(record, Source, callbacks, Config.ForceOverwrite).ConfigureAwait(false);
 
                             if (error != null)
                                 HandleRecordError(recordsStatus, record, error);
@@ -255,7 +257,7 @@ namespace AccountDownloaderLibrary
                     }
                 }
                 else
-                    await DownloadRecords(ownerId, recordsStatus, config.OnlyNewRecords, cancellationToken).ConfigureAwait(false);
+                    await DownloadRecords(ownerId, recordsStatus, Config.OnlyNewRecords, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -263,12 +265,12 @@ namespace AccountDownloaderLibrary
         {
             SetProgressMessage($"Downloading variables for {ownerId}...");
 
-            var variables = await source.GetVariables(ownerId).ConfigureAwait(false);
+            var variables = await Source.GetVariables(ownerId).ConfigureAwait(false);
 
             if (cancellationToken.IsCancellationRequested)
                 return;
 
-            await target.StoreVariables(variables).ConfigureAwait(false);
+            await Target.StoreVariables(variables).ConfigureAwait(false);
 
             status.DownloadedVariableCount = variables.Count;
 
@@ -279,8 +281,8 @@ namespace AccountDownloaderLibrary
         {
             SetProgressMessage($"Downloading variable definitions for {ownerId}...");
 
-            var definitions = await source.GetVariableDefinitions(ownerId).ConfigureAwait(false);
-            await target.StoreDefinitions(definitions).ConfigureAwait(false);
+            var definitions = await Source.GetVariableDefinitions(ownerId).ConfigureAwait(false);
+            await Target.StoreDefinitions(definitions).ConfigureAwait(false);
 
             status.DownloadedVariableDefinitionCount = definitions.Count;
 
@@ -319,7 +321,7 @@ namespace AccountDownloaderLibrary
 
             if (onlyNew)
             {
-                latest = await target.GetLatestRecordTime(ownerId).ConfigureAwait(false);
+                latest = await Target.GetLatestRecordTime(ownerId).ConfigureAwait(false);
 
                 if (latest != null)
                 {
@@ -345,7 +347,7 @@ namespace AccountDownloaderLibrary
                 {
                     Status.CurrentlyDownloadingItem = $"Record {r.Name} ({r.CombinedRecordId})";
 
-                    var error = await target.StoreRecord(r, source, SetupCallbacks(status), config.ForceOverwrite).ConfigureAwait(false);
+                    var error = await Target.StoreRecord(r, Source, SetupCallbacks(status), Config.ForceOverwrite).ConfigureAwait(false);
 
                     if (error != null)
                     {
@@ -363,16 +365,17 @@ namespace AccountDownloaderLibrary
                 },
                 new ExecutionDataflowBlockOptions()
                 {
-                    MaxDegreeOfParallelism = 8,
+                    MaxDegreeOfParallelism = Config.MaxDegreeOfParallelism,
                     EnsureOrdered = false
                 });
 
-            await foreach (var record in source.GetRecords(ownerId, latest).ConfigureAwait(false))
+            await foreach (var record in Source.GetRecords(ownerId, latest).ConfigureAwait(false))
             {
+                SetProgressMessage($"Queueing: {record.CombinedRecordId}");
                 if (cancellationToken.IsCancellationRequested)
                     return;
 
-                status.TotalRecordCount = source.FetchedRecordCount(ownerId);
+                status.TotalRecordCount = Source.FetchedRecordCount(ownerId);
 
                 if (!ProcessRecord(record))
                     continue;
@@ -395,8 +398,8 @@ namespace AccountDownloaderLibrary
             Status.Phase = "User Metadata";
             SetProgressMessage("Downloading user metadata");
 
-            var userMetadata = source.GetUserMetadata();
-            await target.StoreUserMetadata(userMetadata);
+            var userMetadata = Source.GetUserMetadata();
+            await Target.StoreUserMetadata(userMetadata);
         }
 
         public async Task DownloadContacts(CancellationToken cancellationToken)
@@ -404,7 +407,7 @@ namespace AccountDownloaderLibrary
             Status.Phase = "Contacts";
             SetProgressMessage("Downloading contacts");
 
-            var contacts = await source.GetContacts().ConfigureAwait(false);
+            var contacts = await Source.GetContacts().ConfigureAwait(false);
 
             Status.TotalContactCount = contacts.Count;
 
@@ -422,7 +425,7 @@ namespace AccountDownloaderLibrary
 
                 var originalContactId = contact.FriendUserId;
 
-                await target.StoreContact(contact);
+                await Target.StoreContact(contact);
                 SetProgressMessage($"Downloaded {contact.FriendUsername} ({contact.FriendUserId})");
 
                 contactIdMapping.Add(contact.FriendUserId, originalContactId);
@@ -430,7 +433,7 @@ namespace AccountDownloaderLibrary
 
 
             // Download messages
-            if (config.DownloadMessageHistory)
+            if (Config.DownloadMessageHistory)
             {
                 Status.Phase = "Message History";
                 foreach (var contact in contacts)
@@ -451,7 +454,7 @@ namespace AccountDownloaderLibrary
 
         public async Task DownloadMessages(Friend contact, string contactId, CancellationToken cancellationToken)
         {
-            var latest = await target.GetLatestMessageTime(contact.FriendUserId).ConfigureAwait(false);
+            var latest = await Target.GetLatestMessageTime(contact.FriendUserId).ConfigureAwait(false);
 
             string latestText = latest == CloudAccountDataStore.EARLIEST_API_TIME ? "the beginning" : latest.ToString();
 
@@ -462,7 +465,7 @@ namespace AccountDownloaderLibrary
 
             int count = 0;
 
-            await foreach (var message in source.GetMessages(contactId, latest).ConfigureAwait(false))
+            await foreach (var message in Source.GetMessages(contactId, latest).ConfigureAwait(false))
             {
                 if (cancellationToken.IsCancellationRequested)
                     return;
@@ -471,7 +474,7 @@ namespace AccountDownloaderLibrary
 
                 message.SetOtherUserId(contact.FriendUserId);
 
-                await target.StoreMessage(message).ConfigureAwait(false);
+                await Target.StoreMessage(message).ConfigureAwait(false);
 
                 Status.DownloadedMessageCount++;
                 count++;
@@ -487,7 +490,7 @@ namespace AccountDownloaderLibrary
         {
             SetProgressMessage($"Downloading members for {group.GroupId}");
 
-            var memberData = await source.GetMembers(group.GroupId).ConfigureAwait(false);
+            var memberData = await Source.GetMembers(group.GroupId).ConfigureAwait(false);
 
             foreach (var data in memberData)
             {
@@ -495,7 +498,7 @@ namespace AccountDownloaderLibrary
                     return;
 
                 Status.CurrentlyDownloadingItem = $"Member {data.member.UserId} of {group.Name}";
-                await target.StoreMember(group, data.member, data.storage).ConfigureAwait(false);
+                await Target.StoreMember(group, data.member, data.storage).ConfigureAwait(false);
 
                 groupStatus.DownloadedMemberCount++;
             }

@@ -26,15 +26,18 @@ namespace AccountDownloaderLibrary
         private const string DB_PREFIX = "neosdb:///";
         private HttpClient WebClient = new HttpClient();
 
+        private readonly AccountDownloadConfig Config;
+
         public int FetchedRecordCount(string ownerId)
         {
             _fetchedRecords.TryGetValue(ownerId, out var count);
             return count;
         }
 
-        public CloudAccountDataStore(CloudXInterface cloud)
+        public CloudAccountDataStore(CloudXInterface cloud, AccountDownloadConfig config)
         {
             this.Cloud = cloud;
+            this.Config = config;
         }
 
         public virtual async Task Prepare(CancellationToken token)

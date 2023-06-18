@@ -13,16 +13,18 @@ namespace AccountDownloaderLibrary
         {
             public readonly string hash;
             public readonly IAccountDataGatherer source;
+            public readonly RecordStatusCallbacks callbacks;
 
-            public AssetJob(string hash, IAccountDataGatherer source)
+            public AssetJob(string hash, IAccountDataGatherer source, RecordStatusCallbacks re)
             {
                 this.hash = hash;
                 this.source = source;
+                this.callbacks = re;
             }
         }
 
-        ActionBlock<AssetJob> downloadProcessor;
-        readonly ConcurrentHashSet<string> scheduledAssets = new();
+        ActionBlock<AssetJob> DownloadProcessor;
+        readonly ConcurrentHashSet<string> ScheduledAssets = new();
 
         public string Name => "Local Data Store";
         public string UserId { get; private set; }
@@ -30,6 +32,7 @@ namespace AccountDownloaderLibrary
 
         public readonly string BasePath;
         public readonly string AssetsPath;
+        private readonly AccountDownloadConfig Config;
 
         public event Action<string> ProgressMessage;
 
@@ -47,11 +50,12 @@ namespace AccountDownloaderLibrary
             return count;
         }
 
-        public LocalAccountDataStore(string userId, string basePath, string assetsPath)
+        public LocalAccountDataStore(string userId, string basePath, string assetsPath, AccountDownloadConfig config)
         {
             UserId = userId;
             BasePath = basePath;
             AssetsPath = assetsPath;
+            Config = config;
         }
 
         public async Task Prepare(CancellationToken token) {
@@ -76,8 +80,8 @@ namespace AccountDownloaderLibrary
 
         public async Task Complete()
         {
-            downloadProcessor.Complete();
-            await downloadProcessor.Completion.ConfigureAwait(false);
+            DownloadProcessor.Complete();
+            await DownloadProcessor.Completion.ConfigureAwait(false);
 
             ReleaseLocks();
         }
@@ -86,7 +90,7 @@ namespace AccountDownloaderLibrary
         {
             Directory.CreateDirectory(AssetsPath);
 
-            downloadProcessor = new ActionBlock<AssetJob>(async job =>
+            DownloadProcessor = new ActionBlock<AssetJob>(async job =>
             {
                 var path = GetAssetPath(job.hash);
 
@@ -99,6 +103,8 @@ namespace AccountDownloaderLibrary
 
                     await job.source.DownloadAsset(job.hash, path).ConfigureAwait(false);
 
+                    job.callbacks.AssetUploaded();
+
                     ProgressMessage?.Invoke($"Finished download {job.hash}");
                 }
                 catch (Exception ex)
@@ -108,7 +114,7 @@ namespace AccountDownloaderLibrary
             }, new ExecutionDataflowBlockOptions()
             {
                 CancellationToken = token,
-                MaxDegreeOfParallelism = 8
+                MaxDegreeOfParallelism = Config.MaxDegreeOfParallelism,
             });
         }
 
@@ -241,7 +247,7 @@ namespace AccountDownloaderLibrary
 
             if (record.NeosDBManifest != null)
                 foreach (var asset in record.NeosDBManifest)
-                    ScheduleAsset(asset.Hash, source);
+                    ScheduleAsset(asset.Hash, source, statusCallbacks);
 
             return null;
         }
@@ -312,14 +318,20 @@ namespace AccountDownloaderLibrary
             return latest;
         }
 
-        void ScheduleAsset(string hash, IAccountDataGatherer store)
+        void ScheduleAsset(string hash, IAccountDataGatherer store, RecordStatusCallbacks recordStatusCallbacks)
         {
-            if (!scheduledAssets.Add(hash))
+            if (!ScheduledAssets.Add(hash))
                 return;
 
-            var job = new AssetJob(hash, store);
+            var job = new AssetJob(hash, store, recordStatusCallbacks);
 
-            downloadProcessor.Post(job);
+            // TODO: I forget where we were meant to get this info from.
+            var diff = new AssetDiff();
+            diff.Bytes = 0;
+
+            recordStatusCallbacks.AssetToUploadAdded(diff);
+
+            DownloadProcessor.Post(job);
         }
 
         public Task DownloadAsset(string hash, string targetPath)
@@ -356,7 +368,7 @@ namespace AccountDownloaderLibrary
         public Task Cancel()
         {
             ReleaseLocks();
-            downloadProcessor.Complete();
+            DownloadProcessor.Complete();
             return Task.CompletedTask;
         }
     }

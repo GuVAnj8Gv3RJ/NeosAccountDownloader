@@ -51,7 +51,6 @@
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
-        <!-- TODO: Assets is currently broken
         <TextBlock IsVisible="{Binding Config.InventoryWorlds}">
             <TextBlock.Text>
                 <MultiBinding StringFormat="{}{0}: {1} / {2}">
@@ -61,7 +60,6 @@
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
-        -->
         <TextBlock>
             <TextBlock.Text>
                 <MultiBinding StringFormat="{}{0}: {1}">
