@@ -107,7 +107,8 @@ namespace AccountDownloaderLibrary
                 }
             }, new ExecutionDataflowBlockOptions()
             {
-                CancellationToken = token
+                CancellationToken = token,
+                MaxDegreeOfParallelism = 8
             });
         }
 
