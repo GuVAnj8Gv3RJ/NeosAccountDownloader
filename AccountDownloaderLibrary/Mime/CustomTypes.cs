@@ -12,11 +12,7 @@ namespace AccountDownloaderLibrary.Mime
                 new() {
                     File = new() {
                         Extensions = new[]{"meshx"}.ToImmutableArray(),
-                        MimeType = "application/meshx",
-                        Categories = new[]{
-                            Category.Lossless,
-                            Category.Audio,
-                        }.ToImmutableHashSet(),
+                        MimeType = "application/meshx"
                     },
                     Signature = new Segment[] {
                         PrefixSegment.Create(0, "05 4D 65 73 68 58"),
