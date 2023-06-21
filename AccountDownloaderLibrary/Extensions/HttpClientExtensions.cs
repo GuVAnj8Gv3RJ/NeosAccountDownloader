@@ -23,6 +23,12 @@ namespace AccountDownloaderLibrary
             // The resultant file then has 0 bytes.
             // I don't understand streams enough to figure this out, but I would love to save the file operations here.
             //
+            // So ideally:
+            // 1. Get the HTTP Stream
+            // 2. Examine the HTTP Stream for file extension
+            // 3. Create FileStream with file extension
+            // 4. CopyToAsync the stream
+            //
             // At least the file move should be async before this is released.
             // #HelpWanted
 
