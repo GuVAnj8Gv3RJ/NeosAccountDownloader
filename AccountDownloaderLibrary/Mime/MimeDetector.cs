@@ -7,7 +7,7 @@ namespace AccountDownloaderLibrary.Mime
 {
     public class MimeDetector
     {
-        private static readonly MimeDetector instance = new MimeDetector();
+        public static readonly MimeDetector Instance = new MimeDetector();
 
         private ContentInspector inspector = null;
 
@@ -22,7 +22,7 @@ namespace AccountDownloaderLibrary.Mime
             AllBuildier.AddRange(exhaustiveDefs);
             AllBuildier.AddRange(CustomTypes.MESHX());
 
-            var all = AllBuildier.MoveToImmutable();
+            var all = AllBuildier.ToImmutable();
 
             inspector = new ContentInspectorBuilder()
             {
@@ -36,6 +36,11 @@ namespace AccountDownloaderLibrary.Mime
         }
 
         public string MostLikelyFileExtension(FileStream stream)
+        {
+            return ChooseMostLikely(inspector.Inspect(stream).ByFileExtension());
+        }
+
+        public string MostLikelyFileExtension(Stream stream)
         {
             return ChooseMostLikely(inspector.Inspect(stream).ByFileExtension());
         }
