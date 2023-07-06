@@ -27,11 +27,11 @@
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
 		<StackPanel>
-            <Menu Items="{Binding MenuItems}" Background="DarkSlateGray" x:DataType="vm:MenuItemViewModel" x:CompileBindings="False">
+            <Menu ItemsSource="{Binding MenuItems}" Background="DarkSlateGray" x:DataType="vm:MenuItemViewModel" x:CompileBindings="False">
                 <Menu.Styles>
                     <Style Selector="MenuItem">
                         <Setter Property="Header" Value="{Binding Header}"/>
-                        <Setter Property="Items" Value="{Binding Items}"/>
+                        <Setter Property="ItemsSource" Value="{Binding Items}"/>
                         <Setter Property="Command" Value="{Binding Command}"/>
                         <Setter Property="CommandParameter" Value="{Binding CommandParameter}"/>
                     </Style>
