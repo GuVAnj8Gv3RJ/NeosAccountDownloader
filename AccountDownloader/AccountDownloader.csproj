@@ -50,35 +50,35 @@
     <Content Include="Assets\AppIcon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.0.0-preview6" />
-    <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview6" />
+    <PackageReference Include="Avalonia" Version="11.0.0" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.0" />
 
-    <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.0.0-preview6" />
-    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.0-preview6" />
+    <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.0.0" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.0" />
 
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-preview6" />
-    <PackageReference Include="Avalonia.Themes.Simple" Version="11.0.0-preview6" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0" />
+    <PackageReference Include="Avalonia.Themes.Simple" Version="11.0.0" />
 
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-preview6" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0" />
 
     <!-- Reactive UI Stuff-->
-    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview6" />
-    <PackageReference Include="ReactiveUI.Fody" Version="18.4.26" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0" />
+    <PackageReference Include="ReactiveUI.Fody" Version="19.2.1" />
     <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
 
-    <PackageReference Include="Splat" Version="14.6.8" />
+    <PackageReference Include="Splat" Version="14.6.37" />
 
     <!-- Logging -->
-    <PackageReference Include="Serilog" Version="3.0.0-dev-01927" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
+    <PackageReference Include="Serilog" Version="3.0.1" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="7.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="SerilogTraceListener" Version="3.2.1-dev-00011" />
 
     <!-- Avalonia addons -->
-    <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.0.0-avalonia11-preview3" />
-    <PackageReference Include="MessageBox.Avalonia" Version="2.3.1-prev6" />
-    <PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.10.0-preview20230326001" />
+    <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.0.0-avalonia11-preview6" />
+    <PackageReference Include="MessageBox.Avalonia" Version="3.0.1-rc2" />
+    <PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.10.0-preview20230704001" />
 
     <ProjectReference Include="..\AccountDownloaderLibrary\AccountDownloaderLibrary.csproj" />
 

@@ -3,8 +3,7 @@ using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
 using AccountDownloader.ViewModels;
-using MessageBox.Avalonia.DTO;
-using MessageBox.Avalonia;
+using MsBox.Avalonia;
 using System.Reactive;
 using AccountDownloader.Utilities;
 using System.Threading.Tasks;
@@ -15,6 +14,7 @@ using AccountDownloader.Views;
 using MessageBox.Avalonia.Models;
 using Avalonia.Media.Imaging;
 using Avalonia;
+using MsBox.Avalonia.Dto;
 
 namespace AccountDownloader.Views
 {
@@ -128,11 +128,11 @@ namespace AccountDownloader.Views
                 BoxType.Error => AssetHelper.GetBitmap("Error.png"),
                 _ => AssetHelper.GetBitmap("Information.png"),
             };
-            var box = MessageBoxManager.GetMessageBoxCustomWindow(
-               new MessageBoxCustomParamsWithImage
+            var box = MessageBoxManager.GetMessageBoxCustom(
+               new MessageBoxCustomParams
                {
                    ContentTitle = message.Input.Title ?? (type == BoxType.Error ? Res.Error: Res.Information),
-                   Icon = icon,
+                   ImageIcon = icon,
                    ContentMessage = message.Input.Message ?? Res.Errors_UnknownError,
                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
                    WindowIcon = new WindowIcon(AssetHelper.GetBitmap("AppIcon.ico")),
@@ -141,16 +141,16 @@ namespace AccountDownloader.Views
                        new ButtonDefinition{Name = Res.OK, IsDefault = true},
                    }
                });
-            await box.ShowDialog(this);
+            await box.ShowWindowDialogAsync(this);
         }
 
         private async Task ShowYesNoBox(InteractionContext<MessageBoxRequest, InteractionResult<YesNo>> message)
         {
-            var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxCustomWindow(new MessageBoxCustomParamsWithImage()
+            var messageBoxStandardWindow = MessageBoxManager.GetMessageBoxCustom(new MessageBoxCustomParams()
             {
                 ContentTitle = message.Input.Title ?? Res.AreYouSure,
                 ContentMessage = message.Input.Message,
-                Icon = AssetHelper.GetBitmap("Question.png"),
+                ImageIcon = AssetHelper.GetBitmap("Question.png"),
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 WindowIcon = new WindowIcon(AssetHelper.GetBitmap("AppIcon.ico")),
                 // Ideally MessageBox.Avalonia would allow you to specify a return value for the "ButtonDefinition" type, but it doesn't, it returns the string they clicked on
@@ -162,7 +162,7 @@ namespace AccountDownloader.Views
                 }
             });
 
-            var result = await messageBoxStandardWindow.ShowDialog(this);
+            var result = await messageBoxStandardWindow.ShowWindowDialogAsync(this);
             YesNo res = result == Res.Yes ? YesNo.Yes : YesNo.No;
 
             message.SetOutput(InteractionResult<YesNo>.WithResult(res));

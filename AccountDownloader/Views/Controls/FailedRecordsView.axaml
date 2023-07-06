@@ -11,7 +11,7 @@
              x:DataType="vm:FailedRecordsViewModel"
              x:CompileBindings="True">
 <StackPanel>
-    <DataGrid Items="{Binding FailedRecords}" AutoGenerateColumns="False" >
+    <DataGrid ItemsSource="{Binding FailedRecords}" AutoGenerateColumns="False">
         <DataGrid.Columns>
             <DataGridTextColumn Header="{x:Static p:Resources.RecordId}"
                                 Binding="{Binding RecordId}"

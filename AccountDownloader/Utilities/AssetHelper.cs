@@ -18,8 +18,7 @@ namespace AccountDownloader.Utilities
         public static Bitmap GetBitmap(string input)
         {
             var uri = GetUri(input);
-            var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-            var asset = assets!.Open(uri);
+            var asset = AssetLoader.Open(uri);
 
             return new Bitmap(asset);
         }
