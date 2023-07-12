@@ -117,11 +117,14 @@ public class AccountDownloadManager : IAccountDownloader
             DownloadUserMetadata = config.UserMetadata,
             DownloadContacts = config.Contacts,
             DownloadMessageHistory = config.MessageHistory,
-            DownloadUserRecords = config.InventoryWorlds,
 
             // Prevent download of groups that haven't been selected
             DownloadGroups = config.Groups.Any(),
-            GroupsToDownload = new HashSet<string>(config.Groups)
+            GroupsToDownload = new HashSet<string>(config.Groups),
+
+            DownloadUserRecords = config.InventoryWorlds,
+            OnlyNewRecords = config.OnlyNewRecords,
+            RecordsFrom = config.RecordsFrom
         };
 
         return downloadConfig;

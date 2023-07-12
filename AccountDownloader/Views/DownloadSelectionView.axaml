@@ -17,6 +17,24 @@
             <CheckBox IsChecked="{Binding Contacts}" Content="{x:Static p:Resources.Contacts}"></CheckBox>
 			      <CheckBox IsEnabled="{Binding Contacts}" Margin="15,0,0,0" IsChecked="{Binding MessageHistory}" Content="{x:Static p:Resources.MessageHistory}"></CheckBox>
             <CheckBox IsChecked="{Binding InventoryWorlds}" Content="{x:Static p:Resources.InventoryWorlds}"></CheckBox>
+            <StackPanel Orientation="Vertical" Margin="15,0,0,0" Spacing="0">
+              <RadioButton IsEnabled="{Binding InventoryWorlds}" Content="All" GroupName="RecordDownloadType"
+                             IsChecked="{Binding RecordDownloadType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static vm:RecordDownloadType.All}}"/>
+              <StackPanel Orientation="Horizontal" Spacing="5">
+                <RadioButton IsEnabled="{Binding InventoryWorlds}" Content="Only new" GroupName="RecordDownloadType"
+                          IsChecked="{Binding RecordDownloadType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static vm:RecordDownloadType.OnlyNew}}"/>
+                <!--TODO: better ICON, but don't include font-awesome like everyone does-->
+                <TextBlock FontSize="22" Text="🛈" ToolTip.Tip="Downloads items that are newer then the newest item you have previously downloaded."></TextBlock>
+                <!--<Image Width="20" Height="20" Source="avares://Neos Account Downloader/Assets/Question.png" />-->
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Spacing="5">
+                <RadioButton IsEnabled="{Binding InventoryWorlds}" Content="After a certain Date" GroupName="RecordDownloadType"
+                             IsChecked="{Binding RecordDownloadType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static vm:RecordDownloadType.FromDate}}"/>
+                <!-- This needs to be a date time offset >.<-->
+                <DatePicker IsEnabled="{Binding CanChooseRecordDate}" SelectedDate="{Binding RecordsFrom}"/>
+              </StackPanel>
+              
+            </StackPanel>
             <CheckBox IsChecked="{Binding CloudVariableDefinitions}" Content="{x:Static p:Resources.CloudVariableDefinitions}"></CheckBox>
             <CheckBox IsChecked="{Binding CloudVariableValues}" Content="{x:Static p:Resources.CloudVariableValues}"></CheckBox>
         </StackPanel>
