@@ -79,6 +79,9 @@ namespace AccountDownloader.Services
         public bool CloudVariableDefinitions { get; }
         public bool CloudVariableValues { get; }
 
+        public bool OnlyNewRecords { get; }
+        public DateTime? RecordsFrom { get; }
+
         public IEnumerable<string> Groups { get; }
 
         public string FilePath { get; }

@@ -47,6 +47,8 @@
         /// </summary>
         public bool OnlyNewRecords { get; set; } = false;
 
+        public DateTime? RecordsFrom { get; set; } = null;
+
         /// <summary>
         /// Force overwrite synced records even if there's a conflict
         /// </summary>

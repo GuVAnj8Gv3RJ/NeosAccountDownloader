@@ -14,6 +14,13 @@ using AccountDownloader.Extensions;
 
 namespace AccountDownloader.ViewModels;
 
+public enum RecordDownloadType
+{
+    All = 0,
+    OnlyNew,
+    FromDate
+}
+
 public class DownloadSelectionViewModel : ViewModelBase, IAccountDownloadConfig
 {
     public ReactiveCommand<Unit, Unit> OpenFolder { get; }
@@ -49,6 +56,18 @@ public class DownloadSelectionViewModel : ViewModelBase, IAccountDownloadConfig
 
     [Reactive]
     public string FilePath { get; set; } = "";
+
+    // Don't bind to this, might move later
+    public bool OnlyNewRecords { get; set; } = false;
+
+    [Reactive]
+    public DateTime? RecordsFrom { get; set; } = null;
+
+    [Reactive]
+    public RecordDownloadType RecordDownloadType { get; set; } = RecordDownloadType.All;
+
+    [ObservableAsProperty]
+    public bool CanChooseRecordDate { get; } = false;
 
     [ObservableAsProperty]
     public string FormattedRequiredBytes { get; } = string.Empty;
@@ -109,6 +128,9 @@ public class DownloadSelectionViewModel : ViewModelBase, IAccountDownloadConfig
                 MessageHistory = PreviousMessageHistory;
             }
         });
+
+        // If they have selected "From Date" Enable the CanChooseRecordDate Boolean, this turns the date picker on.
+        this.WhenAnyValue(x => x.RecordDownloadType, x => x == RecordDownloadType.FromDate).ToPropertyEx(this, x => x.CanChooseRecordDate);
 
         // When either the inventory worlds checkbox changes or the requiredbytes propert of our group list changes, update the bytes total
         // This too can probably be improved.

@@ -257,7 +257,25 @@ namespace AccountDownloaderLibrary
                     }
                 }
                 else
-                    await DownloadRecords(ownerId, recordsStatus, Config.OnlyNewRecords, cancellationToken).ConfigureAwait(false);
+                {
+                    DateTime? from = Config.RecordsFrom;
+
+                    // OnlyNew takes precedence
+                    if (Config.OnlyNewRecords)
+                    {
+                        from = await Target.GetLatestRecordTime(ownerId).ConfigureAwait(false);
+                        try
+                        {
+                            from = from.Value.AddDays(-1);
+                        }
+                        catch
+                        {
+                            from = null;
+                        }
+                    }
+
+                    await DownloadRecords(ownerId, recordsStatus, from, cancellationToken).ConfigureAwait(false);
+                }
             }
         }
 
@@ -315,28 +333,10 @@ namespace AccountDownloaderLibrary
             };
         }
 
-        public async Task DownloadRecords(string ownerId, RecordDownloadStatus status, bool onlyNew, CancellationToken cancellationToken)
+
+        public async Task DownloadRecords(string ownerId, RecordDownloadStatus status, DateTime? from, CancellationToken cancellationToken)
         {
-            DateTime? latest = null;
-
-            if (onlyNew)
-            {
-                latest = await Target.GetLatestRecordTime(ownerId).ConfigureAwait(false);
-
-                if (latest != null)
-                {
-                    try
-                    {
-                        latest = latest.Value.AddDays(-1);
-                    }
-                    catch
-                    {
-                        latest = null;
-                    }
-                }
-            }
-
-            string latestText = onlyNew ? $" from {latest}" : "";
+            string latestText = from != null ? $" from {from}" : "";
 
             SetProgressMessage($"Downloading records for {ownerId}" + latestText);
 
@@ -369,7 +369,7 @@ namespace AccountDownloaderLibrary
                     EnsureOrdered = false
                 });
 
-            await foreach (var record in Source.GetRecords(ownerId, latest).ConfigureAwait(false))
+            await foreach (var record in Source.GetRecords(ownerId, from).ConfigureAwait(false))
             {
                 SetProgressMessage($"Queueing: {record.CombinedRecordId}");
                 if (cancellationToken.IsCancellationRequested)
