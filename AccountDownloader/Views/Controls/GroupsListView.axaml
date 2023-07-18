@@ -12,30 +12,28 @@
              x:CompileBindings="True">
 	<StackPanel>
 		<TextBlock Text="{x:Static p:Resources.NoGroupsFound}" IsVisible="{Binding !HasGroups}" />
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="80" Margin="0,5,0,5" IsVisible="{Binding HasGroups}">
-		    <ItemsRepeater ItemsSource="{Binding Groups}">
-                <ItemsRepeater.Layout>
-                    <UniformGridLayout Orientation="Horizontal"
-                                       MinColumnSpacing="10"
-                                       MinRowSpacing="10"
-                                       MinItemHeight="30"
-                                       MinItemWidth="150"
-                                       ItemsStretch="Uniform"/>
-                </ItemsRepeater.Layout>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Height="120" Margin="0,5,0,5" IsVisible="{Binding HasGroups}">
+		  <ItemsRepeater ItemsSource="{Binding GroupViewModels}">
+        <ItemsRepeater.Layout>
+          <UniformGridLayout Orientation="Horizontal"
+                             MaximumRowsOrColumns="4"
+                             MinColumnSpacing="10"
+                             MinRowSpacing="10"
+                             MinItemHeight="55"
+                             MinItemWidth="200"
+                             ItemsStretch="Fill"/>
+        </ItemsRepeater.Layout>
 			    <ItemsRepeater.ItemTemplate>
-				    <DataTemplate>
-					    <CheckBox IsChecked="{Binding ShouldDownload}">
-                            <StackPanel Orientation="Vertical">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}"/>
-                                    <TextBlock Text="{x:Static p:Resources.GroupsAdminIndicator}" IsVisible="{Binding IsAdmin}"/>
-                                </StackPanel>
-                                <TextBlock Text="{Binding Storage.FormattedUsed, StringFormat='({0})'}"/>
-                            </StackPanel>
-                        </CheckBox>
+				    <DataTemplate DataType="vm:GroupsListItemViewModel">
+					    <CheckBox IsChecked="{Binding Group.ShouldDownload}" VerticalContentAlignment="Top">
+                <StackPanel>
+                  <TextBlock Text="{Binding GroupTitleLabel}"/>
+                  <TextBlock Text="{Binding GroupByteSizeLabel}"/>
+                </StackPanel>
+              </CheckBox>
 				    </DataTemplate>
 			    </ItemsRepeater.ItemTemplate>
-		    </ItemsRepeater>
-        </ScrollViewer>
+		  </ItemsRepeater>
+    </ScrollViewer>
 	</StackPanel>
 </UserControl>

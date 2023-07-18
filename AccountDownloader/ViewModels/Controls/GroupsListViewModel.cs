@@ -14,7 +14,9 @@ namespace AccountDownloader.ViewModels
 {
     public class GroupsListViewModel: ReactiveObject
     {
-        public ObservableCollection<IGroup> Groups { get;}
+        public ObservableCollection<GroupsListItemViewModel> GroupViewModels { get;}
+
+        public IEnumerable<IGroup> Groups => GroupViewModels.Select(v => v.Group);
 
         [Reactive]
         public bool HasGroups { get; private set; }
@@ -24,20 +26,20 @@ namespace AccountDownloader.ViewModels
 
         public GroupsListViewModel(IEnumerable<IGroup>? groups = null)
         {
-            Groups = new ObservableCollection<IGroup>();
+            GroupViewModels = new ObservableCollection<GroupsListItemViewModel>();
 
             // If the user is any groups
-            this.WhenAnyValue(x => x.Groups.Count).Subscribe(x => HasGroups = x > 0);
+            this.WhenAnyValue(x => x.GroupViewModels.Count).Subscribe(x => HasGroups = x > 0);
 
             if (groups != null)
                 AddGroups(groups);
 
             // When any group updates its "ShouldDownload" property, re-calculate the required bytes for the group list
-            Groups
-                .ToObservableChangeSet(x => x.Id)
-                .AutoRefresh(x => x.ShouldDownload)
-                .Filter(x => x.ShouldDownload)
-                .Sum(x => x.RequiredBytes)
+            GroupViewModels
+                .ToObservableChangeSet(x => x.Group.Id)
+                .AutoRefresh(x => x.Group.ShouldDownload)
+                .Filter(x => x.Group.ShouldDownload)
+                .Sum(x => x.Group.RequiredBytes)
                 .ToPropertyEx(this, x => x.RequiredBytes);
         }
 
@@ -45,7 +47,7 @@ namespace AccountDownloader.ViewModels
         {
             foreach (IGroup group in groups)
             {
-                Groups.Add(group);
+                GroupViewModels.Add(new GroupsListItemViewModel(group));
             }
         }
 

@@ -187,7 +187,7 @@
     <value>Esta herramienta descarga todo el contenido de tu cuenta de Neos. Dependiendo de cuanto contenga tu cuenta, esto podría tardar un rato. Por favor, intenta no interrumpir este proceso una vez haya empezado. Déjalo funcionando hasta que te informe de que se ha completado.</value>
   </data>
   <data name="GroupsAdminIndicator" xml:space="preserve">
-    <value> (administrador)</value>
+    <value>(Administrador)</value>
   </data>
   <data name="GroupsQuestion" xml:space="preserve">
     <value>¿Que contenido de grupo deberiamos descargar?</value>
