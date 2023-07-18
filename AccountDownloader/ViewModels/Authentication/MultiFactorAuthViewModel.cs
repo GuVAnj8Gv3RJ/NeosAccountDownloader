@@ -38,7 +38,7 @@ public class MultiFactorAuthViewModel : ViewModelBase, IValidatableViewModel
         {
             if (result.state == AuthenticationState.TOTPRequired)
             {
-                await ShowError.Handle("Invalid TOTP Token");
+                await GlobalInteractions.ShowError.Handle(new MessageBoxRequest("Invalid TOTP Token."));
                 return;
             }
             if (result.state == AuthenticationState.Authenticated)
@@ -47,7 +47,8 @@ public class MultiFactorAuthViewModel : ViewModelBase, IValidatableViewModel
                 return;
             }
 
-            await ShowError.Handle(result.error);
+            await GlobalInteractions.ShowError.Handle(new MessageBoxRequest(result.error ?? "An unknown error occurred when entering TOTP token."));
+
         });
     }
 }
