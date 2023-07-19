@@ -8,6 +8,7 @@ using Splat;
 using ReactiveUI.Validation.Contexts;
 using ReactiveUI.Validation.Extensions;
 using System.Reactive.Linq;
+using AccountDownloader.Utilities;
 
 namespace AccountDownloader.ViewModels;
 
@@ -38,7 +39,7 @@ public class MultiFactorAuthViewModel : ViewModelBase, IValidatableViewModel
         {
             if (result.state == AuthenticationState.TOTPRequired)
             {
-                await ShowError.Handle("Invalid TOTP Token");
+                await GlobalInteractions.ShowError.Handle(new MessageBoxRequest("Invalid TOTP Token."));
                 return;
             }
             if (result.state == AuthenticationState.Authenticated)
@@ -47,7 +48,11 @@ public class MultiFactorAuthViewModel : ViewModelBase, IValidatableViewModel
                 return;
             }
 
-            await ShowError.Handle(result.error);
+            await GlobalInteractions.ShowError.Handle(new MessageBoxRequest(result.error ?? "An unknown error occurred when entering TOTP token."));
+
+            // We have to return back to the login screen as regular username and password credentials are not checked until after the TOTP
+            // token is entered correctly. (WHY? This is bad! Neos should check username and password BEFORE proceeding to the one-time password)
+            await Router.Navigate.Execute(new LoginViewModel());
         });
     }
 }
