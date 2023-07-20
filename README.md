@@ -3,7 +3,9 @@
 A small tool/utility to download your Neos Account contents to your local computer.
 
 # Disclaimer
-While every effort is made to download everything from your account, this utility may miss or lose some data. Please refer to the [License](License.md) file for additional commentary.
+While every effort is made to download everything from your account, this utility may miss or lose some data. As such we're unable to offer any guarentee or warranty on this application's ability. This is in line with the License but this additional disclaimer is here in the hopes of transparency.
+
+Please refer to the [License](LICENSE.md) file for additional commentary.
 
 # FAQ
 
@@ -29,6 +31,9 @@ Ideally no, the local store that this app builds will in some cases handle dupli
 
 ## Can I run this app for multiple users at the same time?
 Yes, but if you do this, you'll need to use two separate folders which we do not recommend. You may also breach some rate limits Neos has in place on its cloud infrastructure.
+
+## Do subsequent downloads, re-download assets?
+For assets, we skip downloading them if an existing asset is found. This makes many downloads incremental rather than starting from scratch.
 
 # Known Issues
 
