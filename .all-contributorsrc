@@ -11,14 +11,7 @@
   "commitConvention": "angular",
   "contributorsPerLine": 7,
   "contributorsSortAlphabetically": false,
-  "types": {
-    "custom": {
-      "symbol": "🔭",
-      "description": "A custom contribution type.",
-      "link": "[<%= symbol %>](<%= url %> \"<%= description %>\"),"
-    }
-  },
-  "linkToUsage": true,
+  "linkToUsage": false,
   "skipCi": true,
   "contributors": [
     {
@@ -26,6 +19,15 @@
       "name": "TheJebForge",
       "avatar_url": "https://avatars.githubusercontent.com/u/12719947?v=4",
       "profile": "https://github.com/TheJebForge",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "orange3134",
+      "name": "orange3134",
+      "avatar_url": "https://avatars.githubusercontent.com/u/56525091?v=4",
+      "profile": "https://github.com/orange3134",
       "contributions": [
         "translation"
       ]
