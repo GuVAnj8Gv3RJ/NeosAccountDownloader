@@ -2,6 +2,9 @@
 
 A small tool/utility to download your Neos Account contents to your local computer.
 
+# Disclaimer
+While every effort is made to download everything from your account, this utility may miss or lose some data. Please refer to the [License](License.md) file for additional commentary.
+
 # FAQ
 
 ## How do I download this?
@@ -27,7 +30,6 @@ Ideally no, the local store that this app builds will in some cases handle dupli
 ## Can I run this app for multiple users at the same time?
 Yes, but if you do this, you'll need to use two separate folders which we do not recommend. You may also breach some rate limits Neos has in place on its cloud infrastructure.
 
-
 # Known Issues
 
 ## Localization isn't instant
@@ -38,5 +40,13 @@ Localization defaults to your computer's language, so for most people this hopef
 ## Progress Metrics aren't 100% Acurate
 Neos assets and records are stored in a way that makes it difficult for us to estimate the total number of records required for download. Due to this we sometimes discover more that need to be queued for download as we go. Causing numbers to jump around a little bit.
 
-## Inventory & Worlds appears to be complete but the download is still running
-This is most likely queued jobs that need to be finished, or groups contents downloading, see the previous known issue.
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
