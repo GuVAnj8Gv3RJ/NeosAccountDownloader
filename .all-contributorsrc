@@ -1,9 +1,11 @@
 {
-  "projectName": "Neos Account Downloader",
+  "projectName": "NeosAccountDownloader",
   "projectOwner": "GuVAnj8Gv3RJ",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "files": ["README.md"],
+  "files": [
+    "README.md"
+  ],
   "imageSize": 100,
   "commit": true,
   "commitConvention": "angular",
@@ -18,5 +20,16 @@
   },
   "linkToUsage": true,
   "skipCi": true,
-  "contributors": []
+  "contributors": [
+    {
+      "login": "TheJebForge",
+      "name": "TheJebForge",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12719947?v=4",
+      "profile": "https://github.com/TheJebForge",
+      "contributions": [
+        "translation"
+      ]
+    }
+  ],
+  "commitType": "docs"
 }
