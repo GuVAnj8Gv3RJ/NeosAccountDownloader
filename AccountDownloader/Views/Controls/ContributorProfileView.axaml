@@ -1,0 +1,31 @@
+﻿<!-- TODO: eeek, no services in here plz -->
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			       xmlns:ad="clr-namespace:AccountDownloader"
+             xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AccountDownloader.Views.ContributorProfileView"
+             xmlns:vm="using:AccountDownloader.ViewModels"
+             xmlns:vs="using:AccountDownloader.Services"
+             x:DataType="vs:Contributor"
+             x:CompileBindings="True">
+  <Grid>
+    <StackPanel Orientation="Horizontal" Spacing="5">
+      <Panel Width="44" Height="44">
+        <Border Background="Gold"
+                BorderBrush="Gold"
+                BorderThickness="4"
+                CornerRadius="25">
+          <Image Width="40" Height="40" asyncImageLoader:ImageLoader.Source="{Binding Avatar}">
+            <Image.Clip>
+              <EllipseGeometry Rect="0,0,40,40" />
+            </Image.Clip>
+          </Image>
+        </Border>
+      </Panel>
+      <TextBlock FontSize="20" Text="{Binding Name}" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    </StackPanel>
+  </Grid>
+</UserControl>

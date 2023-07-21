@@ -628,6 +628,15 @@ namespace AccountDownloader.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to With contributions from:.
+        /// </summary>
+        public static string WithContributionsFrom {
+            get {
+                return ResourceManager.GetString("WithContributionsFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Would you like to start another download?.
         /// </summary>
         public static string WouldYouLikeToStartAnotherDownload {

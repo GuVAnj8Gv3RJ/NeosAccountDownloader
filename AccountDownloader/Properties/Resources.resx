@@ -312,4 +312,7 @@
   <data name="Disclaimer" xml:space="preserve">
     <value>While every effort is made to download everything from your account, this utility may miss or lose some data. As such we're unable to offer any guarentee or warranty on this application's ability. This is in line with the License but this additional disclaimer is here in the hopes of transparency.</value>
   </data>
+  <data name="WithContributionsFrom" xml:space="preserve">
+    <value>With contributions from:</value>
+  </data>
 </root>

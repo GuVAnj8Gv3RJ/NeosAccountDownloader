@@ -117,6 +117,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Views\Controls\ContributorProfileView.axaml.cs">
+      <DependentUpon>ContributorProfileView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\DownloadSelectionView.axaml.cs">
       <DependentUpon>DownloadSelectionView.axaml</DependentUpon>
     </Compile>
@@ -133,4 +136,12 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <Target Name="CopyContributors" BeforeTargets="Build">
+    <CreateItem Include="..\.all-contributorsrc">
+      <Output TaskParameter="Include" ItemName="fixtures" />
+    </CreateItem>
+    <Message Text="Copying Contributors" Importance="High" />
+
+    <Copy SourceFiles="@(fixtures)" DestinationFolder="Assets/" />
+  </Target>
 </Project>
