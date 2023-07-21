@@ -45,7 +45,7 @@ Localization defaults to your computer's language, so for most people this hopef
 ## Progress Metrics aren't 100% Acurate
 Neos assets and records are stored in a way that makes it difficult for us to estimate the total number of records required for download. Due to this we sometimes discover more that need to be queued for download as we go. Causing numbers to jump around a little bit.
 
-## Contributors
+# Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
