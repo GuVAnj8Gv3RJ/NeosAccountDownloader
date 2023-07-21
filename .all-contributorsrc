@@ -58,6 +58,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Psychpsyo",
+      "name": "Psychpsyo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60073468?v=4",
+      "profile": "https://github.com/Psychpsyo",
+      "contributions": [
+        "code",
+        "translation"
+      ]
     }
   ],
   "commitType": "docs"
