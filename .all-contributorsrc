@@ -31,6 +31,53 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "stiefeljackal",
+      "name": "Stiefel Jackal",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20023996?v=4",
+      "profile": "https://github.com/stiefeljackal",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Sharkmare",
+      "name": "Sharkmare",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34294231?v=4",
+      "profile": "https://github.com/Sharkmare",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "GuVAnj8Gv3RJ",
+      "name": "GuVAnj8Gv3RJ",
+      "avatar_url": "https://avatars.githubusercontent.com/u/132167543?v=4",
+      "profile": "https://github.com/GuVAnj8Gv3RJ",
+      "contributions": [
+        "code",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "RileyGuy",
+      "name": "Cyro",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9770110?v=4",
+      "profile": "https://github.com/RileyGuy",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Psychpsyo",
+      "name": "Psychpsyo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60073468?v=4",
+      "profile": "https://github.com/Psychpsyo",
+      "contributions": [
+        "code",
+        "translation"
+      ]
     }
   ],
   "commitType": "docs"
