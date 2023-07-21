@@ -40,6 +40,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Sharkmare",
+      "name": "Sharkmare",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34294231?v=4",
+      "profile": "https://github.com/Sharkmare",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "commitType": "docs"
