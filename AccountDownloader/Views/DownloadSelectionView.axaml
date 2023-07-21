@@ -10,39 +10,39 @@
              x:DataType="vm:DownloadSelectionViewModel"
              x:CompileBindings="True">
     <StackPanel Spacing="4">
-        <v:UserProfileView Name="Profile" DataContext="{Binding ProfileViewModel}"></v:UserProfileView>
-        <TextBlock Text="{x:Static p:Resources.WhatDownload}" FontSize="16"/>
-        <StackPanel>
-            <CheckBox IsChecked="{Binding UserMetadata}" Content="{x:Static p:Resources.UserMetadata}"></CheckBox>
-            <CheckBox IsChecked="{Binding Contacts}" Content="{x:Static p:Resources.Contacts}"></CheckBox>
-			      <CheckBox IsEnabled="{Binding Contacts}" Margin="15,0,0,0" IsChecked="{Binding MessageHistory}" Content="{x:Static p:Resources.MessageHistory}"></CheckBox>
-            <CheckBox IsChecked="{Binding InventoryWorlds}" Content="{x:Static p:Resources.InventoryWorlds}"></CheckBox>
-            <CheckBox IsChecked="{Binding CloudVariableDefinitions}" Content="{x:Static p:Resources.CloudVariableDefinitions}"></CheckBox>
-            <CheckBox IsChecked="{Binding CloudVariableValues}" Content="{x:Static p:Resources.CloudVariableValues}"></CheckBox>
-        </StackPanel>
-		<TextBlock Text="{x:Static p:Resources.GroupsQuestion}" FontSize="16" />
-		<v:GroupsListView DataContext="{Binding GroupsList}" HorizontalAlignment="Left" Margin="2"/>
-        <TextBlock Text="{x:Static p:Resources.WhereDownload}" Margin="0,10,0,0" FontSize="16"/>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Spacing="5">
-            <TextBox Text="{Binding FilePath, Mode=TwoWay}" Width="400" />
-            <Button Command="{Binding OpenFolder}" Width="125">
-				<TextBlock  HorizontalAlignment="Center" Text="{x:Static p:Resources.SelectFolder}"></TextBlock>
-			</Button>
-        </StackPanel>
-        <!-- Surrounding the text in a 20 height panel, makes the UI not jump around when this text becomes visible/invisible -->
-        <Panel Height="20">
-            <!-- TODO: https://github.com/AvaloniaUI/Avalonia/issues/5518 will make this better when resolved.-->
-            <TextBlock FontStyle="Italic" IsVisible="{Binding ShouldShowRequiredBytes}">
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="{x:Static p:Resources.StorageRequired}">
-                        <Binding Path="FormattedRequiredBytes" />
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
-        </Panel>
-        <Button Width="200" Height="40" Command="{Binding StartDownload}" HorizontalAlignment="Center" Name="StartButton" Margin="20">
-            <TextBlock VerticalAlignment="Center" Text="{x:Static p:Resources.StartDownload}" HorizontalAlignment="Center"></TextBlock>
-        </Button>
-    </StackPanel>
+      <v:UserProfileView Name="Profile" DataContext="{Binding ProfileViewModel}"></v:UserProfileView>
+      <TextBlock Text="{x:Static p:Resources.WhatDownload}" FontSize="16"/>
+      <StackPanel>
+          <CheckBox IsChecked="{Binding UserMetadata}" Content="{x:Static p:Resources.UserMetadata}"></CheckBox>
+          <CheckBox IsChecked="{Binding Contacts}" Content="{x:Static p:Resources.Contacts}"></CheckBox>
+			    <CheckBox IsEnabled="{Binding Contacts}" Margin="15,0,0,0" IsChecked="{Binding MessageHistory}" Content="{x:Static p:Resources.MessageHistory}"></CheckBox>
+          <CheckBox IsChecked="{Binding InventoryWorlds}" Content="{x:Static p:Resources.InventoryWorlds}"></CheckBox>
+          <CheckBox IsChecked="{Binding CloudVariableDefinitions}" Content="{x:Static p:Resources.CloudVariableDefinitions}"></CheckBox>
+          <CheckBox IsChecked="{Binding CloudVariableValues}" Content="{x:Static p:Resources.CloudVariableValues}"></CheckBox>
+      </StackPanel>
+		  <TextBlock Text="{x:Static p:Resources.GroupsQuestion}" FontSize="16" />
+		  <v:GroupsListView DataContext="{Binding GroupsList}" Margin="0,2,0,2"/>
+      <TextBlock Text="{x:Static p:Resources.WhereDownload}" Margin="0,10,0,0" FontSize="16"/>
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Spacing="5">
+        <TextBox Text="{Binding FilePath, Mode=TwoWay}" Width="400" />
+        <Button Command="{Binding OpenFolder}" Width="125">
+			    <TextBlock  HorizontalAlignment="Center" Text="{x:Static p:Resources.SelectFolder}"></TextBlock>
+			  </Button>
+      </StackPanel>
+      <!-- Surrounding the text in a 20 height panel, makes the UI not jump around when this text becomes visible/invisible -->
+      <Panel Height="20">
+      <!-- TODO: https://github.com/AvaloniaUI/Avalonia/issues/5518 will make this better when resolved.-->
+        <TextBlock FontStyle="Italic" IsVisible="{Binding ShouldShowRequiredBytes}">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{x:Static p:Resources.StorageRequired}">
+                    <Binding Path="FormattedRequiredBytes" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+      </Panel>
+      <Button Width="200" Height="40" Command="{Binding StartDownload}" HorizontalAlignment="Center" Name="StartButton" Margin="20">
+          <TextBlock VerticalAlignment="Center" Text="{x:Static p:Resources.StartDownload}" HorizontalAlignment="Center"></TextBlock>
+      </Button>
+  </StackPanel>
 </UserControl>
 
