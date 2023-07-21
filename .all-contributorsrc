@@ -59,6 +59,25 @@
         "code",
         "maintenance"
       ]
+    },
+    {
+      "login": "RileyGuy",
+      "name": "Cyro",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9770110?v=4",
+      "profile": "https://github.com/RileyGuy",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Psychpsyo",
+      "name": "Psychpsyo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60073468?v=4",
+      "profile": "https://github.com/Psychpsyo",
+      "contributions": [
+        "code",
+        "translation"
+      ]
     }
   ],
   "commitType": "docs"
