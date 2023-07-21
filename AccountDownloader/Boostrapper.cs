@@ -47,9 +47,11 @@ namespace AccountDownloader
                 var folder = config!.LogFolder;
                 var level = config!.LogLevel;
 
+                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+
                 var logger = new LoggerConfiguration()
                     .MinimumLevel.Debug()
-                    .WriteTo.File(folder + $"/{machine}-{info!.Version}-.log", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel:level )
+                    .WriteTo.File(folder + $"/{timestamp}-{machine}-{info!.Version}-.log", restrictedToMinimumLevel:level )
                     .CreateLogger();
 
                 var listener = new SerilogTraceListener.SerilogTraceListener(logger);
