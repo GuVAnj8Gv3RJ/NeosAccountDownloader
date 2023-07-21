@@ -9,11 +9,13 @@
              xmlns:vm="using:AccountDownloader.ViewModels"
              x:DataType="vm:GettingStartedViewModel"
              x:CompileBindings="True">
-<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="40">
-<TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"
-Text="{x:Static p:Resources.GettingStartedDescription}"/>
+  <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
+    <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"
+    Text="{x:Static p:Resources.GettingStartedDescription}"/>
+    <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"
+    Text="{x:Static p:Resources.Disclaimer}"/>
     <Button Width="200" Command="{Binding Login}" HorizontalAlignment="Center">
-        <TextBlock Text="{x:Static p:Resources.GetStarted}" HorizontalAlignment="Center"></TextBlock>
-     </Button>
-</StackPanel>
+      <TextBlock Text="{x:Static p:Resources.GetStarted}" HorizontalAlignment="Center"></TextBlock>
+    </Button>
+  </StackPanel>
 </UserControl>
