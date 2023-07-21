@@ -49,6 +49,16 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "GuVAnj8Gv3RJ",
+      "name": "GuVAnj8Gv3RJ",
+      "avatar_url": "https://avatars.githubusercontent.com/u/132167543?v=4",
+      "profile": "https://github.com/GuVAnj8Gv3RJ",
+      "contributions": [
+        "code",
+        "maintenance"
+      ]
     }
   ],
   "commitType": "docs"
