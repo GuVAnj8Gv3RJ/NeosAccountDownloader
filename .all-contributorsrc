@@ -1,0 +1,37 @@
+{
+  "projectName": "NeosAccountDownloader",
+  "projectOwner": "GuVAnj8Gv3RJ",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "angular",
+  "contributorsPerLine": 7,
+  "contributorsSortAlphabetically": false,
+  "linkToUsage": false,
+  "skipCi": true,
+  "contributors": [
+    {
+      "login": "TheJebForge",
+      "name": "TheJebForge",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12719947?v=4",
+      "profile": "https://github.com/TheJebForge",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "orange3134",
+      "name": "orange3134",
+      "avatar_url": "https://avatars.githubusercontent.com/u/56525091?v=4",
+      "profile": "https://github.com/orange3134",
+      "contributions": [
+        "translation"
+      ]
+    }
+  ],
+  "commitType": "docs"
+}
