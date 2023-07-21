@@ -49,6 +49,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "RileyGuy",
+      "name": "Cyro",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9770110?v=4",
+      "profile": "https://github.com/RileyGuy",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
