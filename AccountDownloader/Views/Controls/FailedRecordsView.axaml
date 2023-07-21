@@ -10,24 +10,24 @@
              xmlns:vm="using:AccountDownloader.ViewModels"
              x:DataType="vm:FailedRecordsViewModel"
              x:CompileBindings="True">
-<StackPanel>
+  <StackPanel>
     <DataGrid ItemsSource="{Binding FailedRecords}" AutoGenerateColumns="False">
-        <DataGrid.Columns>
-            <DataGridTextColumn Header="{x:Static p:Resources.RecordId}"
-                                Binding="{Binding RecordId}"
-                                Width="1*"/>
-            <DataGridTextColumn Header="{x:Static p:Resources.Owner}"
-                                Binding="{Binding OwnerId}"
-                                Width="1*"/>
-            <DataGridTextColumn Header="{x:Static p:Resources.Name}"
-                                Binding="{Binding RecordName}"
-                                Width="1*"/>
-            <DataGridTextColumn Header="{x:Static p:Resources.RecordPath}"
-                                Binding="{Binding RecordPath}"/>
-            <DataGridTextColumn Header="{x:Static p:Resources.FailureReason}"
-                                Binding="{Binding FailureReason}"
-                                Width="2*"/>
-        </DataGrid.Columns>
+      <DataGrid.Columns>
+          <DataGridTextColumn Header="{x:Static p:Resources.RecordId}"
+                              Binding="{Binding RecordId}"
+                              Width="1*"/>
+          <DataGridTextColumn Header="{x:Static p:Resources.Owner}"
+                              Binding="{Binding OwnerId}"
+                              Width="1*"/>
+          <DataGridTextColumn Header="{x:Static p:Resources.Name}"
+                              Binding="{Binding RecordName}"
+                              Width="1*"/>
+          <DataGridTextColumn Header="{x:Static p:Resources.RecordPath}"
+                              Binding="{Binding RecordPath}"/>
+          <DataGridTextColumn Header="{x:Static p:Resources.FailureReason}"
+                              Binding="{Binding FailureReason}"
+                              Width="2*"/>
+      </DataGrid.Columns>
     </DataGrid>
-</StackPanel>
+  </StackPanel>
 </UserControl>

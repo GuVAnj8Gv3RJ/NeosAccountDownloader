@@ -31,7 +31,8 @@ namespace AccountDownloader.Services
     {
         private ILogger Logger { get; }
 
-        //TODO: is there a way to auto-generate this? 
+        //TODO: is there a way to auto-generate this?
+        //TODO: We can also measure %-age completion if we can auto-generate.
         public static HashSet<string> AvailableLocaleCodes = new()
         {
             "en",

@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:p="clr-namespace:AccountDownloader.Properties"
+        xmlns:p="clr-namespace:AccountDownloader.Properties"
         mc:Ignorable="d" d:DesignWidth="350" d:DesignHeight="150"
         Width="350" Height="150"
         x:Class="AccountDownloader.Views.AboutWindowView"
@@ -11,39 +11,39 @@
         x:CompileBindings="True"
         TransparencyLevelHint="AcrylicBlur"
         WindowStartupLocation="CenterScreen"
-		Icon="/Assets/AppIcon.ico">
-	<Window.Title>
-		<MultiBinding StringFormat="{}{0} {1}">
-			<Binding Source="{x:Static p:Resources.About}"/>
-			<Binding Source="{x:Static p:Resources.AppName}"/>
-		</MultiBinding>
-	</Window.Title>
-	<Panel>
-		<ExperimentalAcrylicBorder IsHitTestVisible="False">
-			<ExperimentalAcrylicBorder.Material>
-				<ExperimentalAcrylicMaterial
+        Icon="/Assets/AppIcon.ico">
+  <Window.Title>
+    <MultiBinding StringFormat="{}{0} {1}">
+      <Binding Source="{x:Static p:Resources.About}"/>
+      <Binding Source="{x:Static p:Resources.AppName}"/>
+    </MultiBinding>
+  </Window.Title>
+  <Panel>
+    <ExperimentalAcrylicBorder IsHitTestVisible="False">
+      <ExperimentalAcrylicBorder.Material>
+        <ExperimentalAcrylicMaterial
                      BackgroundSource="Digger"
                      TintColor="Black"
                      TintOpacity="1"
                      MaterialOpacity="0.65" />
-			</ExperimentalAcrylicBorder.Material>
-		</ExperimentalAcrylicBorder>
-	<StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-		<TextBlock HorizontalAlignment="Left">
-			<TextBlock.Text>
-				<MultiBinding StringFormat="{}{0} v:{1}">
-					<Binding Source="{x:Static p:Resources.AppName}" />
-					<Binding Path="AppVersion" />
-				</MultiBinding>
-			</TextBlock.Text>
-		</TextBlock>
-		<TextBlock HorizontalAlignment="Left">
-			<TextBlock.Text>
-				<MultiBinding StringFormat="{}By {0}">
-					<Binding Path="AppCompany" />
-				</MultiBinding>
-			</TextBlock.Text>
-		</TextBlock>
-	</StackPanel>
-	</Panel>
+      </ExperimentalAcrylicBorder.Material>
+    </ExperimentalAcrylicBorder>
+  <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <TextBlock HorizontalAlignment="Left">
+      <TextBlock.Text>
+        <MultiBinding StringFormat="{}{0} v:{1}">
+          <Binding Source="{x:Static p:Resources.AppName}" />
+          <Binding Path="AppVersion" />
+        </MultiBinding>
+      </TextBlock.Text>
+    </TextBlock>
+    <TextBlock HorizontalAlignment="Left">
+      <TextBlock.Text>
+        <MultiBinding StringFormat="{}By {0}">
+          <Binding Path="AppCompany" />
+        </MultiBinding>
+      </TextBlock.Text>
+    </TextBlock>
+  </StackPanel>
+  </Panel>
 </Window>

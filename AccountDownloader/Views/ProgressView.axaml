@@ -4,28 +4,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="650"
              x:Class="AccountDownloader.Views.ProgressView"
-			 xmlns:v="clr-namespace:AccountDownloader.Views"
-			 xmlns:p="clr-namespace:AccountDownloader.Properties"
-			 xmlns:progRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
+			       xmlns:v="clr-namespace:AccountDownloader.Views"
+			       xmlns:p="clr-namespace:AccountDownloader.Properties"
+			       xmlns:progRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
              xmlns:vm="using:AccountDownloader.ViewModels"
              x:DataType="vm:ProgressViewModel"
              x:CompileBindings="True">
-    <StackPanel Margin="20" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="15" Width="650">
-		<TextBlock  FontSize="40" TextAlignment="Center" Text="{x:Static p:Resources.Downloading}" />
-		<v:UserProfileView HorizontalAlignment="Center" Name="Profile" DataContext="{Binding ProfileViewModel}"/>
-        <progRing:ProgressRing Width="40"
+  <StackPanel Margin="20" HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="15" Width="650">
+	  <TextBlock  FontSize="40" TextAlignment="Center" Text="{x:Static p:Resources.Downloading}" />
+	  <v:UserProfileView HorizontalAlignment="Center" Name="Profile" DataContext="{Binding ProfileViewModel}"/>
+    <progRing:ProgressRing Width="40"
                            Height="40"
                            IsActive="{Binding IsRunning}"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            Foreground="White"/>
-		<TextBlock FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ProgressPhase}" IsVisible="{Binding ShouldShowPhase}">User Records</TextBlock>
-
-        <v:ProgressStatisticsView HorizontalAlignment="Center" DataContext="{Binding ProgressStatistics}"/>
-        <TextBlock TextWrapping="Wrap" FontSize="15" HorizontalAlignment="Center" Text="{Binding ProgressText}">Test Texssdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfssdfsdfsdfsdfsdfsdfgsdfsdft</TextBlock>
-		<Button HorizontalAlignment="Center" Width="100" Command="{Binding Cancel}">
-			<TextBlock Text="{x:Static p:Resources.Cancel}" TextAlignment="Center" VerticalAlignment="Center"/>
-		</Button>
-    </StackPanel>
+	  <TextBlock FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ProgressPhase}" IsVisible="{Binding ShouldShowPhase}">User Records</TextBlock>
+    <v:ProgressStatisticsView HorizontalAlignment="Center" DataContext="{Binding ProgressStatistics}"/>
+    <TextBlock TextWrapping="Wrap" FontSize="15" HorizontalAlignment="Center" Text="{Binding ProgressText}">Test Texssdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfssdfsdfsdfsdfsdfsdfgsdfsdft</TextBlock>
+	  <Button HorizontalAlignment="Center" Width="100" Command="{Binding Cancel}">
+		  <TextBlock Text="{x:Static p:Resources.Cancel}" TextAlignment="Center" VerticalAlignment="Center"/>
+	  </Button>
+  </StackPanel>
 </UserControl>
 
