@@ -78,6 +78,15 @@
         "code",
         "translation"
       ]
+    },
+    {
+      "login": "Xlinka",
+      "name": "xLinka",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22996716?v=4",
+      "profile": "https://github.com/Xlinka",
+      "contributions": [
+        "research"
+      ]
     }
   ],
   "commitType": "docs"
