@@ -96,6 +96,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "SectOLT",
+      "name": "Samuel-Sann Laurin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19335111?v=4",
+      "profile": "http://www.xeltalania.com",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitType": "docs"
