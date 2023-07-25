@@ -21,20 +21,12 @@ public class AppCloudUserProfile : ReactiveObject, IUserProfile
 
     private static ILogger? Logger;
 
-    public AppCloudUserProfile(User user)
+    public AppCloudUserProfile(User? user = null)
     {
-        UpdateUser(user);
-        SetupLogger();
-    }
+        if (user != null)
+            UpdateUser(user);
 
-    private void SetupLogger()
-    {
-        Logger = Locator.Current.GetService<ILogger>();
-    }
-
-    public AppCloudUserProfile()
-    {
-        SetupLogger();
+        Logger = Locator.Current.GetService<ILogger>() ?? throw new NullReferenceException("No logger found");
     }
 
     private static Uri? GetProfilePictureUri(string? profilePictureUri)
@@ -50,7 +42,7 @@ public class AppCloudUserProfile : ReactiveObject, IUserProfile
 
     public void UpdateUser(User? user)
     {
-        Logger.LogDebug($"Updating user New:{user?.Username}, Old:{UserName} ");
+        Logger?.LogDebug($"Updating user New:{user?.Username}, Old:{UserName} ");
         if (user == null)
             return;
 

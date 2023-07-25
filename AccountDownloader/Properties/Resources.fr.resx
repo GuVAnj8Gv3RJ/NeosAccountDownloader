@@ -187,7 +187,7 @@
     <value>Cet outils télécharge le contenu de votre compte Neos. Tout dépendant du nombre de contenu, cela peut prendre du temps. Veuillez ne pas interrompre le processus une foit celui-ci initié. Vous serez informé quand il sera terminé.</value>
   </data>
   <data name="GroupsAdminIndicator" xml:space="preserve">
-    <value> (administrateur)</value>
+    <value>(administrateur)</value>
   </data>
   <data name="GroupsQuestion" xml:space="preserve">
     <value>Sélectionez le contenu du groupe à télécharger?</value>
@@ -280,7 +280,7 @@
     <value>Statistiques du téléchargement</value>
   </data>
   <data name="DownloadCompleteDescription" xml:space="preserve">
-    <value>Téléchargement completé. Voici un rapport détaillé des statistiques du téléchargement. Une copie à également été écrite dans les fichiers log</value>
+    <value>Téléchargement completé. Voici un rapport détaillé des statistiques du téléchargement. Une copie à également été écrite dans les fichiers log.</value>
   </data>
   <data name="DownloadCompleteRecordFailureDescription" xml:space="preserve">
     <value>Certain Records ont échoué le téléchargement, leur détails sont écrits ci-dessous, ou vérifiez les logs pour plus d'information.</value>
