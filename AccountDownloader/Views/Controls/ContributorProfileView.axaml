@@ -27,7 +27,14 @@
           </Image>
         </Border>
       </Panel>
-      <TextBlock FontSize="20" Text="{Binding Name}" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
+      <TextBlock Text="{Binding Name}"
+                 FontSize="20"
+                 TextAlignment="Left"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Center"
+                 TextWrapping="NoWrap"
+                 TextTrimming="CharacterEllipsis"
+                 Width="160"/>
     </StackPanel>
   </Grid>
 </UserControl>

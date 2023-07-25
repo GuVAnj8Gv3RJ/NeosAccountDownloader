@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:p="clr-namespace:AccountDownloader.Properties"
         mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="500"
-        Width="350" Height="300"
+        Width="650" Height="300"
         x:Class="AccountDownloader.Views.AboutWindowView"
         xmlns:vm="using:AccountDownloader.ViewModels"
         x:DataType="vm:AboutWindowViewModel"
@@ -48,18 +48,20 @@
       </TextBlock>
     </StackPanel>
     <TextBlock Text="{x:Static p:Resources.WithContributionsFrom}" />
-    <ItemsRepeater ItemsSource="{Binding Contributors}:">
-      <ItemsRepeater.Layout>
-        <UniformGridLayout MinColumnSpacing="6"
-                           MinRowSpacing="6"
-                           ItemsStretch="Fill"/>
-      </ItemsRepeater.Layout>
-      <ItemsRepeater.ItemTemplate>
-        <DataTemplate>
-          <v:ContributorProfileView DataContext="{Binding .}" />
-        </DataTemplate>
-      </ItemsRepeater.ItemTemplate>
-    </ItemsRepeater>
+    <ScrollViewer Height="160" AllowAutoHide="False">
+      <ItemsRepeater ItemsSource="{Binding Contributors}:">
+        <ItemsRepeater.Layout>
+          <UniformGridLayout MinColumnSpacing="6"
+                             MinRowSpacing="6"
+                             ItemsStretch="Fill"/>
+        </ItemsRepeater.Layout>
+        <ItemsRepeater.ItemTemplate>
+          <DataTemplate>
+            <v:ContributorProfileView DataContext="{Binding .}" Width="200"/>
+          </DataTemplate>
+        </ItemsRepeater.ItemTemplate>
+      </ItemsRepeater>
+    </ScrollViewer>
   </StackPanel>
   </Panel>
 </Window>
