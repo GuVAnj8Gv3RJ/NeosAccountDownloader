@@ -76,8 +76,8 @@ namespace AccountDownloader
             }
             return list;
         }
-        public static FailedRecordsViewModel DesignFailedRecordsViewModel = new FailedRecordsViewModel(GenerateFailList());
-        public static UserProfileViewModel DesignProfileViewModel = new(new DesignUserProfile());
+        public static readonly FailedRecordsViewModel DesignFailedRecordsViewModel = new(GenerateFailList());
+        public static readonly UserProfileViewModel DesignProfileViewModel = new(new DesignUserProfile());
         private static readonly List<GroupRecord> _groups = new() {
             new GroupRecord("G-Group0", "Group 1 with Long Name", false, new DesignStorageRecord()),
             new GroupRecord("G-Group1", "Group 2", false, new DesignStorageRecord()),
@@ -101,6 +101,6 @@ namespace AccountDownloader
             new GroupRecord("G-Group19", "Group 20", true, new DesignStorageRecord()),
             new GroupRecord("G-Group20", "Group 21", false, new DesignStorageRecord())
         };
-        public static GroupsListViewModel DesignGroupsListViewModel = new(_groups);
+        public static readonly GroupsListViewModel DesignGroupsListViewModel = new(_groups);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -33,7 +34,7 @@ namespace AccountDownloader.Services
 
         //TODO: is there a way to auto-generate this?
         //TODO: We can also measure %-age completion if we can auto-generate.
-        public static HashSet<string> AvailableLocaleCodes = new()
+        public static readonly HashSet<string> AvailableLocaleCodes = new()
         {
             "en",
             "de",
@@ -43,11 +44,11 @@ namespace AccountDownloader.Services
             "es",
             "ru"
         };
-        public static HashSet<string> MachineTranslatedCodes = new() { "ja", "ko" };
+        public static readonly HashSet<string> MachineTranslatedCodes = new() { "ja", "ko" };
 
         public List<LocaleModel> AvailableLocales { get; }
 
-        public LocaleModel CurrentLocale => new LocaleModel(Thread.CurrentThread.CurrentUICulture.DisplayName, Thread.CurrentThread.CurrentUICulture.Name);
+        public LocaleModel CurrentLocale => new(Thread.CurrentThread.CurrentUICulture.DisplayName, Thread.CurrentThread.CurrentUICulture.Name);
 
         public void SetLanguage(string code)
         {
@@ -56,7 +57,7 @@ namespace AccountDownloader.Services
             if (!AvailableLocaleCodes.Contains(code))
                 throw new InvalidOperationException("Unavailable Locale");
 
-            Logger.LogInformation($"Setting App Language to: {code}");
+            Logger.LogInformation("Setting App Language to: {code}", code);
 
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(code);
         }
@@ -73,7 +74,7 @@ namespace AccountDownloader.Services
             // TODO: do we need other details here? Is it better to put the entire CultureInfo there?
             AvailableLocales = AvailableLocaleCodes.Select(CreateLocaleModel).ToList();
 
-            Logger.LogInformation($"Language set to: ${CurrentLocale.Name}");
+            Logger.LogInformation("Language set to: {LanguageName}", CurrentLocale.Name);
         }
 
         private LocaleModel CreateLocaleModel(string code)
