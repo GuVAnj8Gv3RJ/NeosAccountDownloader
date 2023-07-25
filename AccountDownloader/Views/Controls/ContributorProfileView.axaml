@@ -1,5 +1,4 @@
-﻿<!-- TODO: eeek, no services in here plz -->
-<!-- TODO: Combine with UserProfileView to make a unified control -->
+﻿<!-- TODO: Combine with UserProfileView to make a unified control -->
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,8 +8,9 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AccountDownloader.Views.ContributorProfileView"
              xmlns:vm="using:AccountDownloader.ViewModels"
+             xmlns:m="using:AccountDownloader.Models"
              xmlns:vs="using:AccountDownloader.Services"
-             x:DataType="vs:Contributor"
+             x:DataType="m:Contributor"
              x:CompileBindings="True">
   <Grid>
     <!-- TODO: We can use properties here to provide the H/W -->
