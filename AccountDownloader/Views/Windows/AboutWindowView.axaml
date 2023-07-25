@@ -50,8 +50,9 @@
     <TextBlock Text="{x:Static p:Resources.WithContributionsFrom}" />
     <ItemsRepeater ItemsSource="{Binding Contributors}:">
       <ItemsRepeater.Layout>
-        <UniformGridLayout MinColumnSpacing="5"
-                           MinRowSpacing="5"/>
+        <UniformGridLayout MinColumnSpacing="6"
+                           MinRowSpacing="6"
+                           ItemsStretch="Fill"/>
       </ItemsRepeater.Layout>
       <ItemsRepeater.ItemTemplate>
         <DataTemplate>
