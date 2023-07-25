@@ -1,9 +1,12 @@
-﻿using AccountDownloader.Services;
+﻿using System;
+using System.Collections.Generic;
+
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Splat;
-using System;
-using System.Collections.Generic;
+
+using AccountDownloader.Services;
+using AccountDownloader.Models;
 
 namespace AccountDownloader.ViewModels
 {
