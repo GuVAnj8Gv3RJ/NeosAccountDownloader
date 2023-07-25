@@ -340,7 +340,7 @@ namespace AccountDownloader.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  (admin).
+        ///   Looks up a localized string similar to (admin).
         /// </summary>
         public static string GroupsAdminIndicator {
             get {
