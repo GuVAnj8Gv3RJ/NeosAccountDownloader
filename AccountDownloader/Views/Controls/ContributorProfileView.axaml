@@ -1,4 +1,5 @@
 ﻿<!-- TODO: eeek, no services in here plz -->
+<!-- TODO: Combine with UserProfileView to make a unified control -->
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,15 +13,16 @@
              x:DataType="vs:Contributor"
              x:CompileBindings="True">
   <Grid>
+    <!-- TODO: We can use properties here to provide the H/W -->
     <StackPanel Orientation="Horizontal" Spacing="5">
-      <Panel Width="44" Height="44">
+      <Panel Width="34" Height="34">
         <Border Background="Gold"
                 BorderBrush="Gold"
                 BorderThickness="4"
                 CornerRadius="25">
-          <Image Width="40" Height="40" asyncImageLoader:ImageLoader.Source="{Binding Avatar}">
+          <Image Width="30" Height="30" asyncImageLoader:ImageLoader.Source="{Binding Avatar}">
             <Image.Clip>
-              <EllipseGeometry Rect="0,0,40,40" />
+              <EllipseGeometry Rect="0,0,30,30" />
             </Image.Clip>
           </Image>
         </Border>
