@@ -178,7 +178,7 @@ namespace AccountDownloader.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your download is complete. Below is a report detailing some statistics from the download. A copy of this has also been written to a log files.
+        ///   Looks up a localized string similar to Your download is complete. Below is a report detailing some statistics from the download. A copy of this has also been written to a log files..
         /// </summary>
         public static string DownloadCompleteDescription {
             get {

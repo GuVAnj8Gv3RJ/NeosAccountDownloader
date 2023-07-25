@@ -280,7 +280,7 @@
     <value>Statistiques du téléchargement</value>
   </data>
   <data name="DownloadCompleteDescription" xml:space="preserve">
-    <value>Téléchargement completé. Voici un rapport détaillé des statistiques du téléchargement. Une copie à également été écrite dans les fichiers log</value>
+    <value>Téléchargement completé. Voici un rapport détaillé des statistiques du téléchargement. Une copie à également été écrite dans les fichiers log.</value>
   </data>
   <data name="DownloadCompleteRecordFailureDescription" xml:space="preserve">
     <value>Certain Records ont échoué le téléchargement, leur détails sont écrits ci-dessous, ou vérifiez les logs pour plus d'information.</value>
