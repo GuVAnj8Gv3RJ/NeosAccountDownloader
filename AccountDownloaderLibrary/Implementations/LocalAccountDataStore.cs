@@ -270,6 +270,10 @@ namespace AccountDownloaderLibrary
 
         static Task StoreEntity<T>(T entity, string path)
         {
+            // Don't write nulls to the file system
+            if (entity == null)
+                return Task.CompletedTask;
+
             var directory = Path.GetDirectoryName(path);
 
             if (!Directory.Exists(directory))
