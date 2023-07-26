@@ -62,7 +62,7 @@
     <value>バージョン情報</value>
   </data>
   <data name="AppName" xml:space="preserve">
-    <value>Neosアカウントダウンローダー！</value>
+    <value>Neosアカウントダウンローダー</value>
   </data>
   <data name="AreYouSure" xml:space="preserve">
     <value>よろしいですか?</value>
@@ -128,7 +128,7 @@
     <value>このツールはNeosアカウントのコンテンツ全体をダウンロードします。アカウントに含まれるデータ容量によっては、しばらく時間がかかる場合があります。ダウンロードが開始されたら、中断しないようにしてください。ダウンロードが完了するまで、アプリを実行したままにしておいてください。</value>
   </data>
   <data name="GroupsAdminIndicator" xml:space="preserve">
-    <value>（管理者）</value>
+    <value>(管理者)</value>
   </data>
   <data name="GroupsQuestion" xml:space="preserve">
     <value>どのグループのコンテンツをダウンロードしますか？</value>
@@ -143,7 +143,7 @@
     <value>インベントリとワールド</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>言語:</value>
+    <value>言語</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>ログイン</value>
@@ -194,7 +194,7 @@
     <value>ダウンロードには少なくとも{0}の空き容量が必要です。</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>ユーザー名:</value>
+    <value>ユーザー名</value>
   </data>
   <data name="UserMetadata" xml:space="preserve">
     <value>ユーザーメタデータ</value>

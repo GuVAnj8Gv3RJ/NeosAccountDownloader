@@ -27,7 +27,7 @@ public class AccountDownloadManager : IAccountDownloader
 
     private readonly ILogger Logger;
 
-    private DispatcherTimer StatsTimer = new DispatcherTimer();
+    private readonly DispatcherTimer StatsTimer = new();
 
     public AccountDownloadManager(CloudXInterface? cloudInterface, ILogger? logger)
     {

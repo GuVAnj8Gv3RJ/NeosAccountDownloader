@@ -187,7 +187,7 @@
     <value>This tool aims to download your entire Neos account contents. Depending on how much content your account contains, this may take a while. Please try not to interrupt this process, once it has started. Just leave it running until it lets you know it is complete.</value>
   </data>
   <data name="GroupsAdminIndicator" xml:space="preserve">
-    <value> (admin)</value>
+    <value>(admin)</value>
   </data>
   <data name="GroupsQuestion" xml:space="preserve">
     <value>Which group's content should we download?</value>
@@ -280,7 +280,7 @@
     <value>Download Report</value>
   </data>
   <data name="DownloadCompleteDescription" xml:space="preserve">
-    <value>Your download is complete. Below is a report detailing some statistics from the download. A copy of this has also been written to a log files</value>
+    <value>Your download is complete. Below is a report detailing some statistics from the download. A copy of this has also been written to a log files.</value>
   </data>
   <data name="DownloadCompleteRecordFailureDescription" xml:space="preserve">
     <value>Your download failed to aquire some records, you can find their details below, or see the logs for more information.</value>
