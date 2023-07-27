@@ -45,6 +45,16 @@ Localization defaults to your computer's language, so for most people this hopef
 ## Progress Metrics aren't 100% Acurate
 Neos assets and records are stored in a way that makes it difficult for us to estimate the total number of records required for download. Due to this we sometimes discover more that need to be queued for download as we go. Causing numbers to jump around a little bit.
 
+# Contributing
+Thanks for your interest in contributing, in all cases except for localization please open an issue before opening a PR.
+
+## Localization
+We'd love help with localization, follow these directions:
+1. Duplicate: https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/blob/main/AccountDownloader/Properties/Resources.resx
+1. Save it as Resources.<your language code>.resx
+1. Translate
+1. PR it
+
 # Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
