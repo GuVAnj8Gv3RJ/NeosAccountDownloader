@@ -315,4 +315,10 @@
   <data name="WithContributionsFrom" xml:space="preserve">
     <value>With contributions from:</value>
   </data>
+  <data name="AssetHash" xml:space="preserve">
+    <value>Hash</value>
+  </data>
+  <data name="Records" xml:space="preserve">
+    <value>Records</value>
+  </data>
 </root>

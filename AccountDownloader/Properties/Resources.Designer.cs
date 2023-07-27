@@ -97,6 +97,15 @@ namespace AccountDownloader.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hash.
+        /// </summary>
+        public static string AssetHash {
+            get {
+                return ResourceManager.GetString("AssetHash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assets.
         /// </summary>
         public static string Assets {
@@ -543,6 +552,15 @@ namespace AccountDownloader.Properties {
         public static string RecordPath {
             get {
                 return ResourceManager.GetString("RecordPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Records.
+        /// </summary>
+        public static string Records {
+            get {
+                return ResourceManager.GetString("Records", resourceCulture);
             }
         }
         

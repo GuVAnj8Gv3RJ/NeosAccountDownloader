@@ -26,17 +26,21 @@ namespace AccountDownloaderLibrary
         }
     }
 
-    public readonly struct AssetFailure
+    public class AssetFailure
     {
-        public readonly string hash;
-        public readonly string reason;
-        public readonly Record forRecord;
+        public string Hash { get; }
+        public string Reason { get; }
+        public Record ForRecord { get; }
+
+        public string RecordName => ForRecord?.Name ?? "Unknown";
+        public string OwnerId => ForRecord?.OwnerId ?? "Unknown";
+        public string RecordPath => (ForRecord?.Path != string.Empty ? ForRecord?.Path : "Root/World") ?? "Unknown";
 
         public AssetFailure(string hash, string reason, Record forRecord)
         {
-            this.hash = hash;
-            this.reason = reason;
-            this.forRecord = forRecord;
+            this.Hash = hash;
+            this.Reason = reason;
+            this.ForRecord = forRecord;
         }
     }
 

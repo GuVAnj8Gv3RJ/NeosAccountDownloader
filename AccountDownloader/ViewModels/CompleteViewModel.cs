@@ -37,7 +37,7 @@ namespace AccountDownloader.ViewModels
                 list.AddRange(g.RecordsStatus.FailedRecords);
             }
 
-            FailedRecords = new FailedRecordsViewModel(list);
+            FailedRecords = new FailedRecordsViewModel(list, Status.AssetFailures);
 
             if (list.Count > 0 || Status.AssetFailures.Count > 0)
                 ShouldShowFailureMessage = true;

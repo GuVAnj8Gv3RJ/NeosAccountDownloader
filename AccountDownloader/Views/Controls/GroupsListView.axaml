@@ -12,7 +12,7 @@
              x:CompileBindings="True">
 	<StackPanel>
 		<TextBlock Text="{x:Static p:Resources.NoGroupsFound}" IsVisible="{Binding !HasGroups}" />
-    <ScrollViewer VerticalScrollBarVisibility="Auto" Height="110" IsVisible="{Binding HasGroups}">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Height="110" IsVisible="{Binding HasGroups}" AllowAutoHide="False">
 		  <ItemsRepeater ItemsSource="{Binding Groups}">
         <ItemsRepeater.Layout>
             <UniformGridLayout Orientation="Horizontal"
