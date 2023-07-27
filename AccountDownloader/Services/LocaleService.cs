@@ -1,4 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
+﻿
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -28,23 +28,12 @@ namespace AccountDownloader.Services
         }
     }
 
-    public class LocaleService: ILocaleService
+    //TODO: Can we also measure %-age completion?
+    public class LocaleService : ILocaleService
     {
         private ILogger Logger { get; }
 
-        //TODO: is there a way to auto-generate this?
-        //TODO: We can also measure %-age completion if we can auto-generate.
-        public static readonly HashSet<string> AvailableLocaleCodes = new()
-        {
-            "en",
-            "de",
-            "ja",
-            "ko",
-            "fr",
-            "es",
-            "ru"
-        };
-        public static readonly HashSet<string> MachineTranslatedCodes = new() { "ja", "ko" };
+        public static readonly HashSet<string> MachineTranslatedCodes = new() { "ko" };
 
         public List<LocaleModel> AvailableLocales { get; }
 
@@ -54,7 +43,8 @@ namespace AccountDownloader.Services
         {
             if (string.IsNullOrEmpty(code))
                 throw new ArgumentNullException(nameof(code));
-            if (!AvailableLocaleCodes.Contains(code))
+
+            if (!AvailableLocales.Any(lm => lm.Code.Equals(code)))
                 throw new InvalidOperationException("Unavailable Locale");
 
             Logger.LogInformation("Setting App Language to: {code}", code);
@@ -71,19 +61,58 @@ namespace AccountDownloader.Services
         {
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-            // TODO: do we need other details here? Is it better to put the entire CultureInfo there?
-            AvailableLocales = AvailableLocaleCodes.Select(CreateLocaleModel).ToList();
+            AvailableLocales = AvailableCultures.Select(CreateLocaleModel).ToList();
 
             Logger.LogInformation("Language set to: {LanguageName}", CurrentLocale.Name);
         }
 
-        private LocaleModel CreateLocaleModel(string code)
+        private LocaleModel CreateLocaleModel(CultureInfo ci)
         {
-            var cultureName = CultureInfo.GetCultureInfo(code).NativeName;
-            if (MachineTranslatedCodes.Contains(code))
+            var cultureName = ci.NativeName;
+            if (MachineTranslatedCodes.Contains(ci.Name))
                 cultureName += " (Machine Translated)";
 
-            return new LocaleModel(cultureName, code);
+            return new LocaleModel(cultureName, ci.Name);
+        }
+
+        //TODO: this is a bit intensive, I was looking into CodeGenerators but those hate me.
+        // Cached result.
+        private IEnumerable<CultureInfo>? _avaliableLocales;
+
+        public IEnumerable<CultureInfo> AvailableCultures => _avaliableLocales != null ? _avaliableLocales : GenerateAvailableLocales();
+
+
+        // Loosly based on: https://stackoverflow.com/a/57683929/2095344
+        private IEnumerable<CultureInfo> GenerateAvailableLocales()
+        {
+            if (_avaliableLocales != null)
+                return _avaliableLocales;
+
+            //Loop through all cultures
+            _avaliableLocales = CultureInfo.GetCultures(CultureTypes.AllCultures)
+            .Where(c =>
+            {
+                // If its invariant just give up
+                if (c.Equals(CultureInfo.InvariantCulture))
+                    return false;
+
+                // Get the set with this culture(Will add resource set to memory)
+                var set = Res.ResourceManager.GetResourceSet(c, true, false);
+
+                // No set, not available
+                if (set == null)
+                    return false;
+
+                // If the set, is not for the currently selected language, close it to save memory.
+                // Causes language selection to fail
+                // TODO
+                //if (!c.Equals(Thread.CurrentThread.CurrentUICulture))
+                //    set.Close();
+
+                return true;
+            });
+
+            return _avaliableLocales;
         }
     }
 }
