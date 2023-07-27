@@ -26,12 +26,24 @@ namespace AccountDownloaderLibrary
         }
     }
 
+    public readonly struct AssetFailure
+    {
+        public readonly string hash;
+        public readonly string reason;
+
+        public AssetFailure(string hash, string reason)
+        {
+            this.hash = hash;
+            this.reason = reason;
+        }
+    }
+
     public class RecordStatusCallbacks
     {
         public Action<AssetDiff> AssetToUploadAdded;
         public Action<long> BytesUploaded;
         public Action AssetUploaded;
-        public Action<string> AssetMissing;
+        public Action<AssetFailure> AssetFailure;
     }
 
     public interface IAccountDataGatherer

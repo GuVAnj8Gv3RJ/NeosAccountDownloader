@@ -110,6 +110,7 @@ namespace AccountDownloaderLibrary
                 catch (Exception ex)
                 {
                     ProgressMessage?.Invoke($"Exception {job.hash}: " + ex);
+                    job.callbacks.AssetFailure(new AssetFailure(job.hash, ex.Message));
                 }
             }, new ExecutionDataflowBlockOptions()
             {

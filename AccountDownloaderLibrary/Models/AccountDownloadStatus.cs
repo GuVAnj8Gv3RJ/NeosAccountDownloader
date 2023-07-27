@@ -81,7 +81,7 @@ namespace AccountDownloaderLibrary
         /// Assets that for some reason were missing on the source and could not be uploaded.
         /// Mainly for diagnostic purposes, but could be used in the future to try to relocate those.
         /// </summary>
-        public HashSet<string> MissingAssets { get; set; } = new HashSet<string>();
+        public List<AssetFailure> AssetFailures { get; set; } = new List<AssetFailure>();
 
         /// <summary>
         /// If the download failed
@@ -93,10 +93,10 @@ namespace AccountDownloaderLibrary
         /// </summary>
         public List<GroupDownloadStatus> GroupStatuses { get; set; } = new List<GroupDownloadStatus>();
 
-        public void RegisterMissingAsset(string hash)
+        public void RegisterAssetFailure(AssetFailure failure)
         {
-            lock (MissingAssets)
-                MissingAssets.Add(hash);
+            lock (AssetFailures)
+                AssetFailures.Add(failure);
         }
 
         public GroupDownloadStatus GetGroupStatus(string ownerId, string groupName)
