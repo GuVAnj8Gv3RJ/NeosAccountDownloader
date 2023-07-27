@@ -51,7 +51,7 @@ Thanks for your interest in contributing, in all cases except for localization p
 ## Localization
 We'd love help with localization, follow these directions:
 1. Duplicate: https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/blob/main/AccountDownloader/Properties/Resources.resx
-1. Save it as Resources.<your language code>.resx
+1. Save it as Resources.`<your language code>`.resx
 1. Translate
 1. PR it
 
