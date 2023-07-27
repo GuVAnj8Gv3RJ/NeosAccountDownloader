@@ -14,6 +14,7 @@ namespace AccountDownloader.Services
         public long UsedBytes { get; set; }
         public long TotalBytes { get; set; }
 
+        // TODO: Idealy Formatting should NOT be in the Model, we should write a converter
         public string FormattedUsed { get; }
         public string FormattedTotal { get; }
 
