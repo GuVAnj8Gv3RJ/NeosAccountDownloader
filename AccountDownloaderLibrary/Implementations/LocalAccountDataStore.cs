@@ -107,7 +107,7 @@ namespace AccountDownloaderLibrary
 
                     job.callbacks.AssetUploaded();
 
-                    ProgressMessage?.Invoke($"Finished download {job.asset}");
+                    ProgressMessage?.Invoke($"Finished download {job.asset.Hash}");
                 }
                 catch (Exception ex)
                 {
