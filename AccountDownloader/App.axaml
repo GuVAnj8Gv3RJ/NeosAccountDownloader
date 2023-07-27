@@ -14,5 +14,6 @@
   <Application.Resources>
     <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush" Color="#2C2C2C"/>
     <conv:ZeroConverter x:Key="ZeroConverter" />
+    <conv:BytesConverter x:Key="BytesConverter" />
   </Application.Resources>
 </Application>

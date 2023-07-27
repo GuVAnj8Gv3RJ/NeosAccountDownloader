@@ -1,9 +1,7 @@
 ﻿using CloudX.Shared;
 using ReactiveUI;
-using System;
-using BaseX;
 using ReactiveUI.Fody.Helpers;
-using System.Reactive.Linq;
+using System;
 
 namespace AccountDownloader.Services
 {
@@ -14,12 +12,6 @@ namespace AccountDownloader.Services
 
         [Reactive]
         public long TotalBytes { get; set; }
-
-        // See: https://www.reactiveui.net/docs/handbook/view-models/boilerplate-code
-        [ObservableAsProperty]
-        public string FormattedUsed { get;} = string.Empty;
-        [ObservableAsProperty]
-        public string FormattedTotal { get; } = string.Empty;
 
         public OwnerType OwnerType { get; set; }
         public string Id { get; set; }
@@ -54,11 +46,6 @@ namespace AccountDownloader.Services
         {
             Id = id;
             OwnerType = type;
-
-            // This essentially keeps Formatted* properties up to date when the non-formatted variants change
-            // See: https://www.reactiveui.net/docs/handbook/view-models/boilerplate-code
-            this.WhenAnyValue(x => x.UsedBytes).Select(x=> UnitFormatting.FormatBytes(x)).ToPropertyEx(this, x => x.FormattedUsed);
-            this.WhenAnyValue(x => x.TotalBytes).Select(x => UnitFormatting.FormatBytes(x)).ToPropertyEx(this, x => x.FormattedTotal);
         }
     }
     internal class CloudStorageService : IStorageService
@@ -96,7 +83,7 @@ namespace AccountDownloader.Services
                 storage = new ReactiveStorageRecord(groupId, OwnerType.Group);
                 storage.Update(groupInfo.UsedBytes, groupInfo.QuotaBytes);
             }
-                
+
             Interface.GroupUpdated += storage.Update;
 
             return storage;

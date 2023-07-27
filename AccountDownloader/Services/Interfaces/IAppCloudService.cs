@@ -14,9 +14,6 @@ namespace AccountDownloader.Services
         public long UsedBytes { get; set; }
         public long TotalBytes { get; set; }
 
-        public string FormattedUsed { get; }
-        public string FormattedTotal { get; }
-
         public void Update(long used, long total);
 
         public string Id { get; set; }
