@@ -97,6 +97,15 @@ namespace AccountDownloader.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hash.
+        /// </summary>
+        public static string AssetHash {
+            get {
+                return ResourceManager.GetString("AssetHash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assets.
         /// </summary>
         public static string Assets {
@@ -187,7 +196,7 @@ namespace AccountDownloader.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your download failed to aquire some records, you can find their details below, or see the logs for more information..
+        ///   Looks up a localized string similar to Your download failed to aquire some records or assets, you can find their details below, or see the logs for more information..
         /// </summary>
         public static string DownloadCompleteRecordFailureDescription {
             get {
@@ -205,7 +214,7 @@ namespace AccountDownloader.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rate (Items/Worlds per minute).
+        ///   Looks up a localized string similar to Rate (Records per minute).
         /// </summary>
         public static string DownloadRate {
             get {
@@ -543,6 +552,15 @@ namespace AccountDownloader.Properties {
         public static string RecordPath {
             get {
                 return ResourceManager.GetString("RecordPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Records.
+        /// </summary>
+        public static string Records {
+            get {
+                return ResourceManager.GetString("Records", resourceCulture);
             }
         }
         

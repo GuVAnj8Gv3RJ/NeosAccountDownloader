@@ -26,12 +26,30 @@ namespace AccountDownloaderLibrary
         }
     }
 
+    public class AssetFailure
+    {
+        public string Hash { get; }
+        public string Reason { get; }
+        public Record ForRecord { get; }
+
+        public string RecordName => ForRecord?.Name ?? "Unknown";
+        public string OwnerId => ForRecord?.OwnerId ?? "Unknown";
+        public string RecordPath => (ForRecord?.Path != string.Empty ? ForRecord?.Path : "Root/World") ?? "Unknown";
+
+        public AssetFailure(string hash, string reason, Record forRecord)
+        {
+            this.Hash = hash;
+            this.Reason = reason;
+            this.ForRecord = forRecord;
+        }
+    }
+
     public class RecordStatusCallbacks
     {
         public Action<AssetDiff> AssetToUploadAdded;
         public Action<long> BytesUploaded;
         public Action AssetUploaded;
-        public Action<string> AssetMissing;
+        public Action<AssetFailure> AssetFailure;
     }
 
     public interface IAccountDataGatherer

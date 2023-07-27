@@ -81,7 +81,7 @@ namespace AccountDownloaderLibrary
         /// Assets that for some reason were missing on the source and could not be uploaded.
         /// Mainly for diagnostic purposes, but could be used in the future to try to relocate those.
         /// </summary>
-        public HashSet<string> MissingAssets { get; set; } = new HashSet<string>();
+        public List<AssetFailure> AssetFailures { get; set; } = new List<AssetFailure>();
 
         /// <summary>
         /// If the download failed
@@ -93,10 +93,10 @@ namespace AccountDownloaderLibrary
         /// </summary>
         public List<GroupDownloadStatus> GroupStatuses { get; set; } = new List<GroupDownloadStatus>();
 
-        public void RegisterMissingAsset(string hash)
+        public void RegisterAssetFailure(AssetFailure failure)
         {
-            lock (MissingAssets)
-                MissingAssets.Add(hash);
+            lock (AssetFailures)
+                AssetFailures.Add(failure);
         }
 
         public GroupDownloadStatus GetGroupStatus(string ownerId, string groupName)
@@ -236,6 +236,7 @@ namespace AccountDownloaderLibrary
             TotalAssetCount = count;
         }
 
+        //TODO: I want to move these out of this class
         public string GenerateReport()
         {
             //TODO: some sort of templating library
@@ -244,6 +245,7 @@ namespace AccountDownloaderLibrary
             b.AppendLine("----------------------");
             b.AppendLine($"Contacts: {DownloadedContactCount} / {TotalContactCount}");
             b.AppendLine($"Messages: {DownloadedMessageCount}");
+            b.AppendLine($"Assets: {TotalDownloadedAssetCount}/ {TotalAssetCount}");
             b.AppendLine(UserVariablesStatus.GenerateReport());
             b.AppendLine(UserRecordsStatus.GenerateReport());
 
@@ -264,12 +266,30 @@ namespace AccountDownloaderLibrary
                 b.AppendLine($"Total failed records: {TotalFailedRecordCount}");
             }
 
+            // ASSETS
+            if (AssetFailures.Count > 0)
+            {
+                b.AppendLine("Asset Failures");
+                b.AppendLine("----------------------");
+                b.Append(GenerateAssetFailuresReport());
+            }
+
 
             if (!string.IsNullOrEmpty(Error))
                 b.AppendLine("Error: " + Error);
 
             return b.ToString();
 
+        }
+
+        private string GenerateAssetFailuresReport()
+        {
+            var b = new StringBuilder();
+            foreach(var failure in AssetFailures)
+            {
+                b.AppendLine($"{failure.Hash} for {failure.RecordName} at path {failure.RecordPath} owned by {failure.OwnerId} failed due to {failure.Reason}.");
+            }
+            return b.ToString();
         }
     }
 }

@@ -311,7 +311,7 @@ namespace AccountDownloaderLibrary
                     lock (status)
                         status.AssetsUploaded++;
                 },
-                AssetMissing = hash => Status.RegisterMissingAsset(hash)
+                AssetFailure =  failure => Status.RegisterAssetFailure(failure)
             };
         }
 

@@ -11,15 +11,17 @@ namespace AccountDownloaderLibrary
     {
         readonly struct AssetJob
         {
-            public readonly string hash;
+            public readonly NeosDBAsset asset;
+            public readonly Record forRecord;
             public readonly IAccountDataGatherer source;
             public readonly RecordStatusCallbacks callbacks;
 
-            public AssetJob(string hash, IAccountDataGatherer source, RecordStatusCallbacks re)
+            public AssetJob(Record forRecord, NeosDBAsset asset, IAccountDataGatherer source, RecordStatusCallbacks re)
             {
-                this.hash = hash;
+                this.asset = asset;
                 this.source = source;
                 this.callbacks = re;
+                this.forRecord = forRecord;
             }
         }
 
@@ -92,24 +94,25 @@ namespace AccountDownloaderLibrary
 
             DownloadProcessor = new ActionBlock<AssetJob>(async job =>
             {
-                var path = GetAssetPath(job.hash);
+                var path = GetAssetPath(job.asset.Hash);
 
                 if (File.Exists(path))
                     return;
 
                 try
                 {
-                    ProgressMessage?.Invoke($"Downloading asset {job.hash}");
+                    ProgressMessage?.Invoke($"Downloading asset {job.asset}");
 
-                    await job.source.DownloadAsset(job.hash, path).ConfigureAwait(false);
+                    await job.source.DownloadAsset(job.asset.Hash, path).ConfigureAwait(false);
 
                     job.callbacks.AssetUploaded();
 
-                    ProgressMessage?.Invoke($"Finished download {job.hash}");
+                    ProgressMessage?.Invoke($"Finished download {job.asset.Hash}");
                 }
                 catch (Exception ex)
                 {
-                    ProgressMessage?.Invoke($"Exception {job.hash}: " + ex);
+                    ProgressMessage?.Invoke($"Exception in fetching asset with Hash: {job.asset.Hash}: " + ex);
+                    job.callbacks.AssetFailure(new AssetFailure(job.asset.Hash, ex.Message, job.forRecord));
                 }
             }, new ExecutionDataflowBlockOptions()
             {
@@ -247,7 +250,7 @@ namespace AccountDownloaderLibrary
 
             if (record.NeosDBManifest != null)
                 foreach (var asset in record.NeosDBManifest)
-                    ScheduleAsset(asset.Hash, source, statusCallbacks);
+                    ScheduleAsset(record, asset, source, statusCallbacks);
 
             return null;
         }
@@ -322,16 +325,16 @@ namespace AccountDownloaderLibrary
             return latest;
         }
 
-        void ScheduleAsset(string hash, IAccountDataGatherer store, RecordStatusCallbacks recordStatusCallbacks)
+        void ScheduleAsset(Record record, NeosDBAsset asset, IAccountDataGatherer store, RecordStatusCallbacks recordStatusCallbacks)
         {
-            if (!ScheduledAssets.Add(hash))
+            if (!ScheduledAssets.Add(asset.Hash))
                 return;
 
-            var job = new AssetJob(hash, store, recordStatusCallbacks);
+            var job = new AssetJob(record, asset, store, recordStatusCallbacks);
 
-            // TODO: I forget where we were meant to get this info from.
             var diff = new AssetDiff();
-            diff.Bytes = 0;
+            diff.State = AssetDiff.Diff.Added;
+            diff.Bytes = asset.Bytes;
 
             recordStatusCallbacks.AssetToUploadAdded(diff);
 

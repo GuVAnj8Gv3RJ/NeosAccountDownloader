@@ -3,6 +3,7 @@ using AccountDownloaderLibrary;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using System.Collections.Generic;
 using System.Reactive;
 
@@ -18,24 +19,28 @@ namespace AccountDownloader.ViewModels
 
         public FailedRecordsViewModel FailedRecords { get; }
 
+        [Reactive]
+        public bool ShouldShowFailureMessage { get; set; } = false;
+
         public ReactiveCommand<Unit, IRoutableViewModel> StartAnotherDownload { get; }
         public ReactiveCommand<Unit, Unit> Exit { get; }
-
-        // As Status is now essentially "Static" we can setup some static props for it, that make rendering useful
-        public bool HasFailedRecords => Status.TotalFailedRecordCount > 0;
         public CompleteViewModel(IAccountDownloadConfig config, AccountDownloadStatus status)
         {
             Status = status;
             Config = config;
             ProgressStatistics = new ProgressStatisticsViewModel(config, status);
 
+            // Zip up all the records that have failed
             List<RecordDownloadFailure> list = new(status.UserRecordsStatus.FailedRecords);
             foreach (var g in Status.GroupStatuses)
             {
                 list.AddRange(g.RecordsStatus.FailedRecords);
             }
 
-            FailedRecords = new FailedRecordsViewModel(status.UserRecordsStatus.FailedRecords);
+            FailedRecords = new FailedRecordsViewModel(list, Status.AssetFailures);
+
+            if (list.Count > 0 || Status.AssetFailures.Count > 0)
+                ShouldShowFailureMessage = true;
 
             StartAnotherDownload = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new DownloadSelectionViewModel()));
             Exit = ReactiveCommand.Create(ExitFn);

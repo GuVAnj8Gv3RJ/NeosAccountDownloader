@@ -10,8 +10,9 @@
              xmlns:vm="using:AccountDownloader.ViewModels"
              x:DataType="vm:FailedRecordsViewModel"
              x:CompileBindings="True">
-  <StackPanel>
-    <DataGrid ItemsSource="{Binding FailedRecords}" AutoGenerateColumns="False">
+  <StackPanel Spacing="4">
+    <TextBlock Text="{x:Static p:Resources.Records}" IsVisible="{Binding ShouldShowRecordFailures}"/>
+    <DataGrid ItemsSource="{Binding FailedRecords}" AutoGenerateColumns="False" IsVisible="{Binding ShouldShowRecordFailures}">
       <DataGrid.Columns>
           <DataGridTextColumn Header="{x:Static p:Resources.RecordId}"
                               Binding="{Binding RecordId}"
@@ -27,6 +28,25 @@
           <DataGridTextColumn Header="{x:Static p:Resources.FailureReason}"
                               Binding="{Binding FailureReason}"
                               Width="2*"/>
+      </DataGrid.Columns>
+    </DataGrid>
+    <TextBlock Text="{x:Static p:Resources.Assets}" IsVisible="{Binding ShouldShowAssetFailures}"/>
+    <DataGrid ItemsSource="{Binding FailedAssets}" AutoGenerateColumns="False" IsVisible="{Binding ShouldShowAssetFailures}">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="{x:Static p:Resources.AssetHash}"
+                            Binding="{Binding Hash}"
+                            Width="1*"/>
+        <DataGridTextColumn Header="{x:Static p:Resources.Owner}"
+                            Binding="{Binding OwnerId}"
+                            Width="1*"/>
+        <DataGridTextColumn Header="{x:Static p:Resources.Name}"
+                            Binding="{Binding RecordName}"
+                            Width="1*"/>
+        <DataGridTextColumn Header="{x:Static p:Resources.RecordPath}"
+                            Binding="{Binding RecordPath}"/>
+        <DataGridTextColumn Header="{x:Static p:Resources.FailureReason}"
+                            Binding="{Binding Reason}"
+                            Width="2*"/>
       </DataGrid.Columns>
     </DataGrid>
   </StackPanel>

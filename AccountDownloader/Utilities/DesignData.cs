@@ -3,6 +3,7 @@ using AccountDownloader.Utilities;
 using AccountDownloader.ViewModels;
 using AccountDownloaderLibrary;
 using CloudX.Shared;
+using DynamicData;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System;
@@ -59,7 +60,7 @@ namespace AccountDownloader
     }
     public class DesignData
     {
-        public static List<RecordDownloadFailure> GenerateFailList()
+        public static List<RecordDownloadFailure> GenerateRecordFailList()
         {
             var list = new List<RecordDownloadFailure>();
 
@@ -76,7 +77,18 @@ namespace AccountDownloader
             }
             return list;
         }
-        public static readonly FailedRecordsViewModel DesignFailedRecordsViewModel = new(GenerateFailList());
+        public static readonly FailedRecordsViewModel DesignFailedRecordsViewModel = new(GenerateRecordFailList(), GenerateAssetFailList());
+
+        private static List<AssetFailure> GenerateAssetFailList()
+        {
+            var list = new List<AssetFailure>();
+            for (var i = 0; i < 10; i++)
+            {
+                list.Add(new AssetFailure("1234566sodijosdijfoisdjofijsdf9ij", "Asset failed to download", null));
+            }
+            return list;
+        }
+
         public static readonly UserProfileViewModel DesignProfileViewModel = new(new DesignUserProfile());
         private static readonly List<GroupRecord> _groups = new() {
             new GroupRecord("G-Group0", "Group 1 with Long Name", false, new DesignStorageRecord()),
