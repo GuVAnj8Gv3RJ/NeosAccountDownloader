@@ -51,9 +51,6 @@ public class DownloadSelectionViewModel : ViewModelBase, IAccountDownloadConfig
     public string FilePath { get; set; } = "";
 
     [ObservableAsProperty]
-    public string FormattedRequiredBytes { get; } = string.Empty;
-
-    [ObservableAsProperty]
     public long RequiredBytes { get; } = 0;
 
     [ObservableAsProperty]
@@ -120,8 +117,6 @@ public class DownloadSelectionViewModel : ViewModelBase, IAccountDownloadConfig
                 bytes += p.Item2;
                 return bytes;
             });
-        // Format the bytes into a string
-        byteTotal.Select(x => UnitFormatting.FormatBytes(x)).ToPropertyEx(this, x => x.FormattedRequiredBytes);
 
         // Leave the bytes as a number
         byteTotal.ToPropertyEx(this, x => x.RequiredBytes);

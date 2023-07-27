@@ -36,14 +36,11 @@ namespace AccountDownloader
         public DesignStorageRecord()
         {
             Random rand = new Random();
-            FormattedUsed = rand.Next(1, 1000) + " GB";
+            UsedBytes = rand.Next(1000, 10000);
         }
-        public long UsedBytes { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public long UsedBytes { get; set; }
         public long TotalBytes { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public string FormattedUsed { get; set; }
-
-        public string FormattedTotal => throw new NotImplementedException();
 
         public string Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public OwnerType OwnerType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

@@ -35,7 +35,7 @@
       <TextBlock FontStyle="Italic" IsVisible="{Binding ShouldShowRequiredBytes}">
         <TextBlock.Text>
           <MultiBinding StringFormat="{x:Static p:Resources.StorageRequired}">
-              <Binding Path="FormattedRequiredBytes" />
+              <Binding Path="RequiredBytes" Converter="{StaticResource BytesConverter}"/>
           </MultiBinding>
         </TextBlock.Text>
       </TextBlock>
