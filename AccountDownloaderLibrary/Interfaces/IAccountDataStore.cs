@@ -30,11 +30,13 @@ namespace AccountDownloaderLibrary
     {
         public readonly string hash;
         public readonly string reason;
+        public readonly Record forRecord;
 
-        public AssetFailure(string hash, string reason)
+        public AssetFailure(string hash, string reason, Record forRecord)
         {
             this.hash = hash;
             this.reason = reason;
+            this.forRecord = forRecord;
         }
     }
 

@@ -236,6 +236,7 @@ namespace AccountDownloaderLibrary
             TotalAssetCount = count;
         }
 
+        //TODO: I want to move these out of this class
         public string GenerateReport()
         {
             //TODO: some sort of templating library
@@ -244,6 +245,7 @@ namespace AccountDownloaderLibrary
             b.AppendLine("----------------------");
             b.AppendLine($"Contacts: {DownloadedContactCount} / {TotalContactCount}");
             b.AppendLine($"Messages: {DownloadedMessageCount}");
+            b.AppendLine($"Assets: {TotalDownloadedAssetCount}/ {TotalAssetCount}");
             b.AppendLine(UserVariablesStatus.GenerateReport());
             b.AppendLine(UserRecordsStatus.GenerateReport());
 
@@ -264,7 +266,13 @@ namespace AccountDownloaderLibrary
                 b.AppendLine($"Total failed records: {TotalFailedRecordCount}");
             }
 
-
+            // ASSETS
+            if (AssetFailures.Count > 0)
+            {
+                b.AppendLine("Asset Failures");
+                b.AppendLine("----------------------");
+                b.Append(GenerateAssetFailuresReport());
+            }
 
 
             if (!string.IsNullOrEmpty(Error))
@@ -272,6 +280,16 @@ namespace AccountDownloaderLibrary
 
             return b.ToString();
 
+        }
+
+        private string GenerateAssetFailuresReport()
+        {
+            var b = new StringBuilder();
+            foreach(var failure in AssetFailures)
+            {
+                b.AppendLine($"{failure.hash} for {failure.forRecord.Name} at path {failure.forRecord.Path} failed due to {failure.reason}.");
+            }
+            return b.ToString();
         }
     }
 }

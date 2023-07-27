@@ -111,8 +111,8 @@ namespace AccountDownloaderLibrary
                 }
                 catch (Exception ex)
                 {
-                    ProgressMessage?.Invoke($"Exception {job.asset.Hash}: " + ex);
-                    job.callbacks.AssetFailure(new AssetFailure(job.asset.Hash, ex.Message));
+                    ProgressMessage?.Invoke($"Exception in fetching asset with Hash: {job.asset.Hash}: " + ex);
+                    job.callbacks.AssetFailure(new AssetFailure(job.asset.Hash, ex.Message, job.forRecord));
                 }
             }, new ExecutionDataflowBlockOptions()
             {
