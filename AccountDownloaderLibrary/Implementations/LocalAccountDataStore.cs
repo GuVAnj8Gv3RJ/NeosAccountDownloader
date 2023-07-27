@@ -12,14 +12,16 @@ namespace AccountDownloaderLibrary
         readonly struct AssetJob
         {
             public readonly NeosDBAsset asset;
+            public readonly Record forRecord;
             public readonly IAccountDataGatherer source;
             public readonly RecordStatusCallbacks callbacks;
 
-            public AssetJob(NeosDBAsset asset, IAccountDataGatherer source, RecordStatusCallbacks re)
+            public AssetJob(Record forRecord, NeosDBAsset asset, IAccountDataGatherer source, RecordStatusCallbacks re)
             {
                 this.asset = asset;
                 this.source = source;
                 this.callbacks = re;
+                this.forRecord = forRecord;
             }
         }
 
@@ -248,7 +250,7 @@ namespace AccountDownloaderLibrary
 
             if (record.NeosDBManifest != null)
                 foreach (var asset in record.NeosDBManifest)
-                    ScheduleAsset(asset, source, statusCallbacks);
+                    ScheduleAsset(record, asset, source, statusCallbacks);
 
             return null;
         }
@@ -323,12 +325,12 @@ namespace AccountDownloaderLibrary
             return latest;
         }
 
-        void ScheduleAsset(NeosDBAsset asset, IAccountDataGatherer store, RecordStatusCallbacks recordStatusCallbacks)
+        void ScheduleAsset(Record record, NeosDBAsset asset, IAccountDataGatherer store, RecordStatusCallbacks recordStatusCallbacks)
         {
             if (!ScheduledAssets.Add(asset.Hash))
                 return;
 
-            var job = new AssetJob(asset, store, recordStatusCallbacks);
+            var job = new AssetJob(record, asset, store, recordStatusCallbacks);
 
             var diff = new AssetDiff();
             diff.State = AssetDiff.Diff.Added;
