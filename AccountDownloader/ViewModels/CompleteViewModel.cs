@@ -20,22 +20,20 @@ namespace AccountDownloader.ViewModels
 
         public ReactiveCommand<Unit, IRoutableViewModel> StartAnotherDownload { get; }
         public ReactiveCommand<Unit, Unit> Exit { get; }
-
-        // As Status is now essentially "Static" we can setup some static props for it, that make rendering useful
-        public bool HasFailedRecords => Status.TotalFailedRecordCount > 0;
         public CompleteViewModel(IAccountDownloadConfig config, AccountDownloadStatus status)
         {
             Status = status;
             Config = config;
             ProgressStatistics = new ProgressStatisticsViewModel(config, status);
 
+            // Zip up all the records that have failed
             List<RecordDownloadFailure> list = new(status.UserRecordsStatus.FailedRecords);
             foreach (var g in Status.GroupStatuses)
             {
                 list.AddRange(g.RecordsStatus.FailedRecords);
             }
 
-            FailedRecords = new FailedRecordsViewModel(status.UserRecordsStatus.FailedRecords);
+            FailedRecords = new FailedRecordsViewModel(list);
 
             StartAnotherDownload = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new DownloadSelectionViewModel()));
             Exit = ReactiveCommand.Create(ExitFn);

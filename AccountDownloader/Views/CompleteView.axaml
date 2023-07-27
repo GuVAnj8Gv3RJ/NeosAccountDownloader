@@ -12,8 +12,8 @@
   <StackPanel Spacing="10">
     <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Text="{x:Static p:Resources.DownloadCompleteDescription}"/>
     <v:ProgressStatisticsView DataContext="{Binding ProgressStatistics}" HorizontalAlignment="Center"/>
-    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" IsVisible="{Binding HasFailedRecords}" Text="{x:Static p:Resources.DownloadCompleteRecordFailureDescription}" />
-    <ScrollViewer Height="150" IsVisible="{Binding HasFailedRecords}" HorizontalAlignment="Center">
+    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" IsVisible="{Binding FailedRecords.ShouldShow}" Text="{x:Static p:Resources.DownloadCompleteRecordFailureDescription}" />
+    <ScrollViewer Height="150" IsVisible="{Binding FailedRecords.ShouldShow}" HorizontalAlignment="Center">
       <v:FailedRecordsView DataContext="{Binding FailedRecords}" HorizontalAlignment="Center"/>
     </ScrollViewer>
     <TextBlock HorizontalAlignment="Center" Text="{x:Static p:Resources.WouldYouLikeToStartAnotherDownload}" TextWrapping="Wrap"/>
