@@ -106,6 +106,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "rampa3",
+      "name": "rampa3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/68955305?v=4",
+      "profile": "https://github.com/rampa3",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "commitType": "docs"
