@@ -187,7 +187,7 @@ namespace AccountDownloader.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your download failed to aquire some records, you can find their details below, or see the logs for more information..
+        ///   Looks up a localized string similar to Your download failed to aquire some records or assets, you can find their details below, or see the logs for more information..
         /// </summary>
         public static string DownloadCompleteRecordFailureDescription {
             get {
@@ -205,7 +205,7 @@ namespace AccountDownloader.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rate (Items/Worlds per minute).
+        ///   Looks up a localized string similar to Rate (Records per minute).
         /// </summary>
         public static string DownloadRate {
             get {

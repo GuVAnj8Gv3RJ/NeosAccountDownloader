@@ -288,7 +288,7 @@ namespace AccountDownloaderLibrary
             foreach(var failure in AssetFailures)
             {
                 var path = failure.forRecord.Path == string.Empty ? "ROOT or World" : failure.forRecord.Path;
-                b.AppendLine($"{failure.hash} for {failure.forRecord.Name} at path {} failed due to {failure.reason}.");
+                b.AppendLine($"{failure.hash} for {failure.forRecord.Name} at path {path} failed due to {failure.reason}.");
             }
             return b.ToString();
         }

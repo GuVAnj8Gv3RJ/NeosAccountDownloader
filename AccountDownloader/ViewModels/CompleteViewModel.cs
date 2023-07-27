@@ -3,6 +3,7 @@ using AccountDownloaderLibrary;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using System.Collections.Generic;
 using System.Reactive;
 
@@ -17,6 +18,9 @@ namespace AccountDownloader.ViewModels
         public ProgressStatisticsViewModel ProgressStatistics { get; }
 
         public FailedRecordsViewModel FailedRecords { get; }
+
+        [Reactive]
+        public bool ShouldShowFailureMessage { get; set; } = false;
 
         public ReactiveCommand<Unit, IRoutableViewModel> StartAnotherDownload { get; }
         public ReactiveCommand<Unit, Unit> Exit { get; }
@@ -34,6 +38,9 @@ namespace AccountDownloader.ViewModels
             }
 
             FailedRecords = new FailedRecordsViewModel(list);
+
+            if (list.Count > 0 || Status.AssetFailures.Count > 0)
+                ShouldShowFailureMessage = true;
 
             StartAnotherDownload = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new DownloadSelectionViewModel()));
             Exit = ReactiveCommand.Create(ExitFn);

@@ -271,7 +271,7 @@
     <value>Yes</value>
   </data>
   <data name="DownloadRate" xml:space="preserve">
-    <value>Rate (Items/Worlds per minute)</value>
+    <value>Rate (Records per minute)</value>
   </data>
   <data name="DownloadComplete" xml:space="preserve">
     <value>Download Complete!</value>
@@ -283,7 +283,7 @@
     <value>Your download is complete. Below is a report detailing some statistics from the download. A copy of this has also been written to a log files.</value>
   </data>
   <data name="DownloadCompleteRecordFailureDescription" xml:space="preserve">
-    <value>Your download failed to aquire some records, you can find their details below, or see the logs for more information.</value>
+    <value>Your download failed to aquire some records or assets, you can find their details below, or see the logs for more information.</value>
   </data>
   <data name="UserRecords" xml:space="preserve">
     <value>User Records</value>
