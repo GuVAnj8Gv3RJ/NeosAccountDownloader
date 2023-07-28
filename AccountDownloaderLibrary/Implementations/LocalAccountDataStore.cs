@@ -96,8 +96,30 @@ namespace AccountDownloaderLibrary
             {
                 var path = GetAssetPath(job.asset.Hash);
 
-                if (File.Exists(path))
+                var ext = await job.source.GetAssetExtension(job.asset.Hash);
+
+                if (ext != null)
+                {
+                    var pathWithExtension = path + $".{ext}";
+
+                    // We already have this asset and it's in the right location
+                    if (File.Exists(pathWithExtension))
+                        return;
+
+                    // We already have this asset but it is not in the right location/doesn't have an extension
+                    if (File.Exists(path) && !File.Exists(pathWithExtension))
+                    {
+                        File.Move(path, pathWithExtension);
+                        return;
+                    }
+
+                    // If we're here, we're going to proceed downloading the file
+                    path = pathWithExtension;
+                }
+                else if(File.Exists(path))
+                {
                     return;
+                } 
 
                 try
                 {
@@ -377,6 +399,12 @@ namespace AccountDownloaderLibrary
             ReleaseLocks();
             DownloadProcessor.Complete();
             return Task.CompletedTask;
+        }
+
+        public Task<string> GetAssetExtension(string hash)
+        {
+            //TODO
+            throw new NotImplementedException();
         }
     }
 }

@@ -73,6 +73,7 @@ namespace AccountDownloaderLibrary
         Task DownloadAsset(string hash, string targetPath);
         Task<string> GetAsset(string hash);
         Task<AssetData> ReadAsset(string hash);
+        Task<string> GetAssetExtension(string hash);
 
         Task<List<CloudVariableDefinition>> GetVariableDefinitions(string ownerId);
         Task<CloudVariable> GetVariable(string ownerId, string path);

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using AccountDownloaderLibrary.Mime;
 using CloudX.Shared;
 
 namespace AccountDownloaderLibrary
@@ -262,7 +263,7 @@ namespace AccountDownloaderLibrary
         }
 
         public virtual async Task DownloadAsset(string hash, string targetPath)
-        {            
+        {
             await WebClient.DownloadFileTaskAsync(
                 CloudXInterface.NeosDBToHttp(new Uri($"{DB_PREFIX}{hash}"), NeosDB_Endpoint.Default), targetPath);
         }
@@ -279,7 +280,7 @@ namespace AccountDownloaderLibrary
 
         public virtual async Task<string> GetAsset(string hash)
         {
-            var tempPath = System.IO.Path.GetTempFileName();
+            var tempPath = Path.GetTempFileName();
             await DownloadAsset(hash, tempPath).ConfigureAwait(false);
             return tempPath;
         }
@@ -292,6 +293,16 @@ namespace AccountDownloaderLibrary
         public Task Cancel()
         {
             return Task.CompletedTask;
+        }
+
+        //TODO: Nullables
+        public async Task<string> GetAssetExtension(string hash)
+        {
+            var result = await Cloud.GetAssetMime(hash);
+            if (result.IsOK)
+                return MimeDetector.Instance.ExtensionFromMime(result.Content);
+
+            return null;
         }
     }
 }

@@ -2,53 +2,68 @@
 using MimeDetective.Definitions;
 using MimeDetective.Storage;
 using System.Collections.Immutable;
+//TODO: nullables
+#nullable enable
+namespace AccountDownloaderLibrary.Mime;
 
-namespace AccountDownloaderLibrary.Mime
+public class MimeDetector
 {
-    public class MimeDetector
+    public static readonly MimeDetector Instance = new MimeDetector();
+
+    private ContentInspector Inspector { get; }
+
+    private MimeTypeToFileExtensionLookup MimeTypeToFileExtensionLookup { get; }
+
+    //TODO: DI
+    private MimeDetector()
     {
-        public static readonly MimeDetector Instance = new MimeDetector();
-
-        private ContentInspector inspector = null;
-
-        private MimeDetector()
+        ImmutableArray<Definition> exhaustiveDefs = new ExhaustiveBuilder()
         {
-            ImmutableArray<Definition> exhaustiveDefs = new ExhaustiveBuilder()
-            {
-                UsageType = MimeDetective.Definitions.Licensing.UsageType.PersonalNonCommercial
-            }.Build();
+            UsageType = MimeDetective.Definitions.Licensing.UsageType.PersonalNonCommercial
+        }.Build();
 
-            ImmutableArray<Definition>.Builder AllBuildier = ImmutableArray.CreateBuilder<Definition>();
-            AllBuildier.AddRange(exhaustiveDefs);
-            AllBuildier.AddRange(CustomTypes.MESHX());
+        //TODO: do we need exhaustive?
+        //TODO: trim: https://github.com/MediatedCommunications/Mime-Detective#1--trim-the-data-you-dont-need
+        ImmutableArray<Definition>.Builder AllBuildier = ImmutableArray.CreateBuilder<Definition>();
+        AllBuildier.AddRange(exhaustiveDefs);
+        AllBuildier.AddRange(CustomTypes.MESHX());
 
-            var all = AllBuildier.ToImmutable();
+        var all = AllBuildier.ToImmutable();
 
-            inspector = new ContentInspectorBuilder()
-            {
-                Definitions = all
-            }.Build();
-        }
-
-        public string MostLikelyFileExtension(string filePath)
+        Inspector = new ContentInspectorBuilder()
         {
-            return ChooseMostLikely(inspector.Inspect(filePath).ByFileExtension());
-        }
+            Definitions = all
+        }.Build();
 
-        public string MostLikelyFileExtension(FileStream stream)
+        MimeTypeToFileExtensionLookup = new MimeTypeToFileExtensionLookupBuilder()
         {
-            return ChooseMostLikely(inspector.Inspect(stream).ByFileExtension());
-        }
-
-        public string MostLikelyFileExtension(Stream stream)
-        {
-            return ChooseMostLikely(inspector.Inspect(stream).ByFileExtension());
-        }
-
-        private string ChooseMostLikely(ImmutableArray<MimeDetective.Engine.FileExtensionMatch> results)
-        {
-            return results.First().Extension;
-        }
-
+            Definitions = all
+        }.Build();
     }
+
+    public string? ExtensionFromMime(string mime)
+    {
+        return MimeTypeToFileExtensionLookup.TryGetValue(mime);
+    }
+
+    public string MostLikelyFileExtension(string filePath)
+    {
+        return ChooseMostLikely(Inspector.Inspect(filePath).ByFileExtension());
+    }
+
+    public string MostLikelyFileExtension(FileStream stream)
+    {
+        return ChooseMostLikely(Inspector.Inspect(stream).ByFileExtension());
+    }
+
+    public string MostLikelyFileExtension(Stream stream)
+    {
+        return ChooseMostLikely(Inspector.Inspect(stream).ByFileExtension());
+    }
+
+    private string ChooseMostLikely(ImmutableArray<MimeDetective.Engine.FileExtensionMatch> results)
+    {
+        return results.First().Extension;
+    }
+
 }
