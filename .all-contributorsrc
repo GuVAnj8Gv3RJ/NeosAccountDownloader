@@ -115,6 +115,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "ThomFox",
+      "name": "ThomFox",
+      "avatar_url": "https://avatars.githubusercontent.com/u/137287064?v=4",
+      "profile": "https://github.com/ThomFox",
+      "contributions": [
+        "research"
+      ]
     }
   ],
   "commitType": "docs"
