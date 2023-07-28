@@ -3,7 +3,7 @@
 A small tool/utility to download your Neos Account contents to your local computer.
 
 # Disclaimer
-While every effort is made to download everything from your account, this utility may miss or lose some data. As such we're unable to offer any guarentee or warranty on this application's ability. This is in line with the License but this additional disclaimer is here in the hopes of transparency.
+While every effort is made to download everything from your account, this utility may miss or lose some data. As such we're unable to offer any guarantee or warranty on this application's ability. This is in line with the License but this additional disclaimer is here in the hopes of transparency.
 
 Please refer to the [License](LICENSE.md) file for additional commentary.
 
@@ -35,6 +35,17 @@ Yes, but if you do this, you'll need to use two separate folders which we do not
 ## Do subsequent downloads, re-download assets?
 For assets, we skip downloading them if an existing asset is found. This makes many downloads incremental rather than starting from scratch.
 
+## Why is assets  showing as 0/XYZ?
+For assets, we skip downloading them if an existing asset is found. If your progress statistics or report etc. show 0/xyz etc then it means that no new assets were found.
+
+## What's the difference between Assets and Records/Items/Worlds/Avatars?
+This diagram might help:
+![](docs/AssetsVsNonAssets.png)
+
+- Assets: Anything that makes up an element in Neos that is not the structure of it within the inspector. So Image,Sounds,Videos,Model Files. These are downloaded incrementally
+- Records: Records contain a manifest of all assets that are required to represent an item or world. These are downloaded each time.
+- Everything Else: JSON Soup. Just JSON Files of various types. Contacts, Messages etc. These are downloaded each time.
+
 # Known Issues
 
 ## Localization isn't instant
@@ -42,7 +53,7 @@ If you switch languages then the currently active page you're on will not update
 
 Localization defaults to your computer's language, so for most people this hopefully should not be a problem, but for now change your language on the Getting Started screen.
 
-## Progress Metrics aren't 100% Acurate
+## Progress Metrics aren't 100% Accurate
 Neos assets and records are stored in a way that makes it difficult for us to estimate the total number of records required for download. Due to this we sometimes discover more that need to be queued for download as we go. Causing numbers to jump around a little bit.
 
 # Contributing
