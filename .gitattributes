@@ -8,10 +8,10 @@
 *.config diff=xml
 
 # Code!
-*.cs     diff=csharp
-*.tt     diff=csharp
-*.xaml diff=xml
-*.axaml diff=xml
+*.cs     diff=csharp eol=crlf
+*.tt     diff=csharp eol=crlf
+*.xaml diff=xml eol=crlf
+*.axaml diff=xml eol=crlf
 
 # Special files from Visual Studio, These need crlf
 *.sln       merge=binary eol=crlf
