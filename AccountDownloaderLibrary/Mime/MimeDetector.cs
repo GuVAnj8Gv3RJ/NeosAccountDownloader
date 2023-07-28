@@ -17,13 +17,16 @@ public class MimeDetector
     //TODO: DI
     private MimeDetector()
     {
-        ImmutableArray<Definition> exhaustiveDefs = new ExhaustiveBuilder()
+        ///trimmed: https://github.com/MediatedCommunications/Mime-Detective#1--trim-the-data-you-dont-need
+        var exhaustiveDefs = new ExhaustiveBuilder()
         {
             UsageType = MimeDetective.Definitions.Licensing.UsageType.PersonalNonCommercial
-        }.Build();
+        }.Build()
+        .TrimDescription()
+        .TrimMeta()
+        .TrimCategories();
 
         //TODO: do we need exhaustive?
-        //TODO: trim: https://github.com/MediatedCommunications/Mime-Detective#1--trim-the-data-you-dont-need
         ImmutableArray<Definition>.Builder AllBuildier = ImmutableArray.CreateBuilder<Definition>();
         AllBuildier.AddRange(exhaustiveDefs);
         AllBuildier.AddRange(CustomTypes.MESHX());
@@ -32,7 +35,8 @@ public class MimeDetector
 
         Inspector = new ContentInspectorBuilder()
         {
-            Definitions = all
+            Definitions = all,
+            Parallel = true,
         }.Build();
 
         MimeTypeToFileExtensionLookup = new MimeTypeToFileExtensionLookupBuilder()
