@@ -26,13 +26,15 @@
 				  <DataTemplate>
 					  <CheckBox IsChecked="{Binding ShouldDownload}" VerticalContentAlignment="Top">
               <StackPanel Orientation="Vertical">
-                  <StackPanel Orientation="Horizontal">
-                      <TextBlock Text="{Binding Name}" Width="125" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
-                  </StackPanel>
-                  <StackPanel Orientation="Horizontal" Spacing="2">
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="{Binding Name}" Width="125" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="2">
+                  <TextBlock>
                     <TextBlock FontSize="12" Text="{Binding Storage.UsedBytes, Converter={StaticResource BytesConverter}}"/>
                     <TextBlock FontSize="12" Text="{x:Static p:Resources.GroupsAdminIndicator}" IsVisible="{Binding IsAdmin}"/>
-                  </StackPanel>
+                  </TextBlock>
+                </StackPanel>
               </StackPanel>
             </CheckBox>
 				  </DataTemplate>
