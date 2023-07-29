@@ -361,9 +361,11 @@ namespace AccountDownloaderLibrary
 
             var job = new AssetJob(record, asset, store, recordStatusCallbacks);
 
-            var diff = new AssetDiff();
-            diff.State = AssetDiff.Diff.Added;
-            diff.Bytes = asset.Bytes;
+            var diff = new AssetDiff
+            {
+                State = AssetDiff.Diff.Added,
+                Bytes = asset.Bytes
+            };
 
             recordStatusCallbacks.AssetToUploadAdded(diff);
 

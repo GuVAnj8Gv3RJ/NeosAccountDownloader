@@ -74,7 +74,7 @@ namespace AccountDownloader
             services.Register<IAccountDownloader>(() => new AccountDownloadManager(resolve.GetService<CloudXInterface>(), resolve.GetService<ILogger>()));
             services.Register<IStorageService>(() => new CloudStorageService(resolve.GetService<CloudXInterface>(), resolve.GetService<ILogger>()));
             services.Register<IGroupsService>(() => new GroupsService(resolve.GetService<CloudXInterface>(), resolve.GetService<IStorageService>(), resolve.GetService<ILogger>()));
-            services.RegisterLazySingleton<ContributionsService>(() => new ContributionsService());
+            services.RegisterLazySingleton(() => new ContributionsService(resolve.GetService<ILogger>()));
         }
     }
 }
