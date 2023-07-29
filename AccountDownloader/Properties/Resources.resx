@@ -321,4 +321,7 @@
   <data name="Records" xml:space="preserve">
     <value>Records</value>
   </data>
+  <data name="Skipped" xml:space="preserve">
+    <value>Skipped</value>
+  </data>
 </root>

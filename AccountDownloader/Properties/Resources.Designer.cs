@@ -583,6 +583,15 @@ namespace AccountDownloader.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Skipped.
+        /// </summary>
+        public static string Skipped {
+            get {
+                return ResourceManager.GetString("Skipped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start Download.
         /// </summary>
         public static string StartDownload {

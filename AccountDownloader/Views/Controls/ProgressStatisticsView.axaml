@@ -53,10 +53,12 @@
     </TextBlock>
     <TextBlock IsVisible="{Binding Config.InventoryWorlds}">
       <TextBlock.Text>
-        <MultiBinding StringFormat="{}{0}: {1} / {2}">
+        <MultiBinding StringFormat="{}{0}: {1} / {2} ({3} {4})">
           <Binding Source="{x:Static p:Resources.Assets}" />
           <Binding Path="Status.TotalDownloadedAssetCount" />
           <Binding Path="Status.TotalAssetCount" Converter="{StaticResource ZeroConverter}" ConverterParameter="{x:Static p:Resources.Pending}"/>
+          <Binding Path="Status.AssetsSkipped" />
+          <Binding Source="{x:Static p:Resources.Skipped}" />
         </MultiBinding>
       </TextBlock.Text>
     </TextBlock>

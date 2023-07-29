@@ -48,8 +48,9 @@ namespace AccountDownloaderLibrary
     {
         public Action<AssetDiff> AssetToUploadAdded;
         public Action<long> BytesUploaded;
-        public Action AssetUploaded;
+        public Action<string> AssetUploaded;
         public Action<AssetFailure> AssetFailure;
+        public Action<string> AssetSkipped;
     }
 
     public interface IAccountDataGatherer
