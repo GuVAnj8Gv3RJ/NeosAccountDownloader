@@ -134,6 +134,8 @@ namespace AccountDownloaderLibrary
         public int TotalAssetCount { get; set; } = 0;
         public int TotalDownloadedAssetCount { get; set; } = 0;
 
+        public int AssetSkipped { get; set; } = 0;
+
         public int TotalFailedRecordCount
         {
             get
@@ -170,6 +172,8 @@ namespace AccountDownloaderLibrary
                 return Percentage(TotalGroupCount, DownloadedGroupCount);
             }
         }
+
+        
 
         private float Percentage(int current, int total)
         {

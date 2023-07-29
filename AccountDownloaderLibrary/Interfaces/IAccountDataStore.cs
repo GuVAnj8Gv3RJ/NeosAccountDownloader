@@ -44,12 +44,27 @@ namespace AccountDownloaderLibrary
         }
     }
 
+    public enum AssetResultType
+    {
+        Unknown = 0,
+        Downloaded,
+        Skipped,
+        Error
+    }
+    public class AssetResult
+    {
+        public string Hash { get; }
+        public string Reason { get; }
+        public AssetResultType ResultType { get; }
+    }
+
     public class RecordStatusCallbacks
     {
         public Action<AssetDiff> AssetToUploadAdded;
         public Action<long> BytesUploaded;
-        public Action AssetUploaded;
+        public Action<string> AssetUploaded;
         public Action<AssetFailure> AssetFailure;
+        public Action<string> AssetSkipped;
     }
 
     public interface IAccountDataGatherer

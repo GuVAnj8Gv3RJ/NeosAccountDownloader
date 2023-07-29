@@ -306,12 +306,17 @@ namespace AccountDownloaderLibrary
                     lock (status)
                         status.BytesUploaded += bytes;
                 },
-                AssetUploaded = () =>
+                AssetUploaded = hash =>
                 {
                     lock (status)
                         status.AssetsUploaded++;
                 },
-                AssetFailure =  failure => Status.RegisterAssetFailure(failure)
+                AssetFailure =  failure => Status.RegisterAssetFailure(failure),
+                AssetSkipped = hash =>
+                {
+                    lock (status)
+                        Status.AssetSkipped++;
+                }
             };
         }
 

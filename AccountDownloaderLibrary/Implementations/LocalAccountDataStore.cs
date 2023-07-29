@@ -104,11 +104,17 @@ namespace AccountDownloaderLibrary
 
                     // We already have this asset and it's in the right location
                     if (File.Exists(pathWithExtension))
+                    {
+                        job.callbacks.AssetSkipped(job.asset.Hash);
                         return;
+                    }
 
                     // We already have this asset but it is not in the right location/doesn't have an extension
                     if (File.Exists(path) && !File.Exists(pathWithExtension))
                     {
+                        //Technically it is skipped, but moved.
+                        job.callbacks.AssetSkipped(job.asset.Hash);
+
                         File.Move(path, pathWithExtension);
                         return;
                     }
@@ -118,6 +124,7 @@ namespace AccountDownloaderLibrary
                 }
                 else if(File.Exists(path))
                 {
+                    job.callbacks.AssetSkipped(job.asset.Hash);
                     return;
                 } 
 
@@ -127,7 +134,7 @@ namespace AccountDownloaderLibrary
 
                     await job.source.DownloadAsset(job.asset.Hash, path).ConfigureAwait(false);
 
-                    job.callbacks.AssetUploaded();
+                    job.callbacks.AssetUploaded(job.asset.Hash);
 
                     ProgressMessage?.Invoke($"Finished download {job.asset.Hash}");
                 }
