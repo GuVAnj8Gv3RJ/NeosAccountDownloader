@@ -134,7 +134,7 @@ namespace AccountDownloaderLibrary
         public int TotalAssetCount { get; set; } = 0;
         public int TotalDownloadedAssetCount { get; set; } = 0;
 
-        public int AssetSkipped { get; set; } = 0;
+        public int AssetsSkipped { get; set; } = 0;
 
         public int TotalFailedRecordCount
         {
@@ -269,6 +269,9 @@ namespace AccountDownloaderLibrary
                 b.AppendLine($"Total records:  {TotalDownloadedRecordCount} / {TotalRecordCount}");
                 b.AppendLine($"Total failed records: {TotalFailedRecordCount}");
             }
+
+            if (AssetsSkipped > 0)
+                b.AppendLine($"{AssetsSkipped} Assets were skipped because they were already downloaded.");
 
             // ASSETS
             if (AssetFailures.Count > 0)

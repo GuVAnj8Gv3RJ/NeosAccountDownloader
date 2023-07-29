@@ -315,7 +315,7 @@ namespace AccountDownloaderLibrary
                 AssetSkipped = hash =>
                 {
                     lock (status)
-                        Status.AssetSkipped++;
+                        Status.AssetsSkipped++;
                 }
             };
         }
