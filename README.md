@@ -7,10 +7,21 @@ While every effort is made to download everything from your account, this utilit
 
 Please refer to the [License](LICENSE.md) file for additional commentary.
 
+
+# Download Instructions
+
+1. Click [this link](https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/releases/tag/latest)
+2. Scroll to the section of the page that says "Assets".
+3. Click on the Asset(Zip File) that matches your operating system (Windows or Linux) (You **DO NOT** need the source code zips)
+4. It will download
+5. UnZip the downloaded Zip file
+6. Enter the folder from the Zip file
+7. Run the Exe (Neos Account Downloader.exe) by double clicking it.
+
 # FAQ
 
 ## How do I download this?
-Use the [releases tab](https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/releases), grab the latest.
+Follow the instructions above.
 
 ## Why does this exist?
 Backing up Neos content given the current circumstances seemed wise.
