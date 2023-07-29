@@ -20,5 +20,18 @@ namespace AccountDownloaderLibrary.Mime
                 },
             }.ToImmutableArray();
         }
+
+        public static ImmutableArray<Definition> ANIMX() =>
+        new List<Definition>() {
+            new() {
+                File = new() {
+                    Extensions = new[]{"animx"}.ToImmutableArray(),
+                    MimeType = "application/octet-stream"
+                },
+                Signature = new Segment[] {
+                    PrefixSegment.Create(0, "05 41 6E 69 6D 58"),
+                }.ToSignature()
+            },
+        }.ToImmutableArray();
     }
 }

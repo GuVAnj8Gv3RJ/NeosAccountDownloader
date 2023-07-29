@@ -30,6 +30,7 @@ public class MimeDetector
         ImmutableArray<Definition>.Builder AllBuildier = ImmutableArray.CreateBuilder<Definition>();
         AllBuildier.AddRange(exhaustiveDefs);
         AllBuildier.AddRange(CustomTypes.MESHX());
+        AllBuildier.AddRange(CustomTypes.ANIMX());
 
         var all = AllBuildier.ToImmutable();
 
