@@ -66,6 +66,9 @@ jobs:
         key: neos-dlls
         fail-on-cache-miss: true
         enableCrossOsArchive: true
+    - name: Copy Contributors
+      run: |
+        cp .all-contributorsrc AccountDownloader/Assets
     - name: Build Linux app
       run: |
         cd AccountDownloader
