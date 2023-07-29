@@ -10,11 +10,26 @@
              x:CompileBindings="True">
     <StackPanel VerticalAlignment="Center" Spacing="20">
         <TextBlock Text="{x:Static p:Resources.LoginPrompt}" Padding="0"/>
-        <Grid ColumnDefinitions="*,*" RowDefinitions="*,10,*">
-            <Label Grid.Row="0" Content="{x:Static p:Resources.Username}" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="0" Text="{Binding Username}" Watermark="{x:Static p:Resources.Username}" Width="200"/>
-            <Label Grid.Row="2" Content="{x:Static p:Resources.Password}" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding Password}" Grid.Row="2" Watermark="{x:Static p:Resources.Password}" PasswordChar="*" Width="200"/>
+        <Grid ColumnDefinitions="Auto,Auto"
+              RowDefinitions="Auto,10,Auto">
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   Content="{x:Static p:Resources.Username}"
+                   VerticalAlignment="Center"/>
+            <TextBox Grid.Row="0"
+                     Grid.Column="1"
+                     Text="{Binding Username}"
+                     Watermark="{x:Static p:Resources.Username}"
+                     Width="200"/>
+            <Label Grid.Row="2"
+                   Grid.Column="0"
+                   Content="{x:Static p:Resources.Password}"
+                   VerticalAlignment="Center"/>
+            <TextBox Text="{Binding Password}"
+                     Grid.Row="2"
+                     Grid.Column="1"
+                     Watermark="{x:Static p:Resources.Password}"
+                     PasswordChar="*" Width="200"/>
         </Grid>
         <Button Width="200" Command="{Binding Login}" HorizontalAlignment="Center" Name="LoginButton">
             <TextBlock Text="{x:Static p:Resources.Login}" HorizontalAlignment="Center"></TextBlock>
