@@ -44,20 +44,6 @@ namespace AccountDownloaderLibrary
         }
     }
 
-    public enum AssetResultType
-    {
-        Unknown = 0,
-        Downloaded,
-        Skipped,
-        Error
-    }
-    public class AssetResult
-    {
-        public string Hash { get; }
-        public string Reason { get; }
-        public AssetResultType ResultType { get; }
-    }
-
     public class RecordStatusCallbacks
     {
         public Action<AssetDiff> AssetToUploadAdded;
