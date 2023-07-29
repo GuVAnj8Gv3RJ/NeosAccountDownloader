@@ -98,6 +98,9 @@ namespace AccountDownloaderLibrary
 
                 var ext = await job.source.GetAssetExtension(job.asset.Hash);
 
+                if (ext == null)
+                    ProgressMessage?.Invoke($"Asset: {job.asset.Hash} has an unknown extension");
+
                 if (ext != null)
                 {
                     var pathWithExtension = path + $".{ext}";
