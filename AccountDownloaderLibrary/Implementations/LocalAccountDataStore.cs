@@ -123,22 +123,6 @@ namespace AccountDownloaderLibrary
                     ProgressMessage?.Invoke($"Asset: {job.asset.Hash} with: {extResult.MimeType} has a missing extension");
                 }
 
-                //Handle funny mimes
-                //if (AmbiguousMimes.Contains(extResult.MimeType))
-                //{
-                //    ProgressMessage?.Invoke($"Asset: {job.asset.Hash} has a sussy mime.");
-
-                //    IEnumerable<FileExtensionMatch> res = MimeDetector.Instance.PossibleExtensions(extResult.MimeType);
-                //    foreach (FileExtensionMatch r in res)
-                //    {
-                //        ProgressMessage?.Invoke($"Asset: {job.asset.Hash}, {r.Extension}, {r.Points}");
-                //    }
-                //}
-
-                //Log this as Debug
-
-               
-
                 // Downloaded and with extension, skip
                 if (File.Exists(path))
                 {
