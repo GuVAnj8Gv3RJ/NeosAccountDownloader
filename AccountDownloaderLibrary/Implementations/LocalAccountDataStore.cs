@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks.Dataflow;
-using System.Text.Json;
+﻿using AccountDownloaderLibrary.Extensions;
+using AccountDownloaderLibrary.Mime;
 using CloudX.Shared;
-using AccountDownloaderLibrary.Extensions;
-using Medallion.Threading.FileSystem;
 using ConcurrentCollections;
+using Medallion.Threading.FileSystem;
+using MimeDetective.Engine;
+using System.Text.Json;
+using System.Threading.Tasks.Dataflow;
 
 namespace AccountDownloaderLibrary
 {
@@ -60,7 +62,8 @@ namespace AccountDownloaderLibrary
             Config = config;
         }
 
-        public async Task Prepare(CancellationToken token) {
+        public async Task Prepare(CancellationToken token)
+        {
             var lockFileDirectory = new DirectoryInfo(BasePath);
             CancelToken = token;
 
@@ -74,7 +77,7 @@ namespace AccountDownloaderLibrary
                 if (DirectoryLock != null)
                     return;
             }
-            catch 
+            catch
             {
                 throw new DataStoreInUseException("Could not aquire a lock on LocalAccountStore is this path in use by another tool?");
             }
@@ -88,51 +91,69 @@ namespace AccountDownloaderLibrary
             ReleaseLocks();
         }
 
+        // These are mimes which Neos is potentially confused or weirded out by
+        // Was going to call these "SussyMimes"
+        private HashSet<string> AmbiguousMimes = new()
+        {
+            "application/octet-stream",
+        };
+
+        //TODO: Retries
+        //TODO: logging, I need an ILogger here
+        //TODO: the extension stuff is getting complicated and I want to move that out of here/re-arch but everytime I do another file type wants to have special handling. I'll move it later. 
         void InitDownloadProcessor(CancellationToken token)
         {
             Directory.CreateDirectory(AssetsPath);
 
             DownloadProcessor = new ActionBlock<AssetJob>(async job =>
             {
-                var path = GetAssetPath(job.asset.Hash);
 
-                var ext = await job.source.GetAssetExtension(job.asset.Hash);
+                var originalPath = GetAssetPath(job.asset.Hash);
+                var path = originalPath;
 
-                if (ext != null)
+                // When it comes to Mimetypes, we start with the principle of "Trust what neos says"
+                var extResult = await job.source.GetAssetExtension(job.asset.Hash);
+
+                if (extResult == null)
                 {
-                    var pathWithExtension = path + $".{ext}";
-
-                    // We already have this asset and it's in the right location
-                    if (File.Exists(pathWithExtension))
-                    {
-                        job.callbacks.AssetSkipped(job.asset.Hash);
-                        return;
-                    }
-
-                    // We already have this asset but it is not in the right location/doesn't have an extension
-                    if (File.Exists(path) && !File.Exists(pathWithExtension))
-                    {
-                        //Technically it is skipped, but moved.
-                        job.callbacks.AssetSkipped(job.asset.Hash);
-
-                        File.Move(path, pathWithExtension);
-                        return;
-                    }
-
-                    // If we're here, we're going to proceed downloading the file
-                    path = pathWithExtension;
+                    ProgressMessage?.Invoke($"Failed to get details about asset: {job.asset.Hash}");
                 }
-                else if(File.Exists(path))
+
+                if (extResult.Extension != null)
+                {
+                    path += $".{extResult.Extension}";
+                } else
+                {
+                    ProgressMessage?.Invoke($"Asset: {job.asset.Hash} with: {extResult.MimeType} has a missing extension");
+                }
+
+                // Downloaded and with extension, skip
+                if (File.Exists(path))
                 {
                     job.callbacks.AssetSkipped(job.asset.Hash);
+                    if (AmbiguousMimes.Contains(extResult.MimeType))
+                        PostProcessAmbiguousMime(path, extResult);
                     return;
-                } 
+                }
+
+                // Downloaded but no extension move so it has extension.
+                // Only if the paths have changed
+                if (File.Exists(originalPath) && originalPath != path)
+                {
+                    //Technically it is not skipped, but moved.
+                    job.callbacks.AssetSkipped(job.asset.Hash);
+
+                    File.Move(originalPath, path);
+                    return;
+                }
 
                 try
                 {
-                    ProgressMessage?.Invoke($"Downloading asset {job.asset}");
+                    ProgressMessage?.Invoke($"Downloading asset {job.asset.Hash}");
 
                     await job.source.DownloadAsset(job.asset.Hash, path).ConfigureAwait(false);
+                    if (AmbiguousMimes.Contains(extResult.MimeType))
+                        PostProcessAmbiguousMime(path, extResult);
 
                     job.callbacks.AssetUploaded(job.asset.Hash);
 
@@ -148,6 +169,19 @@ namespace AccountDownloaderLibrary
                 CancellationToken = token,
                 MaxDegreeOfParallelism = Config.MaxDegreeOfParallelism,
             });
+        }
+
+        private void PostProcessAmbiguousMime(string path, IExtensionResult res)
+        {
+            var ext = MimeDetector.Instance.MostLikelyFileExtension(path);
+            if (ext == null)
+                return;
+
+            if (ext == res.Extension)
+                return;
+
+            // Go with the actual Byte analysis
+            File.Move(path, path.Replace($".{res.Extension}", $".ext"));
         }
 
         public User GetUserMetadata() => GetEntity<User>(UserMetadataPath(UserId));
@@ -410,7 +444,7 @@ namespace AccountDownloaderLibrary
             return Task.CompletedTask;
         }
 
-        public Task<string> GetAssetExtension(string hash)
+        Task<IExtensionResult> IAccountDataGatherer.GetAssetExtension(string hash)
         {
             //TODO
             throw new NotImplementedException();

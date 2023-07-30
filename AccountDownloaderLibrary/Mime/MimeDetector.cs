@@ -1,5 +1,6 @@
 ﻿using MimeDetective;
 using MimeDetective.Definitions;
+using MimeDetective.Engine;
 using MimeDetective.Storage;
 using System.Collections.Immutable;
 //TODO: nullables
@@ -29,8 +30,8 @@ public class MimeDetector
         //TODO: do we need exhaustive?
         ImmutableArray<Definition>.Builder AllBuildier = ImmutableArray.CreateBuilder<Definition>();
         AllBuildier.AddRange(exhaustiveDefs);
-        AllBuildier.AddRange(CustomTypes.MESHX());
-        AllBuildier.AddRange(CustomTypes.ANIMX());
+        AllBuildier.AddRange(CustomTypes.CustomNeosFiles());
+        AllBuildier.AddRange(StrangeTypes.BrokenTypes());
 
         var all = AllBuildier.ToImmutable();
 
@@ -46,29 +47,37 @@ public class MimeDetector
         }.Build();
     }
 
+    // Gets the first value
     public string? ExtensionFromMime(string mime)
     {
         return MimeTypeToFileExtensionLookup.TryGetValue(mime);
     }
 
-    public string MostLikelyFileExtension(string filePath)
+    public IEnumerable<FileExtensionMatch>? PossibleExtensions(string mime)
+    {
+        return MimeTypeToFileExtensionLookup.TryGetValues(mime);
+    }
+
+    public string? MostLikelyFileExtension(string filePath)
     {
         return ChooseMostLikely(Inspector.Inspect(filePath).ByFileExtension());
     }
 
-    public string MostLikelyFileExtension(FileStream stream)
+    public string? MostLikelyFileExtension(FileStream stream)
     {
         return ChooseMostLikely(Inspector.Inspect(stream).ByFileExtension());
     }
 
-    public string MostLikelyFileExtension(Stream stream)
+    public string? MostLikelyFileExtension(Stream stream)
     {
         return ChooseMostLikely(Inspector.Inspect(stream).ByFileExtension());
     }
 
-    private string ChooseMostLikely(ImmutableArray<MimeDetective.Engine.FileExtensionMatch> results)
+    private string? ChooseMostLikely(ImmutableArray<MimeDetective.Engine.FileExtensionMatch> results)
     {
-        return results.First().Extension;
+        if (results.Count() > 0)
+            return results.First().Extension;
+        return null;
     }
 
 }

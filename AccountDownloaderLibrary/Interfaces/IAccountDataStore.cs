@@ -26,6 +26,11 @@ namespace AccountDownloaderLibrary
         }
     }
 
+    public interface IExtensionResult {
+        string Extension { get; }
+        string MimeType { get; }
+    }
+
     public class AssetFailure
     {
         public string Hash { get; }
@@ -74,7 +79,7 @@ namespace AccountDownloaderLibrary
         Task DownloadAsset(string hash, string targetPath);
         Task<string> GetAsset(string hash);
         Task<AssetData> ReadAsset(string hash);
-        Task<string> GetAssetExtension(string hash);
+        Task<IExtensionResult> GetAssetExtension(string hash);
 
         Task<List<CloudVariableDefinition>> GetVariableDefinitions(string ownerId);
         Task<CloudVariable> GetVariable(string ownerId, string path);

@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountDownloaderLibrary", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountDownloader.Generators", "AccountDownloader.Generators\AccountDownloader.Generators.csproj", "{172677B2-0C40-4C10-B669-61DFB09178F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountDownloader.MimeTester", "AccountDownloader.MimeTester\AccountDownloader.MimeTester.csproj", "{36E24FD4-A012-4ECF-BC16-549AA5D2FBE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountDownloader.MimeTester", "AccountDownloader.MimeTester\AccountDownloader.MimeTester.csproj", "{36E24FD4-A012-4ECF-BC16-549AA5D2FBE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcountDownloaderLibrary.Tests", "AcountDownloaderLibrary.Tests\AcountDownloaderLibrary.Tests.csproj", "{846D4E06-963E-49C9-BF52-E4F08A1FF02A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,12 @@ Global
 		{36E24FD4-A012-4ECF-BC16-549AA5D2FBE7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{36E24FD4-A012-4ECF-BC16-549AA5D2FBE7}.ReleaseNative|Any CPU.ActiveCfg = Release|Any CPU
 		{36E24FD4-A012-4ECF-BC16-549AA5D2FBE7}.ReleaseNative|Any CPU.Build.0 = Release|Any CPU
+		{846D4E06-963E-49C9-BF52-E4F08A1FF02A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{846D4E06-963E-49C9-BF52-E4F08A1FF02A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{846D4E06-963E-49C9-BF52-E4F08A1FF02A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{846D4E06-963E-49C9-BF52-E4F08A1FF02A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{846D4E06-963E-49C9-BF52-E4F08A1FF02A}.ReleaseNative|Any CPU.ActiveCfg = Release|Any CPU
+		{846D4E06-963E-49C9-BF52-E4F08A1FF02A}.ReleaseNative|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
