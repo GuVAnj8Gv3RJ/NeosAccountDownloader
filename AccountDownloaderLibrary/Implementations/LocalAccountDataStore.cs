@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks.Dataflow;
-using System.Text.Json;
+﻿using AccountDownloaderLibrary.Extensions;
 using CloudX.Shared;
-using AccountDownloaderLibrary.Extensions;
-using Medallion.Threading.FileSystem;
 using ConcurrentCollections;
+using Medallion.Threading.FileSystem;
+using System.Text.Json;
+using System.Threading.Tasks.Dataflow;
 
 namespace AccountDownloaderLibrary
 {
@@ -60,7 +60,8 @@ namespace AccountDownloaderLibrary
             Config = config;
         }
 
-        public async Task Prepare(CancellationToken token) {
+        public async Task Prepare(CancellationToken token)
+        {
             var lockFileDirectory = new DirectoryInfo(BasePath);
             CancelToken = token;
 
@@ -74,7 +75,7 @@ namespace AccountDownloaderLibrary
                 if (DirectoryLock != null)
                     return;
             }
-            catch 
+            catch
             {
                 throw new DataStoreInUseException("Could not aquire a lock on LocalAccountStore is this path in use by another tool?");
             }
@@ -88,48 +89,54 @@ namespace AccountDownloaderLibrary
             ReleaseLocks();
         }
 
+        private async Task<string> ConstructAssetPath(AssetJob job)
+        {
+            var path = GetAssetPath(job.asset.Hash);
+            var extResult = await job.source.GetAssetExtension(job.asset.Hash);
+
+            //TODO: ILogger needed here plz, right now we're just spamming progress messages because those end up in the logs
+            if (extResult == null)
+            {
+                ProgressMessage?.Invoke($"Failed to get details about asset: {job.asset.Hash}");
+                return path;
+            }
+
+            ProgressMessage?.Invoke($"Asset: {job.asset.Hash} has {extResult.Extension}, {extResult.MimeType}");
+
+            if (extResult.Extension != null)
+            {
+                return path + $".{extResult.Extension}";
+            }
+
+            return path;
+        }
+
+        //TODO: Retries
         void InitDownloadProcessor(CancellationToken token)
         {
             Directory.CreateDirectory(AssetsPath);
 
             DownloadProcessor = new ActionBlock<AssetJob>(async job =>
             {
-                var path = GetAssetPath(job.asset.Hash);
+                var path = await ConstructAssetPath(job);
 
-                var ext = await job.source.GetAssetExtension(job.asset.Hash);
-
-                if (ext == null)
-                    ProgressMessage?.Invoke($"Asset: {job.asset.Hash} has an unknown extension");
-
-                if (ext != null)
-                {
-                    var pathWithExtension = path + $".{ext}";
-
-                    // We already have this asset and it's in the right location
-                    if (File.Exists(pathWithExtension))
-                    {
-                        job.callbacks.AssetSkipped(job.asset.Hash);
-                        return;
-                    }
-
-                    // We already have this asset but it is not in the right location/doesn't have an extension
-                    if (File.Exists(path) && !File.Exists(pathWithExtension))
-                    {
-                        //Technically it is skipped, but moved.
-                        job.callbacks.AssetSkipped(job.asset.Hash);
-
-                        File.Move(path, pathWithExtension);
-                        return;
-                    }
-
-                    // If we're here, we're going to proceed downloading the file
-                    path = pathWithExtension;
-                }
-                else if(File.Exists(path))
+                // Downloaded and with extension, skip
+                if (File.Exists(path))
                 {
                     job.callbacks.AssetSkipped(job.asset.Hash);
                     return;
-                } 
+                }
+
+                // Downloaded but no extension move so it has extension.
+                var originalPath = GetAssetPath(job.asset.Hash);
+                if (File.Exists(originalPath))
+                {
+                    //Technically it is not skipped, but moved.
+                    job.callbacks.AssetSkipped(job.asset.Hash);
+
+                    File.Move(originalPath, path);
+                    return;
+                }
 
                 try
                 {
@@ -413,7 +420,7 @@ namespace AccountDownloaderLibrary
             return Task.CompletedTask;
         }
 
-        public Task<string> GetAssetExtension(string hash)
+        Task<IExtensionResult> IAccountDataGatherer.GetAssetExtension(string hash)
         {
             //TODO
             throw new NotImplementedException();

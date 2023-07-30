@@ -4,6 +4,12 @@ using CloudX.Shared;
 
 namespace AccountDownloaderLibrary
 {
+    public class ExtensionResult : IExtensionResult
+    {
+        public string Extension { get; set; }
+
+        public string MimeType { get; set; }
+    }
     public class CloudAccountDataStore : IAccountDataGatherer
     {
         public readonly CloudXInterface Cloud;
@@ -296,12 +302,19 @@ namespace AccountDownloaderLibrary
         }
 
         //TODO: Nullables
-        public async Task<string> GetAssetExtension(string hash)
+        public async Task<IExtensionResult> GetAssetExtension(string hash)
         {
             var result = await Cloud.GetAssetMime(hash);
             if (result.IsOK)
-                return MimeDetector.Instance.ExtensionFromMime(result.Content);
+            {
+                var ext = MimeDetector.Instance.ExtensionFromMime(result.Content);
 
+                return new ExtensionResult()
+                {
+                    MimeType = result.Content,
+                    Extension = ext
+                };
+            }
             return null;
         }
     }
