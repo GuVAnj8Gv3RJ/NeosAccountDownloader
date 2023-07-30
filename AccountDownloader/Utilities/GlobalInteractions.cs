@@ -28,7 +28,7 @@ namespace AccountDownloader.Utilities
 
         public static readonly Interaction<WindowClosingEventArgs, bool> OnMainWindowClose = new Interaction<WindowClosingEventArgs, bool>();
 
-        public static readonly Interaction<Unit, Unit> OpenLogLocation = new Interaction<Unit, Unit>();
+        public static readonly Interaction<string, Unit> OpenFolderLocation = new Interaction<string, Unit>();
         public static readonly Interaction<Unit, Unit> ShowAboutWindow = new Interaction<Unit, Unit>();
     }
 }

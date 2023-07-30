@@ -324,4 +324,7 @@
   <data name="Skipped" xml:space="preserve">
     <value>Skipped</value>
   </data>
+  <data name="OpenDownloadFolder" xml:space="preserve">
+    <value>Open Download Folder</value>
+  </data>
 </root>

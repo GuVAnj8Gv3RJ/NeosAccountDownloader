@@ -42,7 +42,7 @@ namespace AccountDownloader.Views
                 d.Add(GlobalInteractions.ShowError.RegisterHandler(ShowErrorBox));
                 d.Add(GlobalInteractions.ShowMessageBox.RegisterHandler(ShowInfoBox));
                 d.Add(GlobalInteractions.ShowYesNoBox.RegisterHandler(ShowYesNoBox));
-                d.Add(GlobalInteractions.OpenLogLocation.RegisterHandler(OpenLogLocation));
+                d.Add(GlobalInteractions.OpenFolderLocation.RegisterHandler(OpenFolderLocation));
                 d.Add(GlobalInteractions.ShowAboutWindow.RegisterHandler(ShowAboutWindow));
             });
             
@@ -54,19 +54,10 @@ namespace AccountDownloader.Views
             this.Closing += MainWindow_Closing;
         }
 
-        private async Task OpenLogLocation(InteractionContext<Unit, Unit> obj)
+        private async Task OpenFolderLocation(InteractionContext<string, Unit> obj)
         {
-            obj.SetOutput(Unit.Default);
-            
-            var config = Locator.Current.GetService<Config>();
-            
-            if (config == null)
-            {
-                await GlobalInteractions.ShowError.Handle(new MessageBoxRequest("Cannot find Log folder."));
-                
-                return;
-            }
-            var res = IOService.OpenFolderDialog(config.LogFolder);
+            obj.SetOutput(Unit.Default);            
+            var res = IOService.OpenFolderDialog(obj.Input);
             if (!res.Success)
                 await GlobalInteractions.ShowError.Handle(new MessageBoxRequest(res.Error!));
         }

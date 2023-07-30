@@ -75,6 +75,14 @@ public class MainWindowViewModel : ReactiveObject, IScreen
 
     public async Task OpenLogFolderFn()
     {
-        await GlobalInteractions.OpenLogLocation.Handle(Unit.Default);
+        var config = Locator.Current.GetService<Config>();
+
+        if (config == null)
+        {
+            await GlobalInteractions.ShowError.Handle(new MessageBoxRequest("Cannot find Log folder."));
+
+            return;
+        }
+        await GlobalInteractions.OpenFolderLocation.Handle(config.LogFolder);
     }
 }

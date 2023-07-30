@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
              x:Class="AccountDownloader.Views.CompleteView"
              xmlns:v="clr-namespace:AccountDownloader.Views"
 			       xmlns:p="clr-namespace:AccountDownloader.Properties"
@@ -13,7 +13,7 @@
     <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Text="{x:Static p:Resources.DownloadCompleteDescription}"/>
     <v:ProgressStatisticsView DataContext="{Binding ProgressStatistics}" HorizontalAlignment="Center"/>
     <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" IsVisible="{Binding ShouldShowFailureMessage}" Text="{x:Static p:Resources.DownloadCompleteRecordFailureDescription}" />
-    <ScrollViewer Height="150" IsVisible="{Binding ShouldShowFailureMessage}" HorizontalAlignment="Center" AllowAutoHide="False">
+    <ScrollViewer Height="150" IsVisible="{Binding ShouldShowFailureMessage}" HorizontalAlignment="Center" AllowAutoHide="False" HorizontalScrollBarVisibility="Auto">
       <v:FailedRecordsView DataContext="{Binding FailedRecords}" HorizontalAlignment="Center"/>
     </ScrollViewer>
     <TextBlock HorizontalAlignment="Center" Text="{x:Static p:Resources.WouldYouLikeToStartAnotherDownload}" TextWrapping="Wrap"/>
@@ -25,5 +25,8 @@
           <TextBlock Text="{x:Static p:Resources.No}" HorizontalAlignment="Center"></TextBlock>
       </Button>
     </StackPanel>
+    <Button Width="200" Command="{Binding OpenDownloadFolder}" HorizontalAlignment="Center">
+      <TextBlock Text="{x:Static p:Resources.OpenDownloadFolder}" HorizontalAlignment="Center"/>
+    </Button>
   </StackPanel>
 </UserControl>

@@ -1,11 +1,15 @@
 ﻿using AccountDownloader.Services;
+using AccountDownloader.Utilities;
 using AccountDownloaderLibrary;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Splat;
 using System.Collections.Generic;
 using System.Reactive;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace AccountDownloader.ViewModels
 {
@@ -23,6 +27,7 @@ namespace AccountDownloader.ViewModels
         public bool ShouldShowFailureMessage { get; set; } = false;
 
         public ReactiveCommand<Unit, IRoutableViewModel> StartAnotherDownload { get; }
+        public ReactiveCommand<Unit, Unit> OpenDownloadFolder { get; }
         public ReactiveCommand<Unit, Unit> Exit { get; }
         public CompleteViewModel(IAccountDownloadConfig config, AccountDownloadStatus status)
         {
@@ -43,6 +48,8 @@ namespace AccountDownloader.ViewModels
                 ShouldShowFailureMessage = true;
 
             StartAnotherDownload = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new DownloadSelectionViewModel()));
+            OpenDownloadFolder = ReactiveCommand.CreateFromTask(() => OpenDownloadFolderFn());
+            
             Exit = ReactiveCommand.Create(ExitFn);
 
         }
@@ -50,10 +57,16 @@ namespace AccountDownloader.ViewModels
         private void ExitFn()
         {
             //TODO: Test on more exotic os
+            //TODO: should be on view layer
             if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 desktop.Shutdown();
             }
+        }
+
+        public async Task OpenDownloadFolderFn()
+        {
+            await GlobalInteractions.OpenFolderLocation.Handle(Config.FilePath);
         }
     }
 }
