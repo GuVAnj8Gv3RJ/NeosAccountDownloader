@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -59,7 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -124,10 +124,10 @@
     <value>Téléchargeur de compte Neos</value>
   </data>
   <data name="AreYouSure" xml:space="preserve">
-    <value>Êtes-vous sûr?</value>
+    <value>Êtes-vous sûr ?</value>
   </data>
   <data name="AreYouSureDownloadCancel" xml:space="preserve">
-    <value>Êtes-vous sûr de vouloir annuler le téléchargement?</value>
+    <value>Êtes-vous sûr de vouloir annuler le téléchargement ?</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Annuler</value>
@@ -139,7 +139,7 @@
     <value>Données des variables nuage</value>
   </data>
   <data name="CompleteQuestion" xml:space="preserve">
-    <value>Téléchargement terminé, Voulez-vous en initier un autre?</value>
+    <value>Téléchargement terminé, Voulez-vous en initier un autre ?</value>
   </data>
   <data name="Contacts" xml:space="preserve">
     <value>Contacts</value>
@@ -163,7 +163,7 @@
     <value>Impossible de sélectioner le dossier, sélectionez manuellement.</value>
   </data>
   <data name="Errors.DownloadCancelled" xml:space="preserve">
-    <value>Téléchargement du compte annulé!</value>
+    <value>Téléchargement du compte annulé !</value>
   </data>
   <data name="Errors.DownloadFailure" xml:space="preserve">
     <value>Une erreur de téléchargement est survenue, causé par {0}. Consultez les fichiers log pour plus de détails, ou retentez le téléchargement.</value>
@@ -190,7 +190,7 @@
     <value>(administrateur)</value>
   </data>
   <data name="GroupsQuestion" xml:space="preserve">
-    <value>Sélectionez le contenu du groupe à télécharger?</value>
+    <value>Sélectionez le contenu du groupe à télécharger ?</value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>Aide</value>
@@ -262,10 +262,10 @@
     <value>Métadonnées Utilisateur</value>
   </data>
   <data name="WhatDownload" xml:space="preserve">
-    <value>Que voulez-vous télécharger?</value>
+    <value>Que voulez-vous télécharger ?</value>
   </data>
   <data name="WhereDownload" xml:space="preserve">
-    <value>Destination du téléchargement?</value>
+    <value>Destination du téléchargement ?</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Oui</value>
@@ -274,7 +274,7 @@
     <value>Vitesse (Objets/Mondes par minute)</value>
   </data>
   <data name="DownloadComplete" xml:space="preserve">
-    <value>Téléchargement completé!</value>
+    <value>Téléchargement completé !</value>
   </data>
   <data name="DownloadReport" xml:space="preserve">
     <value>Statistiques du téléchargement</value>
@@ -289,7 +289,7 @@
     <value>Records de l'utilisateur</value>
   </data>
   <data name="WouldYouLikeToStartAnotherDownload" xml:space="preserve">
-    <value>Initier un autre téléchargement?</value>
+    <value>Initier un autre téléchargement ?</value>
   </data>
   <data name="FailureReason" xml:space="preserve">
     <value>Raison de l'échec</value>
