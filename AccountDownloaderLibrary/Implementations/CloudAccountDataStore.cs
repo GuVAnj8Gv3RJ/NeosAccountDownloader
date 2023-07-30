@@ -45,6 +45,9 @@ namespace AccountDownloaderLibrary
         {
             this.Cloud = cloud;
             this.Config = config;
+
+            //TODO: this just doubles the default timeout of 100s. 
+            WebClient.Timeout = TimeSpan.FromSeconds(200);
         }
 
         public virtual async Task Prepare(CancellationToken token)
