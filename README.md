@@ -71,7 +71,18 @@ Neos assets and records are stored in a way that makes it difficult for us to es
 Thanks for your interest in contributing, in all cases except for localization please open an issue before opening a PR.
 
 ## Localization
-We'd love help with localization, follow these directions:
+We'd love help with localization.
+
+You have two options when localizing.
+
+### Weblate (Preferred)
+We're trying out Weblate for online localization, it will enable you to localize Neos Account Downloader without downloading anything from right in your browser, it is really cool.
+
+[![Translation status](https://hosted.weblate.org/widgets/neos-account-downloader/-/neos-account-downloader-resources/287x66-white.png)](https://hosted.weblate.org/engage/neos-account-downloader/)
+
+We're still setting up Weblate but tune in soon for some more information.
+
+### Manual
 1. Duplicate: https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/blob/main/AccountDownloader/Properties/Resources.resx
 1. Save it as Resources.`<your language code>`.resx
 1. Translate
