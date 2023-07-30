@@ -19,7 +19,7 @@
                                 MinColumnSpacing="10"
                                 MinRowSpacing="5"
                                 MinItemHeight="35"
-                                MinItemWidth="150"
+                                MinItemWidth="140"
                                 ItemsStretch="Fill"/>
         </ItemsRepeater.Layout>
 			  <ItemsRepeater.ItemTemplate>
@@ -27,12 +27,12 @@
 					  <CheckBox IsChecked="{Binding ShouldDownload}" VerticalContentAlignment="Top">
               <StackPanel Orientation="Vertical">
                   <StackPanel Orientation="Horizontal">
-                      <TextBlock Text="{Binding Name}" Width="125" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                      <TextBlock Text="{Binding Name}" Width="120" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
                   </StackPanel>
-                  <StackPanel Orientation="Horizontal" Spacing="2">
-                    <TextBlock FontSize="12" Text="{Binding Storage.UsedBytes, Converter={StaticResource BytesConverter}}"/>
-                    <TextBlock FontSize="12" Text="{x:Static p:Resources.GroupsAdminIndicator}" IsVisible="{Binding IsAdmin}"/>
-                  </StackPanel>
+                  <UniformGrid>
+                    <TextBlock FontSize="12" Text="{Binding Storage.UsedBytes, Converter={StaticResource BytesConverter}}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock FontSize="12" Text="{x:Static p:Resources.GroupsAdminIndicator}" IsVisible="{Binding IsAdmin}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                  </UniformGrid>
               </StackPanel>
             </CheckBox>
 				  </DataTemplate>
