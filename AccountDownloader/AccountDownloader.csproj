@@ -136,7 +136,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <Target Name="CopyContributors" BeforeTargets="Build">
+  
+  <!-- https://til.cazzulino.com/msbuild/detect-ci-builds-for-every-ci-system -->
+  <Target Name="CopyContributors" BeforeTargets="Build" Condition="'$(CI)' == ''">
     <CreateItem Include="..\.all-contributorsrc">
       <Output TaskParameter="Include" ItemName="fixtures" />
     </CreateItem>
