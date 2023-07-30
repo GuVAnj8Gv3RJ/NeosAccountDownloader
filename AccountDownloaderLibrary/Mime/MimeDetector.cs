@@ -53,29 +53,31 @@ public class MimeDetector
         return MimeTypeToFileExtensionLookup.TryGetValue(mime);
     }
 
-    public IEnumerable<FileExtensionMatch> PossibleExtensions(string mime)
+    public IEnumerable<FileExtensionMatch>? PossibleExtensions(string mime)
     {
         return MimeTypeToFileExtensionLookup.TryGetValues(mime);
     }
 
-    public string MostLikelyFileExtension(string filePath)
+    public string? MostLikelyFileExtension(string filePath)
     {
         return ChooseMostLikely(Inspector.Inspect(filePath).ByFileExtension());
     }
 
-    public string MostLikelyFileExtension(FileStream stream)
+    public string? MostLikelyFileExtension(FileStream stream)
     {
         return ChooseMostLikely(Inspector.Inspect(stream).ByFileExtension());
     }
 
-    public string MostLikelyFileExtension(Stream stream)
+    public string? MostLikelyFileExtension(Stream stream)
     {
         return ChooseMostLikely(Inspector.Inspect(stream).ByFileExtension());
     }
 
-    private string ChooseMostLikely(ImmutableArray<MimeDetective.Engine.FileExtensionMatch> results)
+    private string? ChooseMostLikely(ImmutableArray<MimeDetective.Engine.FileExtensionMatch> results)
     {
-        return results.First().Extension;
+        if (results.Count() > 0)
+            return results.First().Extension;
+        return null;
     }
 
 }

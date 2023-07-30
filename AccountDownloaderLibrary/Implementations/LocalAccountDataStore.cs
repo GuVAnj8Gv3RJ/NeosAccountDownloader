@@ -91,13 +91,15 @@ namespace AccountDownloaderLibrary
             ReleaseLocks();
         }
 
-        //Was going to call these "SussyMimes"
+        // These are mimes which Neos is potentially confused or weirded out by
+        // Was going to call these "SussyMimes"
         private HashSet<string> AmbiguousMimes = new()
         {
             "application/octet-stream",
         };
 
         //TODO: Retries
+        //TODO: logging, I need an ILogger here
         //TODO: the extension stuff is getting complicated and I want to move that out of here/re-arch but everytime I do another file type wants to have special handling. I'll move it later. 
         void InitDownloadProcessor(CancellationToken token)
         {
@@ -108,6 +110,8 @@ namespace AccountDownloaderLibrary
 
                 var originalPath = GetAssetPath(job.asset.Hash);
                 var path = originalPath;
+
+                // When it comes to Mimetypes, we start with the principle of "Trust what neos says"
                 var extResult = await job.source.GetAssetExtension(job.asset.Hash);
 
                 if (extResult == null)
@@ -170,13 +174,14 @@ namespace AccountDownloaderLibrary
         private void PostProcessAmbiguousMime(string path, IExtensionResult res)
         {
             var ext = MimeDetector.Instance.MostLikelyFileExtension(path);
+            if (ext == null)
+                return;
 
             if (ext == res.Extension)
                 return;
 
             // Go with the actual Byte analysis
             File.Move(path, path.Replace($".{res.Extension}", $".ext"));
-
         }
 
         public User GetUserMetadata() => GetEntity<User>(UserMetadataPath(UserId));
