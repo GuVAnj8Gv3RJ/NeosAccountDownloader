@@ -1,5 +1,6 @@
 ﻿using MimeDetective;
 using MimeDetective.Definitions;
+using MimeDetective.Engine;
 using MimeDetective.Storage;
 using System.Collections.Immutable;
 //TODO: nullables
@@ -29,8 +30,8 @@ public class MimeDetector
         //TODO: do we need exhaustive?
         ImmutableArray<Definition>.Builder AllBuildier = ImmutableArray.CreateBuilder<Definition>();
         AllBuildier.AddRange(exhaustiveDefs);
-        AllBuildier.AddRange(CustomTypes.MESHX());
-        AllBuildier.AddRange(CustomTypes.ANIMX());
+        AllBuildier.AddRange(CustomTypes.CustomNeosFiles());
+        AllBuildier.AddRange(StrangeTypes.BrokenTypes());
 
         var all = AllBuildier.ToImmutable();
 
@@ -46,9 +47,15 @@ public class MimeDetector
         }.Build();
     }
 
+    // Gets the first value
     public string? ExtensionFromMime(string mime)
     {
         return MimeTypeToFileExtensionLookup.TryGetValue(mime);
+    }
+
+    public IEnumerable<FileExtensionMatch> PossibleExtensions(string mime)
+    {
+        return MimeTypeToFileExtensionLookup.TryGetValues(mime);
     }
 
     public string MostLikelyFileExtension(string filePath)

@@ -1,7 +1,9 @@
 ﻿using AccountDownloaderLibrary.Extensions;
+using AccountDownloaderLibrary.Mime;
 using CloudX.Shared;
 using ConcurrentCollections;
 using Medallion.Threading.FileSystem;
+using MimeDetective.Engine;
 using System.Text.Json;
 using System.Threading.Tasks.Dataflow;
 
@@ -89,47 +91,66 @@ namespace AccountDownloaderLibrary
             ReleaseLocks();
         }
 
-        private async Task<string> ConstructAssetPath(AssetJob job)
+        //Was going to call these "SussyMimes"
+        private HashSet<string> AmbiguousMimes = new()
         {
-            var path = GetAssetPath(job.asset.Hash);
-            var extResult = await job.source.GetAssetExtension(job.asset.Hash);
-
-            //TODO: ILogger needed here plz, right now we're just spamming progress messages because those end up in the logs
-            if (extResult == null)
-            {
-                ProgressMessage?.Invoke($"Failed to get details about asset: {job.asset.Hash}");
-                return path;
-            }
-
-            ProgressMessage?.Invoke($"Asset: {job.asset.Hash} has {extResult.Extension}, {extResult.MimeType}");
-
-            if (extResult.Extension != null)
-            {
-                return path + $".{extResult.Extension}";
-            }
-
-            return path;
-        }
+            "application/octet-stream",
+        };
 
         //TODO: Retries
+        //TODO: the extension stuff is getting complicated and I want to move that out of here/re-arch but everytime I do another file type wants to have special handling. I'll move it later. 
         void InitDownloadProcessor(CancellationToken token)
         {
             Directory.CreateDirectory(AssetsPath);
 
             DownloadProcessor = new ActionBlock<AssetJob>(async job =>
             {
-                var path = await ConstructAssetPath(job);
+
+                var originalPath = GetAssetPath(job.asset.Hash);
+                var path = originalPath;
+                var extResult = await job.source.GetAssetExtension(job.asset.Hash);
+
+                if (extResult == null)
+                {
+                    ProgressMessage?.Invoke($"Failed to get details about asset: {job.asset.Hash}");
+                }
+
+                if (extResult.Extension != null)
+                {
+                    path += $".{extResult.Extension}";
+                } else
+                {
+                    ProgressMessage?.Invoke($"Asset: {job.asset.Hash} with: {extResult.MimeType} has a missing extension");
+                }
+
+                //Handle funny mimes
+                //if (AmbiguousMimes.Contains(extResult.MimeType))
+                //{
+                //    ProgressMessage?.Invoke($"Asset: {job.asset.Hash} has a sussy mime.");
+
+                //    IEnumerable<FileExtensionMatch> res = MimeDetector.Instance.PossibleExtensions(extResult.MimeType);
+                //    foreach (FileExtensionMatch r in res)
+                //    {
+                //        ProgressMessage?.Invoke($"Asset: {job.asset.Hash}, {r.Extension}, {r.Points}");
+                //    }
+                //}
+
+                //Log this as Debug
+
+               
 
                 // Downloaded and with extension, skip
                 if (File.Exists(path))
                 {
                     job.callbacks.AssetSkipped(job.asset.Hash);
+                    if (AmbiguousMimes.Contains(extResult.MimeType))
+                        PostProcessAmbiguousMime(path, extResult);
                     return;
                 }
 
                 // Downloaded but no extension move so it has extension.
-                var originalPath = GetAssetPath(job.asset.Hash);
-                if (File.Exists(originalPath))
+                // Only if the paths have changed
+                if (File.Exists(originalPath) && originalPath != path)
                 {
                     //Technically it is not skipped, but moved.
                     job.callbacks.AssetSkipped(job.asset.Hash);
@@ -140,9 +161,11 @@ namespace AccountDownloaderLibrary
 
                 try
                 {
-                    ProgressMessage?.Invoke($"Downloading asset {job.asset}");
+                    ProgressMessage?.Invoke($"Downloading asset {job.asset.Hash}");
 
                     await job.source.DownloadAsset(job.asset.Hash, path).ConfigureAwait(false);
+                    if (AmbiguousMimes.Contains(extResult.MimeType))
+                        PostProcessAmbiguousMime(path, extResult);
 
                     job.callbacks.AssetUploaded(job.asset.Hash);
 
@@ -158,6 +181,18 @@ namespace AccountDownloaderLibrary
                 CancellationToken = token,
                 MaxDegreeOfParallelism = Config.MaxDegreeOfParallelism,
             });
+        }
+
+        private void PostProcessAmbiguousMime(string path, IExtensionResult res)
+        {
+            var ext = MimeDetector.Instance.MostLikelyFileExtension(path);
+
+            if (ext == res.Extension)
+                return;
+
+            // Go with the actual Byte analysis
+            File.Move(path, path.Replace($".{res.Extension}", $".ext"));
+
         }
 
         public User GetUserMetadata() => GetEntity<User>(UserMetadataPath(UserId));
