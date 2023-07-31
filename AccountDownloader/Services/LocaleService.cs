@@ -92,6 +92,9 @@ namespace AccountDownloader.Services
             _avaliableLocales = CultureInfo.GetCultures(CultureTypes.AllCultures)
             .Where(c =>
             {
+                // We always support english(saves a lookup)
+                if (c.Name == "en")
+                    return true;
                 // If its invariant just give up
                 if (c.Equals(CultureInfo.InvariantCulture))
                     return false;
