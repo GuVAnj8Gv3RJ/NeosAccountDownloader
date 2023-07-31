@@ -125,6 +125,15 @@
       "contributions": [
         "research"
       ]
+    },
+    {
+      "login": "5H4D0W-X",
+      "name": "5H4D0W-X",
+      "avatar_url": "https://avatars.githubusercontent.com/u/99607717?v=4",
+      "profile": "https://github.com/5H4D0W-X",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitType": "docs"
