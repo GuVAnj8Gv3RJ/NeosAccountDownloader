@@ -181,7 +181,7 @@ namespace AccountDownloaderLibrary
                 return;
 
             // Go with the actual Byte analysis
-            File.Move(path, path.Replace($".{res.Extension}", $".ext"));
+            File.Move(path, path.Replace($".{res.Extension}", $".{ext}"));
         }
 
         public User GetUserMetadata() => GetEntity<User>(UserMetadataPath(UserId));
