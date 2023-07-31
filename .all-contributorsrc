@@ -134,6 +134,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "ProbablePrime",
+      "name": "ProbablePrime",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8791132?v=4",
+      "profile": "http://probableprime.co.uk",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitType": "docs"
