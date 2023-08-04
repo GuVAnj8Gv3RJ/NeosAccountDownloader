@@ -78,7 +78,7 @@
     <!-- Avalonia addons -->
     <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.0.0-avalonia11-preview6" />
     <PackageReference Include="MessageBox.Avalonia" Version="3.0.1-rc2" />
-    <PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.10.0-preview20230704001" />
+    <PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.10.0" />
 
     <ProjectReference Include="..\AccountDownloaderLibrary\AccountDownloaderLibrary.csproj" />
 
