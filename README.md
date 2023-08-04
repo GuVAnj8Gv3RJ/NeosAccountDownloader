@@ -57,6 +57,23 @@ This diagram might help:
 - Records: Records contain a manifest of all assets that are required to represent an item or world. These are downloaded each time.
 - Everything Else: JSON Soup. Just JSON Files of various types. Contacts, Messages etc. These are downloaded each time.
 
+## How do I report a bug?
+Please [open an issue](https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/issues) the format doesn't really matter provided you clearly explain your problem and provide a log file if you'd like.
+
+## Can I submit a log file privately?
+Sure, email one to: guvanj8gv3rj.undertook642@passinbox.com I know its awkward but that goes straight to the author no one else.
+
+## What are Asset/Record failures?
+At the end of your download you might see asset or record failures.
+
+- A record failure usually means that an entire item/world/avatar failed to download, you won't have any assets from that record because the tool could not download the Record to find them
+- An asset failure means a part of a downloaded record could not be downloaded.
+
+In both cases, make sure you take a look at the UI scrolling left and right etc. Better UI for this area might be a focus if we continue to see errors. In both events the details are logged to your log files too.
+
+## Where do I find the log files?
+In the top bar menu for the tool click Help -> Open Log Folder. It'll take you right there.
+
 # Known Issues
 
 ## Localization isn't instant
