@@ -37,8 +37,8 @@ You could however, write additional tools that do stuff with them.
 ## Can I import downloaded content into Unity?
 This is not a supported use case of this utility. No effort will be made to support this. You could make your own tooling to do that though.
 
-## Should I use a new folder for each user I download?
-Ideally no, the local store that this app builds will in some cases handle duplicate assets in a way that will reduce total file size if you use the same folder for multiple accounts.
+## Should I use a new folder for each user/group I download?
+Ideally no, the local store that this app builds will in some cases handle duplicate assets in a way that will reduce total file size if you use the same folder for multiple accounts. The download location can handle as many accounts as needed.
 
 ## Can I run this app for multiple users at the same time?
 Yes, but if you do this, you'll need to use two separate folders which we do not recommend. You may also breach some rate limits Neos has in place on its cloud infrastructure.
