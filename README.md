@@ -130,6 +130,9 @@ We're still setting up Weblate but tune in soon for some more information.
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/5H4D0W-X"><img src="https://avatars.githubusercontent.com/u/99607717?v=4?s=100" width="100px;" alt="5H4D0W-X"/><br /><sub><b>5H4D0W-X</b></sub></a><br /><a href="https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/issues?q=author%3A5H4D0W-X" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://probableprime.co.uk"><img src="https://avatars.githubusercontent.com/u/8791132?v=4?s=100" width="100px;" alt="ProbablePrime"/><br /><sub><b>ProbablePrime</b></sub></a><br /><a href="https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/issues?q=author%3AProbablePrime" title="Bug reports">🐛</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/epicEaston197"><img src="https://avatars.githubusercontent.com/u/76523692?v=4?s=100" width="100px;" alt="epicEaston197"/><br /><sub><b>epicEaston197</b></sub></a><br /><a href="https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/issues?q=author%3AepicEaston197" title="Bug reports">🐛</a></td>
+    </tr>
   </tbody>
 </table>
 
