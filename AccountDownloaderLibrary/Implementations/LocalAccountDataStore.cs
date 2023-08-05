@@ -93,6 +93,8 @@ namespace AccountDownloaderLibrary
 
         // These are mimes which Neos is potentially confused or weirded out by
         // Was going to call these "SussyMimes"
+
+        // Move to config maybe?
         private HashSet<string> AmbiguousMimes = new()
         {
             "application/octet-stream",
@@ -100,7 +102,8 @@ namespace AccountDownloaderLibrary
 
         //TODO: Retries
         //TODO: logging, I need an ILogger here
-        //TODO: the extension stuff is getting complicated and I want to move that out of here/re-arch but everytime I do another file type wants to have special handling. I'll move it later. 
+        //TODO: the extension stuff is getting complicated and I want to move that out of here/re-arch but everytime I do another file type wants to have special handling. I'll move it later.
+        //TODO: I really really need nullables in the library here.
         void InitDownloadProcessor(CancellationToken token)
         {
             Directory.CreateDirectory(AssetsPath);
@@ -118,20 +121,24 @@ namespace AccountDownloaderLibrary
                 {
                     ProgressMessage?.Invoke($"Failed to get details about asset: {job.asset.Hash}");
                 }
-
-                if (extResult.Extension != null)
+                else
                 {
-                    path += $".{extResult.Extension}";
-                } else
-                {
-                    ProgressMessage?.Invoke($"Asset: {job.asset.Hash} with: {extResult.MimeType} has a missing extension");
+                    if (extResult.Extension != null)
+                    {
+                        // Successful ext result, append to path
+                        path += $".{extResult.Extension}";
+                    }
+                    else
+                    {
+                        ProgressMessage?.Invoke($"Asset: {job.asset.Hash} with: {extResult.MimeType} has a missing extension");
+                    }
                 }
 
                 // Downloaded and with extension, skip
                 if (File.Exists(path))
                 {
                     job.callbacks.AssetSkipped(job.asset.Hash);
-                    if (AmbiguousMimes.Contains(extResult.MimeType))
+                    if (extResult != null && extResult.MimeType != null && AmbiguousMimes.Contains(extResult.MimeType))
                         PostProcessAmbiguousMime(path, extResult);
                     return;
                 }
@@ -147,12 +154,15 @@ namespace AccountDownloaderLibrary
                     return;
                 }
 
+                // Past here we haven't downloaded the asset at all
                 try
                 {
                     ProgressMessage?.Invoke($"Downloading asset {job.asset.Hash}");
 
                     await job.source.DownloadAsset(job.asset.Hash, path).ConfigureAwait(false);
-                    if (AmbiguousMimes.Contains(extResult.MimeType))
+
+                    // We have to perform sussy mime checks once the asset is fully downloaded
+                    if (extResult != null && extResult.MimeType != null && AmbiguousMimes.Contains(extResult.MimeType))
                         PostProcessAmbiguousMime(path, extResult);
 
                     job.callbacks.AssetUploaded(job.asset.Hash);
