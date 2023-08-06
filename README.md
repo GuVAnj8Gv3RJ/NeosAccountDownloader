@@ -145,4 +145,4 @@ We're still setting up Weblate but tune in soon for some more information.
 We're still figuring out how to link in Weblate contributors for now, we'll manually add you here :)
 
 * Spanish
-    * gallegonovato <fran-carro@hotmail.es> (6)
+    * gallegonovato (6)
