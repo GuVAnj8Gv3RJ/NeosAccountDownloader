@@ -152,6 +152,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "EIA485",
+      "name": "EIA485",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17285570?v=4",
+      "profile": "https://github.com/EIA485",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "commitType": "docs"
