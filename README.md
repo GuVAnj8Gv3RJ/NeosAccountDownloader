@@ -132,6 +132,7 @@ We're still setting up Weblate but tune in soon for some more information.
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/epicEaston197"><img src="https://avatars.githubusercontent.com/u/76523692?v=4?s=100" width="100px;" alt="epicEaston197"/><br /><sub><b>epicEaston197</b></sub></a><br /><a href="https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/issues?q=author%3AepicEaston197" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/EIA485"><img src="https://avatars.githubusercontent.com/u/17285570?v=4?s=100" width="100px;" alt="EIA485"/><br /><sub><b>EIA485</b></sub></a><br /><a href="https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/commits?author=EIA485" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
