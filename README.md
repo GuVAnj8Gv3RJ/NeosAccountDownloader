@@ -10,7 +10,7 @@ Please refer to the [License](LICENSE.md) file for additional commentary.
 
 # Download Instructions
 
-1. Click [this link](https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/releases/tag/latest)
+1. Click [this link](https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/releases/latest)
 2. Scroll to the section of the page that says "Assets".
 3. Click on the Asset(Zip File) that matches your operating system (Windows or Linux) (You **DO NOT** need the source code zips)
 4. It will download
