@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
@@ -63,7 +63,7 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0" />
 
     <!-- Reactive UI Stuff-->
-    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.2" />
     <PackageReference Include="ReactiveUI.Fody" Version="19.4.1" />
     <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
 
