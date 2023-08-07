@@ -12,7 +12,12 @@
              x:CompileBindings="True">
   <StackPanel Spacing="4">
     <TextBlock Text="{x:Static p:Resources.Records}" IsVisible="{Binding ShouldShowRecordFailures}"/>
-    <DataGrid ItemsSource="{Binding FailedRecords}" AutoGenerateColumns="False" IsVisible="{Binding ShouldShowRecordFailures}">
+    <DataGrid ItemsSource="{Binding FailedRecords}"
+              AutoGenerateColumns="False"
+              IsVisible="{Binding ShouldShowRecordFailures}"
+              GridLinesVisibility="Horizontal"
+              IsReadOnly="True"
+              CanUserResizeColumns="True">
       <DataGrid.Columns>
           <DataGridTextColumn Header="{x:Static p:Resources.RecordId}"
                               Binding="{Binding RecordId}"
@@ -31,7 +36,12 @@
       </DataGrid.Columns>
     </DataGrid>
     <TextBlock Text="{x:Static p:Resources.Assets}" IsVisible="{Binding ShouldShowAssetFailures}"/>
-    <DataGrid ItemsSource="{Binding FailedAssets}" AutoGenerateColumns="False" IsVisible="{Binding ShouldShowAssetFailures}">
+    <DataGrid ItemsSource="{Binding FailedAssets}"
+              AutoGenerateColumns="False"
+              IsVisible="{Binding ShouldShowAssetFailures}"
+              GridLinesVisibility="Horizontal"
+              IsReadOnly="True"
+              CanUserResizeColumns="True">
       <DataGrid.Columns>
         <DataGridTextColumn Header="{x:Static p:Resources.AssetHash}"
                             Binding="{Binding Hash}"
