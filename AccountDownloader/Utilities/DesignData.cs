@@ -70,11 +70,11 @@ namespace AccountDownloader
             {
                 list.Add(new RecordDownloadFailure
                 {
-                    FailureReason = "Download Failed",
-                    OwnerId = "U-User",
-                    RecordName = "HomeWorld",
-                    RecordPath = "U-User/Worlds/HomeWorld",
-                    RecordId = "R-1234"
+                    FailureReason = "Download Failed osdijfoisjdofjsdoifjosdifj",
+                    OwnerId = "U-User sdfsdfsdfsdf",
+                    RecordName = "HomeWorldsdfsfffffffffffffffffff",
+                    RecordPath = "U-User/Worlds/HomeWorld/sdf/sd/f/sdf/sdf///ffff/ffffffffff",
+                    RecordId = "R-12342342342344532523523562361166116161616"
                 });
             }
             return list;
@@ -86,7 +86,7 @@ namespace AccountDownloader
             var list = new List<AssetFailure>();
             for (var i = 0; i < 10; i++)
             {
-                list.Add(new AssetFailure("1234566sodijosdijfoisdjofijsdf9ij", "Asset failed to download", null));
+                list.Add(new AssetFailure("1234566sodijosdijfoisdjofijsdf9ij", "Asset failed to download23523523532523523523523525", null));
             }
             return list;
         }
