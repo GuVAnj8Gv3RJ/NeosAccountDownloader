@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -249,5 +249,23 @@
   </data>
   <data name="Assets" xml:space="preserve">
     <value>Assets</value>
+  </data>
+  <data name="Disclaimer" xml:space="preserve">
+    <value>Obwohl wir mit allen Mitteln versuchen, alles aus deinem Konto herunterzuladen, kann dieses Werkzeug einige Daten übersehen oder verlieren. Aufgrund dessen können wir keine Garantie oder Gewährleistung für die Funktionalität dieser Anwendung gewähren. Dies steht im Einklang mit der Lizenz, dieser zusätzliche Haftungsausschluss erfolgt jedoch in der Hoffnung auf Transparenz.</value>
+  </data>
+  <data name="WithContributionsFrom" xml:space="preserve">
+    <value>Mit Beiträgen von:</value>
+  </data>
+  <data name="AssetHash" xml:space="preserve">
+    <value>Hash</value>
+  </data>
+  <data name="Records" xml:space="preserve">
+    <value>Aufzeichnungen</value>
+  </data>
+  <data name="Skipped" xml:space="preserve">
+    <value>Übersprungen</value>
+  </data>
+  <data name="OpenDownloadFolder" xml:space="preserve">
+    <value>Downloadordner öffnen</value>
   </data>
 </root>
