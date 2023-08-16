@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -210,5 +210,59 @@
   </data>
   <data name="Pending" xml:space="preserve">
     <value>保留中</value>
+  </data>
+  <data name="DownloadRate" xml:space="preserve">
+    <value>レート(レコード毎秒)</value>
+  </data>
+  <data name="DownloadComplete" xml:space="preserve">
+    <value>ダウンロード完了！</value>
+  </data>
+  <data name="DownloadReport" xml:space="preserve">
+    <value>ダウンロード結果</value>
+  </data>
+  <data name="DownloadCompleteDescription" xml:space="preserve">
+    <value>ダウンロードが完了しました。詳細は以下の通りです。この詳細はログファイルにも記録されています。</value>
+  </data>
+  <data name="DownloadCompleteRecordFailureDescription" xml:space="preserve">
+    <value>ダウンロード中に一部のレコードまたはアセットの取得に失敗しました。詳細については以下で確認するか、ログを参照してください。</value>
+  </data>
+  <data name="UserRecords" xml:space="preserve">
+    <value>ユーザーレコード</value>
+  </data>
+  <data name="WouldYouLikeToStartAnotherDownload" xml:space="preserve">
+    <value>別のダウンロードを行いますか？</value>
+  </data>
+  <data name="FailureReason" xml:space="preserve">
+    <value>失敗した理由</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>オーナー</value>
+  </data>
+  <data name="RecordId" xml:space="preserve">
+    <value>レコードID</value>
+  </data>
+  <data name="RecordPath" xml:space="preserve">
+    <value>レコードパス</value>
+  </data>
+  <data name="Assets" xml:space="preserve">
+    <value>アセット</value>
+  </data>
+  <data name="Disclaimer" xml:space="preserve">
+    <value>アカウントからすべてをダウンロードするためにあらゆる努力をしていますが、一部のデータが欠落または失われる可能性があります。 そのため、このアプリケーションの機能についていかなる保証も提供することはできません。 これはライセンスに準拠していますが、透明性を期待して追加の免責事項をここに記載しています。</value>
+  </data>
+  <data name="AssetHash" xml:space="preserve">
+    <value>ハッシュ</value>
+  </data>
+  <data name="Records" xml:space="preserve">
+    <value>レコード</value>
+  </data>
+  <data name="Skipped" xml:space="preserve">
+    <value>スキップ</value>
+  </data>
+  <data name="OpenDownloadFolder" xml:space="preserve">
+    <value>ダウンロードフォルダを開く</value>
   </data>
 </root>
