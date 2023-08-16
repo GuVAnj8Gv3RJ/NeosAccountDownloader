@@ -170,6 +170,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "DaichiOkano",
+      "name": "DaichiOkano",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49420867?v=4",
+      "profile": "https://github.com/DaichiOkano",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "commitType": "docs"
