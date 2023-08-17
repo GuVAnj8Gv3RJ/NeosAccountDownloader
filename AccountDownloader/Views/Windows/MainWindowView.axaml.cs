@@ -1,20 +1,18 @@
-﻿using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-using Avalonia.ReactiveUI;
-using ReactiveUI;
-using AccountDownloader.ViewModels;
-using MsBox.Avalonia;
-using System.Reactive;
+﻿using AccountDownloader.Services;
 using AccountDownloader.Utilities;
-using System.Threading.Tasks;
-using System.Reactive.Linq;
-using Splat;
-using AccountDownloader.Services;
-using AccountDownloader.Views;
-using MessageBox.Avalonia.Models;
-using Avalonia.Media.Imaging;
+using AccountDownloader.ViewModels;
 using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Markup.Xaml;
+using Avalonia.Media.Imaging;
+using Avalonia.ReactiveUI;
+using MsBox.Avalonia;
 using MsBox.Avalonia.Dto;
+using MsBox.Avalonia.Models;
+using ReactiveUI;
+using System.Reactive;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace AccountDownloader.Views
 {
@@ -45,7 +43,7 @@ namespace AccountDownloader.Views
                 d.Add(GlobalInteractions.OpenFolderLocation.RegisterHandler(OpenFolderLocation));
                 d.Add(GlobalInteractions.ShowAboutWindow.RegisterHandler(ShowAboutWindow));
             });
-            
+
 #if DEBUG
             this.AttachDevTools();
 #endif
@@ -56,7 +54,7 @@ namespace AccountDownloader.Views
 
         private async Task OpenFolderLocation(InteractionContext<string, Unit> obj)
         {
-            obj.SetOutput(Unit.Default);            
+            obj.SetOutput(Unit.Default);
             var res = IOService.OpenFolderDialog(obj.Input);
             if (!res.Success)
                 await GlobalInteractions.ShowError.Handle(new MessageBoxRequest(res.Error!));
@@ -83,8 +81,8 @@ namespace AccountDownloader.Views
 
                 // Otherwise proceed with closing the window.
                 SafelyCloseWindow();
-            } 
-            catch(UnhandledInteractionException<WindowClosingEventArgs,bool>)
+            }
+            catch (UnhandledInteractionException<WindowClosingEventArgs, bool>)
             {
                 // If no one has registered a handler at this point, we'll end up here because there are no OnMainWindow close handlers.
                 // That's fine it just means no one is interested in cancelling the event, so we can just proceed to close
@@ -122,7 +120,7 @@ namespace AccountDownloader.Views
             var box = MessageBoxManager.GetMessageBoxCustom(
                new MessageBoxCustomParams
                {
-                   ContentTitle = message.Input.Title ?? (type == BoxType.Error ? Res.Error: Res.Information),
+                   ContentTitle = message.Input.Title ?? (type == BoxType.Error ? Res.Error : Res.Information),
                    ImageIcon = icon,
                    ContentMessage = message.Input.Message ?? Res.Errors_UnknownError,
                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
