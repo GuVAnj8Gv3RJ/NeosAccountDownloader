@@ -9,7 +9,7 @@
     <RootNamespace>AccountDownloader</RootNamespace>
     <AssemblyName>Neos Account Downloader</AssemblyName>
     <Company>GuVAnj8Gv3RJ</Company>
-    <Version>1.10.4</Version>
+    <Version>1.10.5</Version>
 
     <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
     <GenerateAssemblyVersionAttribute>True</GenerateAssemblyVersionAttribute>
