@@ -114,7 +114,7 @@ namespace AccountDownloaderLibrary
                 var originalPath = GetAssetPath(job.asset.Hash);
                 var path = originalPath;
 
-                // When it comes to Mimetypes, we start with the principle of "Trust what neos says"
+                // When it comes to Mimetypes, we start with the principle of "Trust what neos says", so ask it what the extension should be
                 var extResult = await job.source.GetAssetExtension(job.asset.Hash);
 
                 if (extResult == null)
@@ -134,27 +134,38 @@ namespace AccountDownloaderLibrary
                     }
                 }
 
-                // Downloaded and with extension, skip
-                if (File.Exists(path))
+                try
                 {
-                    job.callbacks.AssetSkipped(job.asset.Hash);
-                    if (extResult != null && extResult.MimeType != null && AmbiguousMimes.Contains(extResult.MimeType))
-                        PostProcessAmbiguousMime(path, extResult);
-                    return;
+                    // Downloaded and with extension.
+                    if (File.Exists(path))
+                    {
+                        // Mark this file as skiped, we don't need to re-download it.
+                        job.callbacks.AssetSkipped(job.asset.Hash);
+
+                        // However, post-process anything ambiguous, we could also do additional processing here
+                        if (extResult != null && extResult.MimeType != null && AmbiguousMimes.Contains(extResult.MimeType))
+                            PostProcessAmbiguousMime(path, extResult);
+                        return;
+                    }
+
+                    // Downloaded but no extension move so it has extension.
+                    // But only if the paths have changed.
+                    if (File.Exists(originalPath) && originalPath != path)
+                    {
+                        //Technically it is not skipped, but moved but still skipped because we did not re-download it
+                        job.callbacks.AssetSkipped(job.asset.Hash);
+
+                        // Always overwrite, assume the newly downloaded copy is newer
+                        File.Move(originalPath, path, true);
+                        return;
+                    }
+                } catch (Exception ex)
+                {
+                    ProgressMessage?.Invoke($"Exception in processing asset with Hash: {job.asset.Hash}: " + ex);
+                    job.callbacks.AssetFailure(new AssetFailure(job.asset.Hash, ex.Message, job.forRecord));
                 }
 
-                // Downloaded but no extension move so it has extension.
-                // Only if the paths have changed
-                if (File.Exists(originalPath) && originalPath != path)
-                {
-                    //Technically it is not skipped, but moved.
-                    job.callbacks.AssetSkipped(job.asset.Hash);
-
-                    File.Move(originalPath, path);
-                    return;
-                }
-
-                // Past here we haven't downloaded the asset at all
+                // Past here we haven't downloaded the asset at all, download it fresh
                 try
                 {
                     ProgressMessage?.Invoke($"Downloading asset {job.asset.Hash}");
@@ -191,7 +202,7 @@ namespace AccountDownloaderLibrary
                 return;
 
             // Go with the actual Byte analysis
-            File.Move(path, path.Replace($".{res.Extension}", $".{ext}"));
+            File.Move(path, path.Replace($".{res.Extension}", $".{ext}"), true);
         }
 
         public User GetUserMetadata() => GetEntity<User>(UserMetadataPath(UserId));
