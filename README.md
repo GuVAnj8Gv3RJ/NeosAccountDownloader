@@ -7,6 +7,16 @@ While every effort is made to download everything from your account, this utilit
 
 Please refer to the [License](LICENSE.md) file for additional commentary.
 
+## A note on Anonymity
+I understand that some of you have felt a degree of apprehension due to my remaining anonymous, citing concerns that I'm not an active member of the Neos community. 
+
+This is not the case. I feel the situation surrounding Neos has created some anxiety concerning the future of the projects I've made on this platform, and this downloader is to help mitigate that by providing an opportunity to back up work should the worst come to pass. 
+
+Similarly, other efforts to restore content, such as the Neos wiki edits, have led to account locks for users, denying them the ability to access their assets entirely. This makes it difficult to provide back up options without risking access to the very content it aims to preserve. 
+
+My anonymity is simply intended to provide a basic level of protection. I hope you can find it a not unreasonable one, and I welcome anyone to investigate the Github to verify the contents of the downloader.
+
+You can also read [Verifying Checksums](#verifying-checksumsintegrity) to double check that what you see on GitHub is what you get.
 
 # Download Instructions
 
