@@ -84,6 +84,23 @@ Localization defaults to your computer's language, so for most people this hopef
 ## Progress Metrics aren't 100% Accurate
 Neos assets and records are stored in a way that makes it difficult for us to estimate the total number of records required for download. Due to this we sometimes discover more that need to be queued for download as we go. Causing numbers to jump around a little bit.
 
+## Verifying Checksums/Integrity
+
+If you'd like to double check the checksums/integrity of the built Binaries of this project. You can follow these steps:
+1. Download the latest release(1.10.7 onwards) for your operating system
+1. Also download the Checksum for that operating system. It is a text file.
+1. Check the [Actions log](https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/actions) for this repository, for the version you downloaded
+1. Locate the "Print Checksum" step
+1. Copy the printed checksum somewhere safe
+1. Now you can check the checksum of the downloaded files.
+    1. On windows you can run: `certutil -hashfile <file> SHA256`
+    1. On Linux you can run: `sha256sum <file>`
+1. Compare the output of the command to the downloaded checksum file.
+1. Compare the output of the command to the checksum found in the GitHub Actions Log
+1. If all 3 match, then you know that this build that you've downloaded was generated purely from GH actions and not manipulated.
+
+This should help to increase trust, that the builds of this tool are not manipulated by the author. What you see on GH is what gets built and served to you via the releases tab.
+
 # Contributing
 Thanks for your interest in contributing, in all cases except for localization please open an issue before opening a PR.
 
