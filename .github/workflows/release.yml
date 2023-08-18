@@ -39,6 +39,14 @@ jobs:
       run: |
         cd AccountDownloader/bin/Release/net7.0/win-x64/publish
         powershell Compress-Archive -Path .\* -DestinationPath AccountDownloaderWindows.zip
+    - name: Generate checksum
+      uses: jmgilman/actions-generate-checksum@v1
+      with:
+        patterns: |
+          ./AccountDownloader/bin/Release/net7.0/win-x64/publish/AccountDownloaderWindows.zip
+        output: checksum-${{github.ref_name}}-${{github.run_id}}-windows.txt
+    - name: Print Checksum
+      run: type checksum-${{github.ref_name}}-${{github.run_id}}-windows.txt
     - name: Upload Release Asset
       id: upload-release-asset
       uses: svenstaro/upload-release-action@v2
@@ -49,6 +57,14 @@ jobs:
         tag: ${{ github.ref }}
         file: ./AccountDownloader/bin/Release/net7.0/win-x64/publish/AccountDownloaderWindows.zip
         asset_name: AccountDownloaderWindows-${{github.ref_name}}.zip
+    - name: Upload Checksum
+      uses: svenstaro/upload-release-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref }}
+        file: checksum-${{github.ref_name}}-${{github.run_id}}-windows.txt
   release-linux:
     needs: [prepare]
     runs-on: ubuntu-latest
@@ -80,6 +96,14 @@ jobs:
       run: |
         cd AccountDownloader/bin/Release/net7.0/linux-x64/publish
         tar -czvf AccountDownloaderLinux.tar.gz ./*
+    - name: Generate checksum
+      uses: jmgilman/actions-generate-checksum@v1
+      with:
+        patterns: |
+          AccountDownloader/bin/Release/net7.0/linux-x64/publish/AccountDownloaderLinux.tar.gz
+        output: checksum-${{github.ref_name}}-${{github.run_id}}-linux.txt
+    - name: Print Checksum
+      run: cat checksum-${{github.ref_name}}-${{github.run_id}}-linux.txt
     - name: Upload Release Asset
       id: upload-release-asset
       uses: svenstaro/upload-release-action@v2
@@ -90,3 +114,11 @@ jobs:
         tag: ${{ github.ref }}
         file: AccountDownloader/bin/Release/net7.0/linux-x64/publish/AccountDownloaderLinux.tar.gz
         asset_name: AccountDownloaderLinux-${{github.ref_name}}.tar.gz
+    - name: Upload Checksum
+      uses: svenstaro/upload-release-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref }}
+        file: checksum-${{github.ref_name}}-${{github.run_id}}-linux.txt
