@@ -101,6 +101,8 @@ If you'd like to double check the checksums/integrity of the built Binaries of t
 
 This should help to increase trust, that the builds of this tool are not manipulated by the author. What you see on GH is what gets built and served to you via the releases tab.
 
+If you'd like to read more about this concept, you can read this [Wikipedia article](https://en.wikipedia.org/wiki/File_verification).
+
 # Contributing
 Thanks for your interest in contributing, in all cases except for localization please open an issue before opening a PR.
 
