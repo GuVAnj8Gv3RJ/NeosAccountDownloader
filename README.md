@@ -84,7 +84,7 @@ Localization defaults to your computer's language, so for most people this hopef
 ## Progress Metrics aren't 100% Accurate
 Neos assets and records are stored in a way that makes it difficult for us to estimate the total number of records required for download. Due to this we sometimes discover more that need to be queued for download as we go. Causing numbers to jump around a little bit.
 
-## Verifying Checksums/Integrity
+# Verifying Checksums/Integrity
 
 If you'd like to double check the checksums/integrity of the built Binaries of this project. You can follow these steps:
 1. Download the latest release(1.10.7 onwards) for your operating system
