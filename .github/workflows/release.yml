@@ -40,11 +40,11 @@ jobs:
         cd AccountDownloader/bin/Release/net7.0/win-x64/publish
         powershell Compress-Archive -Path .\* -DestinationPath AccountDownloaderWindows.zip
     - name: Generate checksum
-      uses: jmgilman/actions-generate-checksum@v1
+      uses:  ToxicAven/generate-checksum-file@v2
       with:
-        patterns: |
-          ./AccountDownloader/bin/Release/net7.0/win-x64/publish/AccountDownloaderWindows.zip
-        output: checksum-${{github.ref_name}}-${{github.run_id}}-windows.txt
+        filePath: ./AccountDownloader/bin/Release/net7.0/win-x64/publish/AccountDownloaderWindows.zip
+        saveFile: checksum-${{github.ref_name}}-${{github.run_id}}-windows.txt
+        algorithm: 'sha256'
     - name: Print Checksum
       run: type checksum-${{github.ref_name}}-${{github.run_id}}-windows.txt
     - name: Upload Release Asset
@@ -97,11 +97,11 @@ jobs:
         cd AccountDownloader/bin/Release/net7.0/linux-x64/publish
         tar -czvf AccountDownloaderLinux.tar.gz ./*
     - name: Generate checksum
-      uses: jmgilman/actions-generate-checksum@v1
+      uses:  ToxicAven/generate-checksum-file@v2
       with:
-        patterns: |
-          AccountDownloader/bin/Release/net7.0/linux-x64/publish/AccountDownloaderLinux.tar.gz
-        output: checksum-${{github.ref_name}}-${{github.run_id}}-linux.txt
+        filePath: AccountDownloader/bin/Release/net7.0/linux-x64/publish/AccountDownloaderLinux.tar.gz
+        saveFile: checksum-${{github.ref_name}}-${{github.run_id}}-linux.txt
+        algorithm: 'sha256'
     - name: Print Checksum
       run: cat checksum-${{github.ref_name}}-${{github.run_id}}-linux.txt
     - name: Upload Release Asset
