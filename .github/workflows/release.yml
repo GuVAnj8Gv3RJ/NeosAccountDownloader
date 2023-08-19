@@ -13,18 +13,18 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@v2
+      uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
       with:
         egress-policy: audit
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
     - name: Setup .NET 7
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@3447fd6a9f9e57506b15f895c5b76d3b197dc7c2 # v3.2.0
       with:
         dotnet-version: 7.0.x
     - name: Restore Neos DLL Cache
       id: cache-neos-dlls
-      uses: actions/cache/restore@v3
+      uses: actions/cache/restore@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
       with:
         path: |
           ExternalLibraries/BaseX.dll
@@ -45,7 +45,7 @@ jobs:
         cd AccountDownloader/bin/Release/net7.0/win-x64/publish
         powershell Compress-Archive -Path .\* -DestinationPath AccountDownloaderWindows.zip
     - name: Generate checksum
-      uses:  ToxicAven/generate-checksum-file@v2
+      uses:  ToxicAven/generate-checksum-file@66708d081e14d5616c5b0920ff9a127f6f499dee # v2
       with:
         filePath: ./AccountDownloader/bin/Release/net7.0/win-x64/publish/AccountDownloaderWindows.zip
         saveFile: checksum-${{github.ref_name}}-${{github.run_id}}-windows.txt
@@ -54,7 +54,7 @@ jobs:
       run: type checksum-${{github.ref_name}}-${{github.run_id}}-windows.txt
     - name: Upload Release Asset
       id: upload-release-asset
-      uses: svenstaro/upload-release-action@v2
+      uses: svenstaro/upload-release-action@1beeb572c19a9242f4361f4cee78f8e0d9aec5df # v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -63,7 +63,7 @@ jobs:
         file: ./AccountDownloader/bin/Release/net7.0/win-x64/publish/AccountDownloaderWindows.zip
         asset_name: AccountDownloaderWindows-${{github.ref_name}}.zip
     - name: Upload Checksum
-      uses: svenstaro/upload-release-action@v2
+      uses: svenstaro/upload-release-action@1beeb572c19a9242f4361f4cee78f8e0d9aec5df # v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -75,18 +75,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@v2
+      uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
       with:
         egress-policy: audit
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
     - name: Setup .NET 7
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@3447fd6a9f9e57506b15f895c5b76d3b197dc7c2 # v3.2.0
       with:
         dotnet-version: 7.0.x
     - name: Restore Neos DLL Cache
       id: cache-neos-dlls
-      uses: actions/cache/restore@v3
+      uses: actions/cache/restore@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
       with:
         path: |
           ExternalLibraries/BaseX.dll
@@ -107,7 +107,7 @@ jobs:
         cd AccountDownloader/bin/Release/net7.0/linux-x64/publish
         tar -czvf AccountDownloaderLinux.tar.gz ./*
     - name: Generate checksum
-      uses:  ToxicAven/generate-checksum-file@v2
+      uses:  ToxicAven/generate-checksum-file@66708d081e14d5616c5b0920ff9a127f6f499dee # v2
       with:
         filePath: AccountDownloader/bin/Release/net7.0/linux-x64/publish/AccountDownloaderLinux.tar.gz
         saveFile: checksum-${{github.ref_name}}-${{github.run_id}}-linux.txt
@@ -116,7 +116,7 @@ jobs:
       run: cat checksum-${{github.ref_name}}-${{github.run_id}}-linux.txt
     - name: Upload Release Asset
       id: upload-release-asset
-      uses: svenstaro/upload-release-action@v2
+      uses: svenstaro/upload-release-action@1beeb572c19a9242f4361f4cee78f8e0d9aec5df # v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -125,7 +125,7 @@ jobs:
         file: AccountDownloader/bin/Release/net7.0/linux-x64/publish/AccountDownloaderLinux.tar.gz
         asset_name: AccountDownloaderLinux-${{github.ref_name}}.tar.gz
     - name: Upload Checksum
-      uses: svenstaro/upload-release-action@v2
+      uses: svenstaro/upload-release-action@1beeb572c19a9242f4361f4cee78f8e0d9aec5df # v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
