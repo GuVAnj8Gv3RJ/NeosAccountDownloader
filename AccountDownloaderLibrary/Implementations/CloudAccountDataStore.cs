@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using AccountDownloaderLibrary.Mime;
 using CloudX.Shared;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace AccountDownloaderLibrary
 {
@@ -17,6 +18,8 @@ namespace AccountDownloaderLibrary
         public string Name => Cloud.UserAgentProduct + " " + Cloud.UserAgentVersion;
         public string UserId => Cloud.CurrentUser.Id;
         public string Username => Cloud.CurrentUser.Username;
+
+        private ILogger Logger;
 
 #pragma warning disable CS0067 // The event 'CloudAccountDataStore.ProgressMessage' is never used
         public event Action<string> ProgressMessage;
@@ -41,10 +44,12 @@ namespace AccountDownloaderLibrary
             return count;
         }
 
-        public CloudAccountDataStore(CloudXInterface cloud, AccountDownloadConfig config)
+        public CloudAccountDataStore(CloudXInterface cloud, AccountDownloadConfig config, ILogger logger)
         {
             this.Cloud = cloud;
             this.Config = config;
+
+            Logger = logger;
 
             //TODO: this just doubles the default timeout of 100s. 
             WebClient.Timeout = TimeSpan.FromSeconds(200);
