@@ -108,7 +108,6 @@ namespace AccountDownloaderLibrary
         };
 
         //TODO: Retries
-        //TODO: logging, I need an ILogger here
         //TODO: the extension stuff is getting complicated and I want to move that out of here/re-arch but everytime I do another file type wants to have special handling. I'll move it later.
         //TODO: I really really need nullables in the library here.
         void InitDownloadProcessor(CancellationToken token)
@@ -124,16 +123,17 @@ namespace AccountDownloaderLibrary
                 // When it comes to Mimetypes, we start with the principle of "Trust what neos says", so ask it what the extension should be
                 var extResult = await job.source.GetAssetExtension(job.asset.Hash);
 
-                if (extResult == null || extResult.Extension == null)
-                {
-                    Logger.LogInformation($"Asset: {job.asset.Hash} with: {extResult.MimeType} has a missing extension");
-                }
-                else
+                if (extResult?.Extension != null)
                 {
                     // Successful ext result, append to path
                     path += $".{extResult.Extension}";
                 }
+                else
+                {
+                    Logger.LogInformation($"Asset: {job.asset.Hash} with: {extResult.MimeType} has a missing extension");
+                }
 
+                // Already downloaded
                 try
                 {
                     // Downloaded and with extension.
