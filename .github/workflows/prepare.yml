@@ -3,10 +3,18 @@ name: Prepare Build
 on:
   workflow_call
 
+permissions:
+  contents: read
+
 jobs:
   cache-dlls:
     runs-on: windows-latest
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Restore Neos DLL Cache
         id: cache-neos-dlls
         uses: actions/cache/restore@v3
