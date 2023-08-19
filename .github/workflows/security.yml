@@ -1,22 +1,5 @@
-name: Build App
-
+name: Security Scan
 on:
-  push:
-    branches:
-      - "main"
-    tags-ignore:
-      - '**'
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.txt'
-  pull_request:
-    tags-ignore:
-      - '**'
-    branches:
-      - "**"
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.txt'
   schedule:
     - cron: '20 14 * * 1'
 
@@ -35,6 +18,10 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: csharp
     - name: Restore Neos DLL Cache
       id: cache-neos-dlls
       uses: actions/cache/restore@v3
@@ -49,4 +36,8 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore"
+      run: dotnet build --configuration Release --no-restore
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+      with:
+        category: "/language:csharp"
