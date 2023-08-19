@@ -14,6 +14,8 @@ namespace AccountDownloader.Services
         public void SetLanguage(LocaleModel model);
         public LocaleModel CurrentLocale { get; }
         public List<LocaleModel> AvailableLocales { get; }
+
+        public event Action<CultureInfo> LocaleChanged;
     }
     // For UIs
     public class LocaleModel
@@ -37,6 +39,8 @@ namespace AccountDownloader.Services
 
         public List<LocaleModel> AvailableLocales { get; }
 
+        public event Action<CultureInfo> LocaleChanged;
+
         public LocaleModel CurrentLocale => new(Thread.CurrentThread.CurrentUICulture.DisplayName, Thread.CurrentThread.CurrentUICulture.Name);
 
         public void SetLanguage(string code)
@@ -50,6 +54,8 @@ namespace AccountDownloader.Services
             Logger.LogInformation("Setting App Language to: {code}", code);
 
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(code);
+
+            LocaleChanged?.Invoke(Thread.CurrentThread.CurrentUICulture);
         }
 
         public void SetLanguage(LocaleModel model)

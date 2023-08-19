@@ -66,6 +66,15 @@ public class MainWindowViewModel : ReactiveObject, IScreen
         };
 
         Router.Navigate.Execute(new GettingStartedViewModel());
+
+        LocaleService.LocaleChanged += LocaleService_LocaleChanged;
+    }
+
+    private void LocaleService_LocaleChanged(System.Globalization.CultureInfo obj)
+    {
+        var currentModel = Router.GetCurrentViewModel();
+        if (currentModel != null)
+            Router.Navigate.Execute(currentModel);
     }
 
     private async Task ShowAboutFn()
