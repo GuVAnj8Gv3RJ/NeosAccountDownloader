@@ -3,8 +3,10 @@ using AccountDownloaderLibrary.Mime;
 using CloudX.Shared;
 using ConcurrentCollections;
 using Medallion.Threading.FileSystem;
+using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using System.Threading.Tasks.Dataflow;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace AccountDownloaderLibrary
 {
@@ -37,6 +39,8 @@ namespace AccountDownloaderLibrary
         public readonly string AssetsPath;
         private readonly AccountDownloadConfig Config;
 
+        private readonly ILogger Logger;
+
         public event Action<string> ProgressMessage;
 
         private FileDistributedLockHandle DirectoryLock;
@@ -53,12 +57,14 @@ namespace AccountDownloaderLibrary
             return count;
         }
 
-        public LocalAccountDataStore(string userId, string basePath, string assetsPath, AccountDownloadConfig config)
+        public LocalAccountDataStore(string userId, string basePath, string assetsPath, AccountDownloadConfig config, ILogger logger)
         {
             UserId = userId;
             BasePath = basePath;
             AssetsPath = assetsPath;
             Config = config;
+
+            Logger = logger;
         }
 
         public async Task Prepare(CancellationToken token)
@@ -78,7 +84,9 @@ namespace AccountDownloaderLibrary
             }
             catch
             {
-                throw new DataStoreInUseException("Could not aquire a lock on LocalAccountStore is this path in use by another tool?");
+                var msg = "Could not aquire a lock on LocalAccountStore is this path in use by another tool?";
+                Logger.LogError(msg);
+                throw new DataStoreInUseException(msg);
             }
         }
 
@@ -118,7 +126,7 @@ namespace AccountDownloaderLibrary
 
                 if (extResult == null || extResult.Extension == null)
                 {
-                    ProgressMessage?.Invoke($"Asset: {job.asset.Hash} with: {extResult.MimeType} has a missing extension");
+                    Logger.LogInformation($"Asset: {job.asset.Hash} with: {extResult.MimeType} has a missing extension");
                 }
                 else
                 {
@@ -153,7 +161,7 @@ namespace AccountDownloaderLibrary
                     }
                 } catch (Exception ex)
                 {
-                    ProgressMessage?.Invoke($"Exception in processing asset with Hash: {job.asset.Hash}: " + ex);
+                    Logger.LogError($"Exception in processing asset with Hash: {job.asset.Hash}: " + ex);
                     job.callbacks.AssetFailure(new AssetFailure(job.asset.Hash, ex.Message, job.forRecord));
                 }
 
@@ -174,7 +182,7 @@ namespace AccountDownloaderLibrary
                 }
                 catch (Exception ex)
                 {
-                    ProgressMessage?.Invoke($"Exception in fetching asset with Hash: {job.asset.Hash}: " + ex);
+                    Logger.LogError($"Exception in fetching asset with Hash: {job.asset.Hash}: " + ex);
                     job.callbacks.AssetFailure(new AssetFailure(job.asset.Hash, ex.Message, job.forRecord));
                 }
             }, new ExecutionDataflowBlockOptions()
@@ -193,6 +201,7 @@ namespace AccountDownloaderLibrary
             if (ext == res.Extension)
                 return;
 
+            //TODO IO
             // Go with the actual Byte analysis
             File.Move(path, path.Replace($".{res.Extension}", $".{ext}"), true);
         }
