@@ -11,13 +11,13 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@v2
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
         with:
           egress-policy: audit
 
       - name: Restore Neos DLL Cache
         id: cache-neos-dlls
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
         with:
           path: |
             ExternalLibraries/BaseX.dll
@@ -46,7 +46,7 @@ jobs:
       - name: Save Needed DLLs to Cache
         if: steps.cache-neos-dlls.outputs.cache-hit != 'true'
         id: save-cache
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
         with:
           path: |
             ExternalLibraries/BaseX.dll
