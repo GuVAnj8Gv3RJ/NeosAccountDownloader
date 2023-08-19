@@ -9,3 +9,33 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
+
+  - package-ecosystem: nuget
+    directory: /AccountDownloader.Generators
+    schedule:
+      interval: daily
+
+  - package-ecosystem: nuget
+    directory: /AccountDownloader.MimeTester
+    schedule:
+      interval: daily
+
+  - package-ecosystem: nuget
+    directory: /AccountDownloader
+    schedule:
+      interval: daily
+
+  - package-ecosystem: nuget
+    directory: /AccountDownloaderLibrary
+    schedule:
+      interval: daily
+
+  - package-ecosystem: nuget
+    directory: /AcountDownloaderLibrary.Tests
+    schedule:
+      interval: daily
