@@ -86,11 +86,6 @@ In the top bar menu for the tool click Help -> Open Log Folder. It'll take you r
 
 # Known Issues
 
-## Localization isn't instant
-If you switch languages then the currently active page you're on will not update to the new language. 
-
-Localization defaults to your computer's language, so for most people this hopefully should not be a problem, but for now change your language on the Getting Started screen.
-
 ## Progress Metrics aren't 100% Accurate
 Neos assets and records are stored in a way that makes it difficult for us to estimate the total number of records required for download. Due to this we sometimes discover more that need to be queued for download as we go. Causing numbers to jump around a little bit.
 
