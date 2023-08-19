@@ -11,6 +11,9 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using AccountDownloader.Extensions;
+using System.IO;
+using System.Security.Policy;
+using System.Linq;
 
 namespace AccountDownloader.ViewModels;
 
@@ -141,42 +144,56 @@ public class DownloadSelectionViewModel : ViewModelBase, IAccountDownloadConfig
 
     private async Task PickDownloadFolder()
     {
-        var fileName = await ShowOpenFolderDialog.Handle(new FolderPickerOpenOptions { AllowMultiple=false, Title= Res.WhereDownload});
+        var fileName = await ShowOpenFolderDialog.Handle(new FolderPickerOpenOptions { AllowMultiple = false, Title = Res.WhereDownload });
 
-        if (fileName.HasResult)
-        {
-            // Suffix the returned path with NeosDownload, this ensures we send stuff to its own folder
-            // Before we had this, it was possible for some users to accidentally dump the Neos Download into their Documents folder.
-            // This is due to the Download using multiple folders for each user or the assets downloaded.
-            // So if a user accidentally selects Documents, for example, then:
-            // Documents\U-User & Documents\Assets would be created.
-
-            // That could be confusing, so we suffix our own folder to it which would mean:
-            // Documents\NeosDownload\U-User & Documents\NeosDownload\Assets would be created
-            // This keeps the files in one folder no matter what people do
-
-            // It could lead to some confusion if people already understand this process and create their own folder for it
-            // E.g. Documents\NeosBackup(user made)\NeosDownload(we made this).
-            // But user's can always edit the path after selection
-
-            // So anyway, suffix the returned path with NeosDownload
-            // See: https://stackoverflow.com/questions/372865/path-combine-for-urls
-            // This is so complicated why?
-            var downloadAppend = "NeosDownload";
-
-            var uri = fileName.Result;
-
-            // Partially fixes #33 by preventing recursion i guess
-            // TODO: better fixes.
-            if (!uri!.AbsoluteUri.EndsWith(downloadAppend))
-                uri = uri.Append("/" + downloadAppend);
-
-            FilePath = uri.LocalPath;
-        }
-        else
+        if (!fileName.HasResult)
         {
             await GlobalInteractions.ShowMessageBox.Handle(new MessageBoxRequest(fileName.Error!));
+            return;
         }
+
+        // Suffix the returned path with NeosDownload, this ensures we send stuff to its own folder
+        // Before we had this, it was possible for some users to accidentally dump the Neos Download into their Documents folder.
+        // This is due to the Download using multiple folders for each user or the assets downloaded.
+        // So if a user accidentally selects Documents, for example, then:
+        // Documents\U-User & Documents\Assets would be created.
+
+        // That could be confusing, so we suffix our own folder to it which would mean:
+        // Documents\NeosDownload\U-User & Documents\NeosDownload\Assets would be created
+        // This keeps the files in one folder no matter what people do
+
+        // It could lead to some confusion if people already understand this process and create their own folder for it
+        // E.g. Documents\NeosBackup(user made)\NeosDownload(we made this).
+        // But user's can always edit the path after selection
+
+        // So anyway, suffix the returned path with NeosDownload
+        // See: https://stackoverflow.com/questions/372865/path-combine-for-urls
+        // This is so complicated why?
+        var downloadAppend = "NeosDownload";
+
+        var uri = fileName.Result;
+
+        // Check if we're in an existing Download location.
+        // Fixes #33
+        if (!IsDownloadLocation(uri!.LocalPath))
+        { 
+            if (!uri!.AbsoluteUri.EndsWith(downloadAppend))
+                uri = uri.Append("/" + downloadAppend);
+        }
+
+        FilePath = uri.LocalPath;
+    }
+
+    //TODO: IO Service
+    //TODO: We should dump a "Marker" file in the directory detailing the version that wrote the local data store.
+    public bool IsDownloadLocation(string path)
+    {
+        DirectoryInfo location = new DirectoryInfo(path);
+        if (!location.Exists)
+            return false;
+
+        // Does the location already contain an Assets folder which signifies that it is already a download location.
+        return location.GetDirectories().Any(d => d.Name == "Assets");
     }
 
     public override string ToString()
