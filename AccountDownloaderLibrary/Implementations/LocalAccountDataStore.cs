@@ -3,7 +3,6 @@ using AccountDownloaderLibrary.Mime;
 using CloudX.Shared;
 using ConcurrentCollections;
 using Medallion.Threading.FileSystem;
-using MimeDetective.Engine;
 using System.Text.Json;
 using System.Threading.Tasks.Dataflow;
 
@@ -117,21 +116,14 @@ namespace AccountDownloaderLibrary
                 // When it comes to Mimetypes, we start with the principle of "Trust what neos says", so ask it what the extension should be
                 var extResult = await job.source.GetAssetExtension(job.asset.Hash);
 
-                if (extResult == null)
+                if (extResult == null || extResult.Extension == null)
                 {
-                    ProgressMessage?.Invoke($"Failed to get details about asset: {job.asset.Hash}");
+                    ProgressMessage?.Invoke($"Asset: {job.asset.Hash} with: {extResult.MimeType} has a missing extension");
                 }
                 else
                 {
-                    if (extResult.Extension != null)
-                    {
-                        // Successful ext result, append to path
-                        path += $".{extResult.Extension}";
-                    }
-                    else
-                    {
-                        ProgressMessage?.Invoke($"Asset: {job.asset.Hash} with: {extResult.MimeType} has a missing extension");
-                    }
+                    // Successful ext result, append to path
+                    path += $".{extResult.Extension}";
                 }
 
                 try
@@ -143,7 +135,7 @@ namespace AccountDownloaderLibrary
                         job.callbacks.AssetSkipped(job.asset.Hash);
 
                         // However, post-process anything ambiguous, we could also do additional processing here
-                        if (extResult != null && extResult.MimeType != null && AmbiguousMimes.Contains(extResult.MimeType))
+                        if (extResult?.MimeType != null && AmbiguousMimes.Contains(extResult.MimeType))
                             PostProcessAmbiguousMime(path, extResult);
                         return;
                     }
@@ -173,7 +165,7 @@ namespace AccountDownloaderLibrary
                     await job.source.DownloadAsset(job.asset.Hash, path).ConfigureAwait(false);
 
                     // We have to perform sussy mime checks once the asset is fully downloaded
-                    if (extResult != null && extResult.MimeType != null && AmbiguousMimes.Contains(extResult.MimeType))
+                    if (extResult?.MimeType != null && AmbiguousMimes.Contains(extResult.MimeType))
                         PostProcessAmbiguousMime(path, extResult);
 
                     job.callbacks.AssetUploaded(job.asset.Hash);
