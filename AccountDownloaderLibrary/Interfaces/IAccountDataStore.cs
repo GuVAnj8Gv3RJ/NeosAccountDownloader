@@ -76,9 +76,7 @@ namespace AccountDownloaderLibrary
         Task Cancel();
 
         Task<long> GetAssetSize(string hash);
-        Task DownloadAsset(string hash, string targetPath);
-        Task<string> GetAsset(string hash);
-        Task<AssetData> ReadAsset(string hash);
+        Task<Stream> ReadAsset(string hash);
         Task<IExtensionResult> GetAssetExtension(string hash);
 
         Task<List<CloudVariableDefinition>> GetVariableDefinitions(string ownerId);

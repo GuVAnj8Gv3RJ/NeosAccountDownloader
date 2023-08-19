@@ -276,12 +276,6 @@ namespace AccountDownloaderLibrary
             return null;
         }
 
-        public virtual async Task DownloadAsset(string hash, string targetPath)
-        {
-            await WebClient.DownloadFileTaskAsync(
-                CloudXInterface.NeosDBToHttp(new Uri($"{DB_PREFIX}{hash}"), NeosDB_Endpoint.Default), targetPath);
-        }
-
         public virtual async Task<long> GetAssetSize(string hash)
         {
             var result = await Cloud.GetGlobalAssetInfo(hash).ConfigureAwait(false);
@@ -292,16 +286,9 @@ namespace AccountDownloaderLibrary
                 return 0;
         }
 
-        public virtual async Task<string> GetAsset(string hash)
+        public virtual Task<Stream> ReadAsset(string hash)
         {
-            var tempPath = Path.GetTempFileName();
-            await DownloadAsset(hash, tempPath).ConfigureAwait(false);
-            return tempPath;
-        }
-
-        public virtual Task<AssetData> ReadAsset(string hash)
-        {
-            return Task.FromResult<AssetData>(CloudXInterface.NeosDBToHttp(new Uri($"{DB_PREFIX}{hash}"), NeosDB_Endpoint.Default));
+            return WebClient.GetStreamAsync(CloudXInterface.NeosDBToHttp(new Uri($"{DB_PREFIX}{hash}"), NeosDB_Endpoint.Default));
         }
 
         public Task Cancel()

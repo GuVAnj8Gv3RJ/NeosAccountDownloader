@@ -1,9 +1,12 @@
 ﻿using AccountDownloaderLibrary.Extensions;
 using AccountDownloaderLibrary.Mime;
+using BaseX;
 using CloudX.Shared;
 using ConcurrentCollections;
 using Medallion.Threading.FileSystem;
 using Microsoft.Extensions.Logging;
+using System.IO;
+using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks.Dataflow;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
@@ -107,8 +110,36 @@ namespace AccountDownloaderLibrary
             "application/octet-stream",
         };
 
+        private void PostProcessAmbiguousMime(string path, IExtensionResult res, string hash)
+        {
+            if (!AmbiguousMimes.Contains(res.MimeType))
+                return;
+
+            var detectedExtension = MimeDetector.Instance.MostLikelyFileExtension(path);
+            if (detectedExtension == null)
+                return;
+
+            var existingExtension = Path.GetExtension(path).Replace(".", "");
+
+            if (existingExtension != null && existingExtension == detectedExtension)
+                return;
+
+            Logger.LogInformation($"Mime Analysis for Asset: {hash} discovered a new extension, ${detectedExtension}");
+
+            var newPath = $"{Path.GetFileNameWithoutExtension(path)}.{detectedExtension}";
+
+            File.Move(path, newPath, true);
+        }
+
+        // Our extension code is always improving so this method will continually do additionall processing to discover new extension results/update ones.
+        private void PostProcessAsset(string storedPath, string hash, IExtensionResult extResult)
+        {
+            // However, post-process anything ambiguous, we could also do additional processing here
+            PostProcessAmbiguousMime(storedPath, extResult, hash);
+
+        }
+
         //TODO: Retries
-        //TODO: the extension stuff is getting complicated and I want to move that out of here/re-arch but everytime I do another file type wants to have special handling. I'll move it later.
         //TODO: I really really need nullables in the library here.
         void InitDownloadProcessor(CancellationToken token)
         {
@@ -118,48 +149,46 @@ namespace AccountDownloaderLibrary
             {
 
                 var originalPath = GetAssetPath(job.asset.Hash);
-                var path = originalPath;
-
-                // When it comes to Mimetypes, we start with the principle of "Trust what neos says", so ask it what the extension should be
                 var extResult = await job.source.GetAssetExtension(job.asset.Hash);
 
-                if (extResult?.Extension != null)
-                {
-                    // Successful ext result, append to path
-                    path += $".{extResult.Extension}";
-                }
-                else
+                string extensionPath = extResult?.Extension != null ? $"{originalPath}.{extResult.Extension}" : originalPath;
+
+                // When it comes to Mimetypes, we start with the principle of "Trust what neos says", so ask it what the extension should be
+
+                if (extResult?.Extension == null)
                 {
                     Logger.LogInformation($"Asset: {job.asset.Hash} with: {extResult.MimeType} has a missing extension");
                 }
 
-                // Already downloaded
                 try
                 {
-                    // Downloaded and with extension.
-                    if (File.Exists(path))
+                    // File exists at original path and we have a new path for it. Move
+                    // This is mostly for users running new versions of the downloader, before we added extensions
+                    if (File.Exists(originalPath) && extensionPath != originalPath)
                     {
+                        Logger.LogInformation($"Discovered extension for Asset: {job.asset.Hash}, {extResult.Extension}");
+
                         // Mark this file as skiped, we don't need to re-download it.
                         job.callbacks.AssetSkipped(job.asset.Hash);
 
-                        // However, post-process anything ambiguous, we could also do additional processing here
-                        if (extResult?.MimeType != null && AmbiguousMimes.Contains(extResult.MimeType))
-                            PostProcessAmbiguousMime(path, extResult);
+                        File.Move(originalPath, extensionPath, true);
+
+                        PostProcessAsset(extensionPath, job.asset.Hash, extResult);
                         return;
                     }
 
-                    // Downloaded but no extension move so it has extension.
-                    // But only if the paths have changed.
-                    if (File.Exists(originalPath) && originalPath != path)
+                    // File is in the correct location with Extension
+                    if (File.Exists(extensionPath))
                     {
-                        //Technically it is not skipped, but moved but still skipped because we did not re-download it
+                        Logger.LogInformation($"Asset: {job.asset.Hash}, was already downloaded skipping");
+                        // Mark this file as skiped, we don't need to re-download it.
                         job.callbacks.AssetSkipped(job.asset.Hash);
 
-                        // Always overwrite, assume the newly downloaded copy is newer
-                        File.Move(originalPath, path, true);
+                        PostProcessAsset(extensionPath, job.asset.Hash, extResult);
                         return;
                     }
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     Logger.LogError($"Exception in processing asset with Hash: {job.asset.Hash}: " + ex);
                     job.callbacks.AssetFailure(new AssetFailure(job.asset.Hash, ex.Message, job.forRecord));
@@ -170,11 +199,16 @@ namespace AccountDownloaderLibrary
                 {
                     ProgressMessage?.Invoke($"Downloading asset {job.asset.Hash}");
 
-                    await job.source.DownloadAsset(job.asset.Hash, path).ConfigureAwait(false);
+                    using (Stream data = await job.source.ReadAsset(job.asset.Hash).ConfigureAwait(false))
+                    {
+                        using (FileStream fs = new FileStream(extensionPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                        {
+                            await data.CopyToAsync(fs);
+                        }
+                    }
 
                     // We have to perform sussy mime checks once the asset is fully downloaded
-                    if (extResult?.MimeType != null && AmbiguousMimes.Contains(extResult.MimeType))
-                        PostProcessAmbiguousMime(path, extResult);
+                    PostProcessAsset(extensionPath,job.asset.Hash, extResult);
 
                     job.callbacks.AssetUploaded(job.asset.Hash);
 
@@ -190,20 +224,6 @@ namespace AccountDownloaderLibrary
                 CancellationToken = token,
                 MaxDegreeOfParallelism = Config.MaxDegreeOfParallelism,
             });
-        }
-
-        private void PostProcessAmbiguousMime(string path, IExtensionResult res)
-        {
-            var ext = MimeDetector.Instance.MostLikelyFileExtension(path);
-            if (ext == null)
-                return;
-
-            if (ext == res.Extension)
-                return;
-
-            //TODO IO
-            // Go with the actual Byte analysis
-            File.Move(path, path.Replace($".{res.Extension}", $".{ext}"), true);
         }
 
         public User GetUserMetadata() => GetEntity<User>(UserMetadataPath(UserId));
@@ -428,11 +448,6 @@ namespace AccountDownloaderLibrary
             DownloadProcessor.Post(job);
         }
 
-        public Task DownloadAsset(string hash, string targetPath)
-        {
-            return Task.Run(() => File.Copy(GetAssetPath(hash), targetPath));
-        }
-
         public Task<long> GetAssetSize(string hash)
         {
             var path = GetAssetPath(hash);
@@ -443,12 +458,10 @@ namespace AccountDownloaderLibrary
                 return Task.FromResult(0L);
         }
 
-        public Task<string> GetAsset(string hash)
+        public Task<Stream> ReadAsset(string hash)
         {
-            return Task.FromResult(GetAssetPath(hash));
+            return Task.FromResult<Stream>(File.OpenRead(GetAssetPath(hash)));
         }
-
-        public Task<AssetData> ReadAsset(string hash) => Task.FromResult<AssetData>(File.OpenRead(GetAssetPath(hash)));
 
         private void ReleaseLocks()
         {
