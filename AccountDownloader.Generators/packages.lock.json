@@ -4,9 +4,9 @@
     ".NETStandard,Version=v2.0": {
       "Microsoft.CodeAnalysis.Analyzers": {
         "type": "Direct",
-        "requested": "[3.3.3, )",
-        "resolved": "3.3.3",
-        "contentHash": "j/rOZtLMVJjrfLRlAMckJLPW/1rze9MT1yfWqSIbUPGRu1m1P0fuo9PmqapwsmePfGB5PJrudQLvmUOAMF0DqQ=="
+        "requested": "[3.11.0-beta1.23364.2, )",
+        "resolved": "3.11.0-beta1.23364.2",
+        "contentHash": "wSm9WKP4mHPiSc6Mc806jY6roKUy8ZLm3nxduS3oZKucIk5+DSSaAog06ugMPHoXt3+1e6srlS5sfjjst91big=="
       },
       "Microsoft.CodeAnalysis.CSharp": {
         "type": "Direct",
