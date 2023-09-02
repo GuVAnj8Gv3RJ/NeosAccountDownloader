@@ -65,8 +65,6 @@ namespace AccountDownloaderLibrary
         public string Username { get; }
 
         public event Action<string> ProgressMessage;
-
-        int FetchedRecordCount(string ownerId);
         int FetchedGroupCount { get; }
         Task Prepare(CancellationToken token);
         Task Complete();
@@ -85,7 +83,7 @@ namespace AccountDownloaderLibrary
         IAsyncEnumerable<GroupData> GetGroups();
         Task<List<MemberData>> GetMembers(string groupId);
         Task<Record> GetRecord(string ownerId, string recordId);
-        IAsyncEnumerable<Record> GetRecords(string ownerId, DateTime? from);
+        IAsyncEnumerable<IEnumerable<Record>> GetRecords(string ownerId, DateTime? from);
         User GetUserMetadata();
         Task<List<Friend>> GetContacts();
         IAsyncEnumerable<Message> GetMessages(string contactId, DateTime? from);
