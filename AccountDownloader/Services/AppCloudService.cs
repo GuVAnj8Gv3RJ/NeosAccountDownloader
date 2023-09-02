@@ -62,30 +62,37 @@ public class AppCloudService : IAppCloudService
         Profile.UpdateUser(_interface.CurrentUser);
     }
 
-    private AuthResult ProcessLoginResult(CloudResult<UserSession> loginResult)
+    private AuthResult ProcessLoginResult(CloudResult<UserSession>? loginResult)
     {
         AuthResult authResult;
-
-        if (loginResult.IsOK)
+        if (loginResult == null)
         {
-            authResult = new AuthResult(AuthenticationState.Authenticated, null);
-            this.logger.LogInformation("{user} Logged in successfully.", _login);
-            PostLogin();
-        }
-        else
+            this.logger.LogWarning("Failed to login {user}, with reason {reason}", _login, "CloudX returned null from a login request");
+            authResult = new AuthResult(AuthenticationState.Error, "CloudX returned null from a login request");
+        } else
         {
-            if (loginResult.Content == "TOTP")
+            if (loginResult.IsOK)
             {
-                authResult = new AuthResult(AuthenticationState.TOTPRequired, "TOTP Required");
-                this.logger.LogInformation("TOTP Challenge");
+                authResult = new AuthResult(AuthenticationState.Authenticated, null);
+                this.logger.LogInformation("{user} Logged in successfully.", _login);
+                PostLogin();
             }
             else
             {
-                this.logger.LogWarning("Failed to login {user}, with reason {reason}", _login, loginResult.Content);
-                authResult = new AuthResult(AuthenticationState.Error, loginResult.Content);
+                if (loginResult.Content == "TOTP")
+                {
+                    this.logger.LogInformation("TOTP Challenge");
+                    authResult = new AuthResult(AuthenticationState.TOTPRequired, "TOTP Required");
+                }
+                else
+                {
+                    this.logger.LogWarning("Failed to login {user}, with reason {reason}", _login, loginResult.Content);
+                    authResult = new AuthResult(AuthenticationState.Error, loginResult.Content);
+                }
+
             }
-                
         }
+        
         AuthState = authResult.state;
         return authResult;
     }
@@ -94,6 +101,7 @@ public class AppCloudService : IAppCloudService
     {
         this.logger.LogInformation("{user} responded to TOTP Challenge",_login);
         var loginResult = await _interface.Login(_login, _password, null, _id, false, null, code).ConfigureAwait(false);
+        this.logger.LogDebug("Returned from TOTP Login");
         return ProcessLoginResult(loginResult);
     }
 }
