@@ -34,6 +34,12 @@ updates:
     directory: /AccountDownloaderLibrary
     schedule:
       interval: daily
+    ignore:
+      - dependency-name: "Microsoft.AspNetCore.SignalR.Client.Core"
+      - dependency-name: "Microsoft.AspNetCore.Http.Connections.Client"
+      - dependency-name: "Microsoft.AspNetCore.SignalR.Client"
+      - dependency-name: "Microsoft.AspNetCore.SignalR.Common"
+      - dependency-name: "Newtonsoft.Json"
 
   - package-ecosystem: nuget
     directory: /AcountDownloaderLibrary.Tests
