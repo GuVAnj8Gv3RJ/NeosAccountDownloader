@@ -378,8 +378,8 @@ namespace AccountDownloaderLibrary
                         }
                         break;
                     }
-
-                    status.TotalRecordCount++;
+                    lock (status)
+                        status.TotalRecordCount++;
 
                     if (lastError != null || fullRecord == null)
                     {
