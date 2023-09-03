@@ -361,6 +361,8 @@ namespace AccountDownloaderLibrary
                     // TODO: backoffs/too many requests
                     // We need to re-download the record from its non-paginated source.
                     // Which will include the manifest which we need
+
+#pragma warning disable CS0162 // Unreachable code detected, TODO: GetRecord can return null but does not currently support nullables
                     for (int attempt = 0; attempt < 10; attempt++)
                     {
                         try
@@ -378,6 +380,7 @@ namespace AccountDownloaderLibrary
                         }
                         break;
                     }
+#pragma warning restore CS0162 // Unreachable code detected
                     lock (status)
                         status.TotalRecordCount++;
 
@@ -422,7 +425,6 @@ namespace AccountDownloaderLibrary
                         continue;
 
                     recordProcessing.Post(record);
-                    string lastError = null;
                 }
 
                 // wait a bit if there's a lot of tasks
