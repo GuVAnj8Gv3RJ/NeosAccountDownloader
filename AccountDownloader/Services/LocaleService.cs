@@ -39,7 +39,7 @@ namespace AccountDownloader.Services
 
         public List<LocaleModel> AvailableLocales { get; }
 
-        public event Action<CultureInfo> LocaleChanged;
+        public event Action<CultureInfo>? LocaleChanged;
 
         public LocaleModel CurrentLocale => new(Thread.CurrentThread.CurrentUICulture.DisplayName, Thread.CurrentThread.CurrentUICulture.Name);
 
