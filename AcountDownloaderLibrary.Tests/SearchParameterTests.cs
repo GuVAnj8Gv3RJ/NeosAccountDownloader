@@ -1,12 +1,25 @@
 ﻿using AccountDownloaderLibrary.Models;
+using CloudX.Shared;
 using Newtonsoft.Json;
+using FluentAssertions;
 
 namespace AcountDownloaderLibrary.Tests;
-
 
 [TestClass]
 public class SearchParameterTests
 {
+
+    public T? InOutNewtonsoft<T>(T input)
+    {
+        var json = JsonConvert.SerializeObject(input);
+        return JsonConvert.DeserializeObject<T>(json);
+    }
+    public T? InOutNet<T>(T input)
+    {
+        var json = System.Text.Json.JsonSerializer.Serialize(input);
+        return System.Text.Json.JsonSerializer.Deserialize<T>(json);
+    }
+
     [TestMethod]
     public void TestFeaturedNullNewtonSoft()
     {
@@ -14,17 +27,15 @@ public class SearchParameterTests
 
         ap.OnlyFeatured = null;
 
-        var jsonA = JsonConvert.SerializeObject(ap);
-        var deSerialize = JsonConvert.DeserializeObject<AccountDownloaderSearchParameters>(jsonA);
+        var result = InOutNewtonsoft(ap);
 
-        Assert.IsNull(deSerialize?.OnlyFeatured, "OnlyFeatured should only be present if the user included it");
+        Assert.IsNull(result?.OnlyFeatured, "OnlyFeatured should only be present if the user included it");
 
         ap.OnlyFeatured = false;
-        jsonA = JsonConvert.SerializeObject(ap);
 
-        deSerialize = JsonConvert.DeserializeObject<AccountDownloaderSearchParameters>(jsonA);
+        result = InOutNewtonsoft(ap);
 
-        Assert.IsFalse(deSerialize?.OnlyFeatured, "OnlyFeatured was included and should be false");
+        Assert.IsFalse(result?.OnlyFeatured, "OnlyFeatured was included and should be false");
 
     }
 
@@ -35,16 +46,23 @@ public class SearchParameterTests
 
         ap.OnlyFeatured = null;
 
-        var jsonA = System.Text.Json.JsonSerializer.Serialize(ap);
-        var deSerialize = System.Text.Json.JsonSerializer.Deserialize<AccountDownloaderSearchParameters>(jsonA);
+        var result = InOutNet(ap);
 
-        Assert.IsNull(deSerialize?.OnlyFeatured, "OnlyFeatured should only be present if the user included it");
+        Assert.IsNull(result?.OnlyFeatured, "OnlyFeatured should only be present if the user included it");
 
         ap.OnlyFeatured = false;
-        jsonA = JsonConvert.SerializeObject(ap);
 
-        deSerialize = JsonConvert.DeserializeObject<AccountDownloaderSearchParameters>(jsonA);
 
+        result = InOutNet(ap);
+
+    }
+
+    [TestMethod]
+    public void TestEquivalency()
+    {
+        var np = new SearchParameters();
+        var ap = new AccountDownloaderSearchParameters();
+        ap.OnlyFeatured = false;
         InOutNewtonsoft(np)
             .Should()
             .BeEquivalentTo(InOutNewtonsoft(ap));
