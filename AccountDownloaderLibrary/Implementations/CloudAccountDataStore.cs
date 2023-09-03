@@ -1,6 +1,6 @@
-﻿using System.Net;
-using AccountDownloaderLibrary.Implementations;
+﻿using AccountDownloaderLibrary.Implementations;
 using AccountDownloaderLibrary.Mime;
+using AccountDownloaderLibrary.Models;
 using CloudX.Shared;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
@@ -146,7 +146,7 @@ namespace AccountDownloaderLibrary
 
         public virtual async IAsyncEnumerable<IEnumerable<Record>> GetRecords(string ownerId, DateTime? from)
         {
-            var searchParams = new SearchParameters
+            var searchParams = new AccountDownloaderSearchParameters
             {
                 ByOwner = ownerId,
                 Private = true,
