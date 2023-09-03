@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using AccountDownloaderLibrary.Implementations;
 using AccountDownloaderLibrary.Mime;
 using CloudX.Shared;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
@@ -27,8 +28,6 @@ namespace AccountDownloaderLibrary
 
         public int FetchedGroupCount { get; private set; }
 
-        readonly Dictionary<string, int> _fetchedRecords = new();
-
         public static DateTime EARLIEST_API_TIME = new(2016, 1, 1);
 
         private CancellationToken CancelToken;
@@ -37,12 +36,6 @@ namespace AccountDownloaderLibrary
         private HttpClient WebClient = new HttpClient();
 
         private readonly AccountDownloadConfig Config;
-
-        public int FetchedRecordCount(string ownerId)
-        {
-            _fetchedRecords.TryGetValue(ownerId, out var count);
-            return count;
-        }
 
         public CloudAccountDataStore(CloudXInterface cloud, AccountDownloadConfig config, ILogger logger)
         {
@@ -151,7 +144,7 @@ namespace AccountDownloaderLibrary
             return result.Entity;
         }
 
-        public virtual async IAsyncEnumerable<Record> GetRecords(string ownerId, DateTime? from)
+        public virtual async IAsyncEnumerable<IEnumerable<Record>> GetRecords(string ownerId, DateTime? from)
         {
             var searchParams = new SearchParameters
             {
@@ -165,45 +158,15 @@ namespace AccountDownloaderLibrary
             if (from != null)
                 searchParams.MinDate = from.Value;
 
-            var search = new RecordSearch<Record>(searchParams, Cloud);
+            var search = new PaginatedRecordSearch<Record>(searchParams, Cloud);
 
             var count = 0;
 
             while (search.HasMoreResults)
             {
                 count += 100;
-                await search.EnsureResults(count);
-            }
-
-            _fetchedRecords[ownerId] = search.Records.Count;
-
-            foreach (var r in search.Records)
-            {
-                string lastError = null;
-
-                // Must get the actual record, which will include manifest
-                for (int attempt = 0; attempt < 10; attempt++)
-                {
-                    var result = await Cloud.GetRecord<Record>(ownerId, r.RecordId).ConfigureAwait(false);
-
-                    if (result.Entity == null)
-                    {
-                        // it was deleted in the meanwhile, just ignore
-                        if (result.State == HttpStatusCode.NotFound)
-                            break;
-
-                        lastError = $"Could not get record: {ownerId}:{r.RecordId}. Result: {result}";
-
-                        // try again
-                        continue;
-                    }
-
-                    yield return result.Entity;
-                    break;
-                }
-
-                if (lastError != null)
-                    throw new Exception(lastError);
+                var records = await search.Next();
+                yield return records;
             }
         }
 

@@ -248,19 +248,12 @@ namespace AccountDownloaderLibrary
             return await Task.FromResult(GetEntity<Record>(Path.Combine(RecordsPath(ownerId), recordId)));
         }
 
-        public async IAsyncEnumerable<Record> GetRecords(string ownerId, DateTime? from)
+        public async IAsyncEnumerable<IEnumerable<Record>> GetRecords(string ownerId, DateTime? from)
         {
             var records = await GetEntities<Record>(RecordsPath(ownerId)).ConfigureAwait(false);
 
-            _fetchedRecords[ownerId] = records.Count;
-
-            foreach (var record in records)
-            {
-                if (from != null && record.LastModificationTime < from.Value)
-                    continue;
-
-                yield return record;
-            }
+            //TODO: honor "From"
+            yield return records;
         }
 
         public Task<List<CloudVariableDefinition>> GetVariableDefinitions(string ownerId) => GetEntities<CloudVariableDefinition>(VariableDefinitionPath(ownerId));
@@ -421,10 +414,13 @@ namespace AccountDownloaderLibrary
         {
             DateTime? latest = null;
 
-            await foreach (var record in GetRecords(ownerId, null).ConfigureAwait(false))
+            await foreach (var page in GetRecords(ownerId, null).ConfigureAwait(false))
             {
-                if (latest == null || record.LastModificationTime > latest)
-                    latest = record.LastModificationTime;
+                foreach (var record in page)
+                {
+                    if (latest == null || record.LastModificationTime > latest)
+                        latest = record.LastModificationTime;
+                }
             }
 
             return latest;

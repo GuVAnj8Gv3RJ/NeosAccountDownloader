@@ -2,6 +2,8 @@
 using CloudX.Shared;
 using AccountDownloaderLibrary.Extensions;
 using AccountDownloaderLibrary.Interfaces;
+using System.Net;
+using System.Runtime.InteropServices;
 
 namespace AccountDownloaderLibrary
 {
@@ -348,15 +350,48 @@ namespace AccountDownloaderLibrary
             int count = 0;
 
             ActionBlock<Record> recordProcessing = new(
-                async r =>
+                async partialRecord =>
                 {
-                    Status.CurrentlyDownloadingItem = $"Record {r.Name} ({r.CombinedRecordId})";
+                    Status.CurrentlyDownloadingItem = $"Record {partialRecord.Name} ({partialRecord.CombinedRecordId})";
 
-                    var error = await Target.StoreRecord(r, Source, SetupCallbacks(status), Config.ForceOverwrite).ConfigureAwait(false);
+                    string lastError = null;
+
+                    Record fullRecord = null;
+
+                    // TODO: backoffs/too many requests
+                    // We need to re-download the record from its non-paginated source.
+                    // Which will include the manifest which we need
+                    for (int attempt = 0; attempt < 10; attempt++)
+                    {
+                        try
+                        {
+                            fullRecord = await Source.GetRecord(ownerId, partialRecord.RecordId).ConfigureAwait(false);
+
+                            if (fullRecord != null)
+                            {
+                                break;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            lastError = $"Could not get record: {ownerId}:{partialRecord.RecordId}. Result: {e.Message}";
+                        }
+                        break;
+                    }
+                    lock (status)
+                        status.TotalRecordCount++;
+
+                    if (lastError != null || fullRecord == null)
+                    {
+                        HandleRecordError(status, partialRecord, lastError);
+                        return;
+                    }
+
+                    var error = await Target.StoreRecord(fullRecord, Source, SetupCallbacks(status), Config.ForceOverwrite).ConfigureAwait(false);
 
                     if (error != null)
                     {
-                        HandleRecordError(status, r, error);
+                        HandleRecordError(status, partialRecord, error);
                         return;
                     };
 
@@ -374,18 +409,21 @@ namespace AccountDownloaderLibrary
                     EnsureOrdered = false
                 });
 
-            await foreach (var record in Source.GetRecords(ownerId, latest).ConfigureAwait(false))
+            await foreach (var page in Source.GetRecords(ownerId, latest).ConfigureAwait(false))
             {
-                SetProgressMessage($"Queueing: {record.CombinedRecordId}");
+                
                 if (cancellationToken.IsCancellationRequested)
-                    return;
+                    break;
 
-                status.TotalRecordCount = Source.FetchedRecordCount(ownerId);
+                foreach (var record in page)
+                {
+                    SetProgressMessage($"Queueing: {record.CombinedRecordId}");
+                    if (!ProcessRecord(record))
+                        continue;
 
-                if (!ProcessRecord(record))
-                    continue;
-
-                recordProcessing.Post(record);
+                    recordProcessing.Post(record);
+                    string lastError = null;
+                }
 
                 // wait a bit if there's a lot of tasks
                 while (recordProcessing.InputCount > 16)
