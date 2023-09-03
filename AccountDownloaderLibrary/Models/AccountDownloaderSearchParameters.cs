@@ -17,5 +17,6 @@ public class AccountDownloaderSearchParameters : SearchParameters
 {
     [JsonProperty(PropertyName = "onlyFeatured", NullValueHandling = NullValueHandling.Ignore)]
     [JsonPropertyName("onlyFeatured")]
+    [System.Text.Json.Serialization.JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault | JsonIgnoreCondition.WhenWritingDefault)]
     public new bool? OnlyFeatured { get; set; } = null;
 }

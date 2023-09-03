@@ -158,7 +158,7 @@ namespace AccountDownloaderLibrary
             if (from != null)
                 searchParams.MinDate = from.Value;
 
-            var search = new PaginatedRecordSearch<Record>(searchParams, Cloud);
+            var search = new PaginatedRecordSearch<Record>(searchParams, Cloud, this.Logger);
 
             var count = 0;
 

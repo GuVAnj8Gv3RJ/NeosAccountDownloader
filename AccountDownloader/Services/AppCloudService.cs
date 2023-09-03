@@ -2,6 +2,7 @@
 
 using System;
 using System.Threading.Tasks;
+using BaseX;
 using CloudX.Shared;
 using Microsoft.Extensions.Logging;
 
@@ -22,7 +23,15 @@ public class AppCloudService : IAppCloudService
         _interface = cloudInterface ?? throw new NullReferenceException("Cannot run without a CloudX Interface");
         this.logger = logger ?? throw new NullReferenceException("Cannot run without a Logger");
 
+        UniLog.OnLog += UniLog_OnLog;
+
         _interface.UserUpdated += Profile.UpdateUser;
+    }
+
+    // Lets us see inside cloudx
+    private void UniLog_OnLog(string obj)
+    {
+        this.logger.LogDebug(obj);
     }
 
     public AuthenticationState AuthState { get; private set; }

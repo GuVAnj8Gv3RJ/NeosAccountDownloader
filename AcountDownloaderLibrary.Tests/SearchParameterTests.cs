@@ -45,7 +45,24 @@ public class SearchParameterTests
 
         deSerialize = JsonConvert.DeserializeObject<AccountDownloaderSearchParameters>(jsonA);
 
-        Assert.IsFalse(deSerialize?.OnlyFeatured, "OnlyFeatured was included and should be false");
+        InOutNewtonsoft(np)
+            .Should()
+            .BeEquivalentTo(InOutNewtonsoft(ap));
+    }
+
+    [TestMethod]
+    public void TestFeaturedSerializedToLiteralNull()
+    {
+        var ap = new AccountDownloaderSearchParameters();
+        var json = JsonConvert.SerializeObject(ap);
+
+        ap.OnlyFeatured = null;
+
+        json.Should().NotContain("\"onlyFeatured\":null");
+
+        json = System.Text.Json.JsonSerializer.Serialize(ap);
+
+        json.Should().NotContain("\"onlyFeatured\":null");
 
     }
 }
