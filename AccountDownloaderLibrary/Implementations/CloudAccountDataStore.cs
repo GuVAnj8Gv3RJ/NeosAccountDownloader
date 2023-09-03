@@ -20,7 +20,7 @@ namespace AccountDownloaderLibrary
         public string UserId => Cloud.CurrentUser.Id;
         public string Username => Cloud.CurrentUser.Username;
 
-        private ILogger Logger;
+        private readonly ILogger Logger;
 
 #pragma warning disable CS0067 // The event 'CloudAccountDataStore.ProgressMessage' is never used
         public event Action<string> ProgressMessage;
@@ -33,7 +33,7 @@ namespace AccountDownloaderLibrary
         private CancellationToken CancelToken;
 
         private const string DB_PREFIX = "neosdb:///";
-        private HttpClient WebClient = new HttpClient();
+        private readonly HttpClient WebClient = new();
 
         private readonly AccountDownloadConfig Config;
 

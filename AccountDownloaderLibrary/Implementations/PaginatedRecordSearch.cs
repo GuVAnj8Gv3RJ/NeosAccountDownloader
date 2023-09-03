@@ -7,14 +7,14 @@ namespace AccountDownloaderLibrary.Implementations;
 
 public class PaginatedRecordSearch<R> where R : class, IRecord, new()
 {
-    private AccountDownloaderSearchParameters searchParameters;
+    private readonly AccountDownloaderSearchParameters searchParameters;
 
-    private CloudXInterface cloud;
+    private readonly CloudXInterface cloud;
 
     public bool HasMoreResults { get; private set; }
     public int Offset { get; private set; } = 0;
 
-    private ILogger Logger;
+    private readonly ILogger Logger;
 
     public PaginatedRecordSearch(AccountDownloaderSearchParameters searchParameters, CloudXInterface cloud, ILogger logger)
     {
