@@ -39,7 +39,7 @@ namespace AccountDownloader.Services
 
         public List<LocaleModel> AvailableLocales { get; }
 
-        public event Action<CultureInfo> LocaleChanged;
+        public event Action<CultureInfo>? LocaleChanged;
 
         public LocaleModel CurrentLocale => new(Thread.CurrentThread.CurrentUICulture.DisplayName, Thread.CurrentThread.CurrentUICulture.Name);
 
@@ -85,7 +85,7 @@ namespace AccountDownloader.Services
         // Cached result.
         private IEnumerable<CultureInfo>? _avaliableLocales;
 
-        public IEnumerable<CultureInfo> AvailableCultures => _avaliableLocales != null ? _avaliableLocales : GenerateAvailableLocales();
+        public IEnumerable<CultureInfo> AvailableCultures => _avaliableLocales ?? GenerateAvailableLocales();
 
 
         // Loosly based on: https://stackoverflow.com/a/57683929/2095344

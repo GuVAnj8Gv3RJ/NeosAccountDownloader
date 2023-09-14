@@ -9,12 +9,12 @@ namespace AcountDownloaderLibrary.Tests;
 public class SearchParameterTests
 {
 
-    public T? InOutNewtonsoft<T>(T input)
+    public static T? InOutNewtonsoft<T>(T input)
     {
         var json = JsonConvert.SerializeObject(input);
         return JsonConvert.DeserializeObject<T>(json);
     }
-    public T? InOutNet<T>(T input)
+    public static T? InOutNet<T>(T input)
     {
         var json = System.Text.Json.JsonSerializer.Serialize(input);
         return System.Text.Json.JsonSerializer.Deserialize<T>(json);
@@ -23,9 +23,10 @@ public class SearchParameterTests
     [TestMethod]
     public void TestFeaturedNullNewtonSoft()
     {
-        var ap = new AccountDownloaderSearchParameters();
-
-        ap.OnlyFeatured = null;
+        var ap = new AccountDownloaderSearchParameters
+        {
+            OnlyFeatured = null
+        };
 
         var result = InOutNewtonsoft(ap);
 
@@ -42,9 +43,10 @@ public class SearchParameterTests
     [TestMethod]
     public void TestFeaturedNullNET()
     {
-        var ap = new AccountDownloaderSearchParameters();
-
-        ap.OnlyFeatured = null;
+        var ap = new AccountDownloaderSearchParameters
+        {
+            OnlyFeatured = null
+        };
 
         var result = InOutNet(ap);
 
@@ -55,14 +57,18 @@ public class SearchParameterTests
 
         result = InOutNet(ap);
 
+        Assert.IsNull(result?.OnlyFeatured, "OnlyFeatured should be present if the user included it");
+
     }
 
     [TestMethod]
     public void TestEquivalency()
     {
         var np = new SearchParameters();
-        var ap = new AccountDownloaderSearchParameters();
-        ap.OnlyFeatured = false;
+        var ap = new AccountDownloaderSearchParameters
+        {
+            OnlyFeatured = false
+        };
         InOutNewtonsoft(np)
             .Should()
             .BeEquivalentTo(InOutNewtonsoft(ap));
