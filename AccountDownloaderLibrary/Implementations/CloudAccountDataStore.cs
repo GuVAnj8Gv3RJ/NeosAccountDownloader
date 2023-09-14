@@ -28,7 +28,7 @@ namespace AccountDownloaderLibrary
 
         public int FetchedGroupCount { get; private set; }
 
-        public static DateTime EARLIEST_API_TIME = new(2016, 1, 1);
+        public static readonly DateTime EARLIEST_API_TIME = new(2016, 1, 1);
 
         private CancellationToken CancelToken;
 
@@ -72,8 +72,15 @@ namespace AccountDownloaderLibrary
 
                 if (result.IsOK)
                     return result.Entity;
-
-                await Task.Delay(TimeSpan.FromSeconds(attempt * 1.5), CancelToken).ConfigureAwait(false);
+                // https://stackoverflow.com/questions/20509158/taskcanceledexception-when-calling-task-delay-with-a-cancellationtoken-in-an-key
+                try
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(attempt * 1.5), CancelToken).ConfigureAwait(false);
+                }
+                catch
+                {
+                    // we don't care
+                }
             }
 
             throw new Exception("Could not fetch contacts after several attempts. Result: " + result);
@@ -191,6 +198,7 @@ namespace AccountDownloaderLibrary
             return result?.Entity;
         }
 
+        //TODO: cancel token
         public virtual async Task<DateTime> GetLatestMessageTime(string contactId)
         {
             int delay = 50;
@@ -259,8 +267,9 @@ namespace AccountDownloaderLibrary
             return Task.CompletedTask;
         }
 
-        //TODO: Nullables
-        public async Task<IExtensionResult> GetAssetExtension(string hash)
+//TODO: Enabling Nullable here temporarily. Full Nullables
+#nullable enable
+        public async Task<IExtensionResult?> GetAssetExtension(string hash)
         {
             var result = await Cloud.GetAssetMime(hash);
             if (result.IsOK)
@@ -276,4 +285,5 @@ namespace AccountDownloaderLibrary
             return null;
         }
     }
+#nullable disable
 }

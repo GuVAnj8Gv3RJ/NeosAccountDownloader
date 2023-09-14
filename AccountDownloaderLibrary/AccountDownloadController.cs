@@ -12,6 +12,7 @@ namespace AccountDownloaderLibrary
         readonly IAccountDataGatherer Source;
         readonly IAccountDataStore Target;
         readonly AccountDownloadConfig Config;
+        private ActionBlock<RecordJob> RecordProcessor;
 
         #region PROGRESS REPORT
 
@@ -55,6 +56,7 @@ namespace AccountDownloaderLibrary
 
         private async Task HandleCancel()
         {
+            RecordProcessor?.Complete();
             await Source.Cancel();
             await Target.Cancel();
         }
@@ -322,6 +324,76 @@ namespace AccountDownloaderLibrary
             };
         }
 
+
+        readonly struct RecordJob
+        {
+            public readonly string OwnerId;
+            public readonly Record PartialRecord;
+            public readonly RecordDownloadStatus Status;
+
+            public RecordJob(string ownerId, Record partialRecord, RecordDownloadStatus status)
+            {
+                OwnerId = ownerId;
+                PartialRecord = partialRecord;
+                Status = status;
+            }
+        }
+
+#nullable enable
+        private async Task ProcessPartialRecord(RecordJob job, int count)
+        {
+            Status.CurrentlyDownloadingItem = $"Record {job.PartialRecord.Name} ({job.PartialRecord.CombinedRecordId})";
+
+            string? lastError = null;
+
+            Record? fullRecord = null;
+
+            // TODO: backoffs/too many requests
+            // We need to re-download the record from its non-paginated source.
+            // Which will include the manifest which we need
+            for (int attempt = 0; attempt < 10; attempt++)
+            {
+                try
+                {
+                    fullRecord = await Source.GetRecord(job.OwnerId, job.PartialRecord.RecordId).ConfigureAwait(false);
+
+                    if (fullRecord != null)
+                    {
+                        break;
+                    }
+                }
+                catch (Exception e)
+                {
+                    lastError = $"Could not get record: {job.OwnerId}:{job.PartialRecord.RecordId}. Result: {e.Message}";
+                }
+            }
+            lock (job.Status)
+                job.Status.TotalRecordCount++;
+
+            if (lastError != null || fullRecord == null)
+            {
+                HandleRecordError(job.Status, job.PartialRecord, lastError);
+                return;
+            }
+
+            var error = await Target.StoreRecord(fullRecord, Source, SetupCallbacks(job.Status), Config.ForceOverwrite).ConfigureAwait(false);
+
+            if (error != null)
+            {
+                HandleRecordError(job.Status, job.PartialRecord, error);
+                return;
+            };
+
+            var newCount = Interlocked.Increment(ref count);
+
+            lock (job.Status)
+                job.Status.DownloadedRecordCount++;
+
+            if (newCount % 100 == 0)
+                SetProgressMessage($"Downloaded {count} records...");
+        }
+#nullable disable
+
         public async Task DownloadRecords(string ownerId, RecordDownloadStatus status, bool onlyNew, CancellationToken cancellationToken)
         {
             DateTime? latest = null;
@@ -349,63 +421,8 @@ namespace AccountDownloaderLibrary
 
             int count = 0;
 
-            ActionBlock<Record> recordProcessing = new(
-                async partialRecord =>
-                {
-                    Status.CurrentlyDownloadingItem = $"Record {partialRecord.Name} ({partialRecord.CombinedRecordId})";
-
-                    string lastError = null;
-
-                    Record fullRecord = null;
-
-                    // TODO: backoffs/too many requests
-                    // We need to re-download the record from its non-paginated source.
-                    // Which will include the manifest which we need
-
-#pragma warning disable CS0162 // Unreachable code detected, TODO: GetRecord can return null but does not currently support nullables
-                    for (int attempt = 0; attempt < 10; attempt++)
-                    {
-                        try
-                        {
-                            fullRecord = await Source.GetRecord(ownerId, partialRecord.RecordId).ConfigureAwait(false);
-
-                            if (fullRecord != null)
-                            {
-                                break;
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            lastError = $"Could not get record: {ownerId}:{partialRecord.RecordId}. Result: {e.Message}";
-                        }
-                        break;
-                    }
-#pragma warning restore CS0162 // Unreachable code detected
-                    lock (status)
-                        status.TotalRecordCount++;
-
-                    if (lastError != null || fullRecord == null)
-                    {
-                        HandleRecordError(status, partialRecord, lastError);
-                        return;
-                    }
-
-                    var error = await Target.StoreRecord(fullRecord, Source, SetupCallbacks(status), Config.ForceOverwrite).ConfigureAwait(false);
-
-                    if (error != null)
-                    {
-                        HandleRecordError(status, partialRecord, error);
-                        return;
-                    };
-
-                    var newCount = Interlocked.Increment(ref count);
-
-                    lock (status)
-                        status.DownloadedRecordCount++;
-
-                    if (newCount % 100 == 0)
-                        SetProgressMessage($"Downloaded {count} records...");
-                },
+            RecordProcessor = new(
+                async job => await ProcessPartialRecord(job, count),
                 new ExecutionDataflowBlockOptions()
                 {
                     MaxDegreeOfParallelism = Config.MaxDegreeOfParallelism,
@@ -424,20 +441,34 @@ namespace AccountDownloaderLibrary
                     if (!ProcessRecord(record))
                         continue;
 
-                    recordProcessing.Post(record);
+                    RecordProcessor.Post(new RecordJob(ownerId, record, status));
                 }
 
                 // wait a bit if there's a lot of tasks
-                while (recordProcessing.InputCount > 16)
-                    await Task.Delay(100, cancellationToken);
+                while (RecordProcessor.InputCount > 16)
+                {
+                    if (cancellationToken.IsCancellationRequested)
+                        break;
+
+                    // await Task.delay will throw an exception if the cancellation token is cancelled
+                    // see: https://stackoverflow.com/questions/20509158/taskcanceledexception-when-calling-task-delay-with-a-cancellationtoken-in-an-key
+                    try
+                    {
+                        await Task.Delay(100, cancellationToken);
+                    } catch
+                    {
+                        // no-op
+                    }
+                }
             }
 
-            recordProcessing.Complete();
-            await recordProcessing.Completion.ConfigureAwait(false);
+            RecordProcessor.Complete();
+            await RecordProcessor.Completion.ConfigureAwait(false);
 
             SetProgressMessage($"Downloaded {count} records.");
         }
 
+        //TODO: flow cancellation token
         public async Task DownloadUserMetadata(CancellationToken cancellationToken)
         {
             Status.Phase = "User Metadata";
