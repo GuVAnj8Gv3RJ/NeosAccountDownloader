@@ -20,7 +20,7 @@ namespace AccountDownloaderLibrary
         public string UserId => Cloud.CurrentUser.Id;
         public string Username => Cloud.CurrentUser.Username;
 
-        private ILogger Logger;
+        private readonly ILogger Logger;
 
 #pragma warning disable CS0067 // The event 'CloudAccountDataStore.ProgressMessage' is never used
         public event Action<string> ProgressMessage;
@@ -28,12 +28,12 @@ namespace AccountDownloaderLibrary
 
         public int FetchedGroupCount { get; private set; }
 
-        public static DateTime EARLIEST_API_TIME = new(2016, 1, 1);
+        public static readonly DateTime EARLIEST_API_TIME = new(2016, 1, 1);
 
         private CancellationToken CancelToken;
 
         private const string DB_PREFIX = "neosdb:///";
-        private HttpClient WebClient = new HttpClient();
+        private readonly HttpClient WebClient = new();
 
         private readonly AccountDownloadConfig Config;
 
@@ -259,8 +259,9 @@ namespace AccountDownloaderLibrary
             return Task.CompletedTask;
         }
 
-        //TODO: Nullables
-        public async Task<IExtensionResult> GetAssetExtension(string hash)
+//TODO: Enabling Nullable here temporarily. Full Nullables
+#nullable enable
+        public async Task<IExtensionResult?> GetAssetExtension(string hash)
         {
             var result = await Cloud.GetAssetMime(hash);
             if (result.IsOK)
@@ -276,4 +277,5 @@ namespace AccountDownloaderLibrary
             return null;
         }
     }
+#nullable disable
 }

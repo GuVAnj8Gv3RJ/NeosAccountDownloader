@@ -31,7 +31,9 @@ public class AppCloudService : IAppCloudService
     // Lets us see inside cloudx
     private void UniLog_OnLog(string obj)
     {
+#pragma warning disable CA2254 // We're exporting cloudx's log
         this.logger.LogDebug(obj);
+#pragma warning restore CA2254
     }
 
     public AuthenticationState AuthState { get; private set; }

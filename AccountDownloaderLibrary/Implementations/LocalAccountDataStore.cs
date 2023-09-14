@@ -87,9 +87,8 @@ namespace AccountDownloaderLibrary
             }
             catch
             {
-                var msg = "Could not aquire a lock on LocalAccountStore is this path in use by another tool?";
-                Logger.LogError(msg);
-                throw new DataStoreInUseException(msg);
+                Logger.LogError("Could not aquire a lock on LocalAccountStore is this path in use by another tool?");
+                throw new DataStoreInUseException("Could not aquire a lock on LocalAccountStore is this path in use by another tool?");
             }
         }
 
@@ -105,7 +104,7 @@ namespace AccountDownloaderLibrary
         // Was going to call these "SussyMimes"
 
         // Move to config maybe?
-        private HashSet<string> AmbiguousMimes = new()
+        private readonly HashSet<string> AmbiguousMimes = new()
         {
             "application/octet-stream",
         };
@@ -124,7 +123,7 @@ namespace AccountDownloaderLibrary
             if (existingExtension != null && existingExtension == detectedExtension)
                 return;
 
-            Logger.LogInformation($"Mime Analysis for Asset: {hash} discovered a new extension, ${detectedExtension}");
+            Logger.LogInformation("Mime Analysis for Asset: {hash} discovered a new extension, {detectedExtension}", hash, detectedExtension);
 
             var newPath = $"{Path.GetFileNameWithoutExtension(path)}.{detectedExtension}";
 
@@ -138,88 +137,94 @@ namespace AccountDownloaderLibrary
             PostProcessAmbiguousMime(storedPath, extResult, hash);
 
         }
-
+#nullable enable
         //TODO: Retries
-        //TODO: I really really need nullables in the library here.
+        private async Task ProcessJob(AssetJob job)
+        {
+            // Somehow the DownloadProcessor was processing jobs after completion, This lead to some really weird outputs such as files being written to the
+            // App's working directory.
+            // See: https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/issues/202
+            // Do not process if the downloader has completed, should fix 202.
+            if (DownloadProcessor.Completion.IsCompleted)
+                return;
+
+            string originalPath = GetAssetPath(job.asset.Hash);
+            IExtensionResult? extResult = await job.source.GetAssetExtension(job.asset.Hash);
+
+            string extensionPath = extResult?.Extension != null ? $"{originalPath}.{extResult.Extension}" : originalPath;
+
+            // When it comes to Mimetypes, we start with the principle of "Trust what neos says", so ask it what the extension should be
+
+            if (extResult?.Extension == null)
+            {
+                Logger.LogInformation("Asset: {hash} with: {mime} has a missing extension", job.asset.Hash, extResult?.MimeType);
+            }
+
+            try
+            {
+                // File exists at original path and we have a new path for it. Move
+                // This is mostly for users running new versions of the downloader, before we added extensions
+                if (File.Exists(originalPath) && extensionPath != originalPath)
+                {
+                    Logger.LogInformation("Discovered extension for Asset: {hash}, {extension}", job.asset.Hash, extResult?.Extension);
+
+                    // Mark this file as skiped, we don't need to re-download it.
+                    job.callbacks.AssetSkipped?.Invoke(job.asset.Hash);
+
+                    File.Move(originalPath, extensionPath, true);
+
+                    PostProcessAsset(extensionPath, job.asset.Hash, extResult);
+                    return;
+                }
+
+                // File is in the correct location with Extension
+                if (File.Exists(extensionPath))
+                {
+                    Logger.LogInformation("Asset: {hash}, was already downloaded skipping", job.asset.Hash);
+                    // Mark this file as skiped, we don't need to re-download it.
+                    job.callbacks.AssetSkipped?.Invoke(job.asset.Hash);
+
+                    PostProcessAsset(extensionPath, job.asset.Hash, extResult);
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("Exception in processing asset with Hash: {hash}: {message}", job.asset.Hash, ex.Message);
+                job.callbacks.AssetFailure?.Invoke(new AssetFailure(job.asset.Hash, ex.Message, job.forRecord));
+            }
+
+            // Past here we haven't downloaded the asset at all, download it fresh
+            try
+            {
+                ProgressMessage?.Invoke($"Downloading asset {job.asset.Hash}");
+
+                using (Stream data = await job.source.ReadAsset(job.asset.Hash).ConfigureAwait(false))
+                {
+                    using FileStream fs = new(extensionPath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+                    await data.CopyToAsync(fs);
+                }
+
+                // We have to perform sussy mime checks once the asset is fully downloaded
+                PostProcessAsset(extensionPath, job.asset.Hash, extResult);
+
+                job.callbacks.AssetUploaded?.Invoke(job.asset.Hash);
+
+                ProgressMessage?.Invoke($"Finished download {job.asset.Hash}");
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("Exception in fetching asset with Hash: {hash}: {ex}", job.asset.Hash, ex.Message);
+                job.callbacks.AssetFailure?.Invoke(new AssetFailure(job.asset.Hash, ex.Message, job.forRecord));
+            }
+        }
+#nullable disable
         void InitDownloadProcessor(CancellationToken token)
         {
             Directory.CreateDirectory(AssetsPath);
 
-            DownloadProcessor = new ActionBlock<AssetJob>(async job =>
-            {
-
-                var originalPath = GetAssetPath(job.asset.Hash);
-                var extResult = await job.source.GetAssetExtension(job.asset.Hash);
-
-                string extensionPath = extResult?.Extension != null ? $"{originalPath}.{extResult.Extension}" : originalPath;
-
-                // When it comes to Mimetypes, we start with the principle of "Trust what neos says", so ask it what the extension should be
-
-                if (extResult?.Extension == null)
-                {
-                    Logger.LogInformation($"Asset: {job.asset.Hash} with: {extResult.MimeType} has a missing extension");
-                }
-
-                try
-                {
-                    // File exists at original path and we have a new path for it. Move
-                    // This is mostly for users running new versions of the downloader, before we added extensions
-                    if (File.Exists(originalPath) && extensionPath != originalPath)
-                    {
-                        Logger.LogInformation($"Discovered extension for Asset: {job.asset.Hash}, {extResult.Extension}");
-
-                        // Mark this file as skiped, we don't need to re-download it.
-                        job.callbacks.AssetSkipped(job.asset.Hash);
-
-                        File.Move(originalPath, extensionPath, true);
-
-                        PostProcessAsset(extensionPath, job.asset.Hash, extResult);
-                        return;
-                    }
-
-                    // File is in the correct location with Extension
-                    if (File.Exists(extensionPath))
-                    {
-                        Logger.LogInformation($"Asset: {job.asset.Hash}, was already downloaded skipping");
-                        // Mark this file as skiped, we don't need to re-download it.
-                        job.callbacks.AssetSkipped(job.asset.Hash);
-
-                        PostProcessAsset(extensionPath, job.asset.Hash, extResult);
-                        return;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Logger.LogError($"Exception in processing asset with Hash: {job.asset.Hash}: " + ex);
-                    job.callbacks.AssetFailure(new AssetFailure(job.asset.Hash, ex.Message, job.forRecord));
-                }
-
-                // Past here we haven't downloaded the asset at all, download it fresh
-                try
-                {
-                    ProgressMessage?.Invoke($"Downloading asset {job.asset.Hash}");
-
-                    using (Stream data = await job.source.ReadAsset(job.asset.Hash).ConfigureAwait(false))
-                    {
-                        using (FileStream fs = new FileStream(extensionPath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
-                        {
-                            await data.CopyToAsync(fs);
-                        }
-                    }
-
-                    // We have to perform sussy mime checks once the asset is fully downloaded
-                    PostProcessAsset(extensionPath,job.asset.Hash, extResult);
-
-                    job.callbacks.AssetUploaded(job.asset.Hash);
-
-                    ProgressMessage?.Invoke($"Finished download {job.asset.Hash}");
-                }
-                catch (Exception ex)
-                {
-                    Logger.LogError($"Exception in fetching asset with Hash: {job.asset.Hash}: " + ex);
-                    job.callbacks.AssetFailure(new AssetFailure(job.asset.Hash, ex.Message, job.forRecord));
-                }
-            }, new ExecutionDataflowBlockOptions()
+            // Using a non-anonymous function causes better stack traces
+            DownloadProcessor = new ActionBlock<AssetJob>(ProcessJob, new ExecutionDataflowBlockOptions()
             {
                 CancellationToken = token,
                 MaxDegreeOfParallelism = Config.MaxDegreeOfParallelism,
@@ -466,6 +471,7 @@ namespace AccountDownloaderLibrary
         public void Dispose()
         {
             ReleaseLocks();
+            GC.SuppressFinalize(this);
         }
 
         public Task Cancel()

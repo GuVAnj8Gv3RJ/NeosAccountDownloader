@@ -1,5 +1,6 @@
 ﻿using CloudX.Shared;
 
+#nullable enable
 namespace AccountDownloaderLibrary
 {
     public readonly struct GroupData
@@ -51,11 +52,11 @@ namespace AccountDownloaderLibrary
 
     public class RecordStatusCallbacks
     {
-        public Action<AssetDiff> AssetToUploadAdded;
-        public Action<long> BytesUploaded;
-        public Action<string> AssetUploaded;
-        public Action<AssetFailure> AssetFailure;
-        public Action<string> AssetSkipped;
+        public Action<AssetDiff>? AssetToUploadAdded;
+        public Action<long>? BytesUploaded;
+        public Action<string>? AssetUploaded;
+        public Action<AssetFailure>? AssetFailure;
+        public Action<string>? AssetSkipped;
     }
 
     public interface IAccountDataGatherer
@@ -75,7 +76,7 @@ namespace AccountDownloaderLibrary
 
         Task<long> GetAssetSize(string hash);
         Task<Stream> ReadAsset(string hash);
-        Task<IExtensionResult> GetAssetExtension(string hash);
+        Task<IExtensionResult?> GetAssetExtension(string hash);
 
         Task<List<CloudVariableDefinition>> GetVariableDefinitions(string ownerId);
         Task<CloudVariable> GetVariable(string ownerId, string path);
@@ -97,7 +98,7 @@ namespace AccountDownloaderLibrary
         Task StoreVariables(List<CloudVariable> variable);
         Task StoreGroup(Group group, Storage storage);
         Task StoreMember(Group group, Member member, Storage storage);
-        Task<string> StoreRecord(Record record, IAccountDataGatherer source, RecordStatusCallbacks statusCallbacks = null, bool forceConflictOverwrite = false);
+        Task<string> StoreRecord(Record record, IAccountDataGatherer source, RecordStatusCallbacks? statusCallbacks = null, bool forceConflictOverwrite = false);
         Task StoreUserMetadata(User user);
         Task StoreContact(Friend friend);
         Task StoreMessage(Message message);
