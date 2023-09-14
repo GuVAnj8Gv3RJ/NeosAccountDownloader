@@ -471,6 +471,7 @@ namespace AccountDownloaderLibrary
         public void Dispose()
         {
             ReleaseLocks();
+            DownloadProcessor.Complete();
             GC.SuppressFinalize(this);
         }
 

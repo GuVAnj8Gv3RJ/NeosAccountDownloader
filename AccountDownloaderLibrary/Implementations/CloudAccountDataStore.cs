@@ -72,8 +72,15 @@ namespace AccountDownloaderLibrary
 
                 if (result.IsOK)
                     return result.Entity;
-
-                await Task.Delay(TimeSpan.FromSeconds(attempt * 1.5), CancelToken).ConfigureAwait(false);
+                // https://stackoverflow.com/questions/20509158/taskcanceledexception-when-calling-task-delay-with-a-cancellationtoken-in-an-key
+                try
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(attempt * 1.5), CancelToken).ConfigureAwait(false);
+                }
+                catch
+                {
+                    // we don't care
+                }
             }
 
             throw new Exception("Could not fetch contacts after several attempts. Result: " + result);
@@ -191,6 +198,7 @@ namespace AccountDownloaderLibrary
             return result?.Entity;
         }
 
+        //TODO: cancel token
         public virtual async Task<DateTime> GetLatestMessageTime(string contactId)
         {
             int delay = 50;

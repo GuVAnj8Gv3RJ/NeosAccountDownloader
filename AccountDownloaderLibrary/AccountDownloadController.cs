@@ -12,6 +12,7 @@ namespace AccountDownloaderLibrary
         readonly IAccountDataGatherer Source;
         readonly IAccountDataStore Target;
         readonly AccountDownloadConfig Config;
+        private ActionBlock<RecordJob> RecordProcessor;
 
         #region PROGRESS REPORT
 
@@ -55,6 +56,7 @@ namespace AccountDownloaderLibrary
 
         private async Task HandleCancel()
         {
+            RecordProcessor?.Complete();
             await Source.Cancel();
             await Target.Cancel();
         }
@@ -419,7 +421,7 @@ namespace AccountDownloaderLibrary
 
             int count = 0;
 
-            ActionBlock<RecordJob> recordProcessing = new(
+            RecordProcessor = new(
                 async job => await ProcessPartialRecord(job, count),
                 new ExecutionDataflowBlockOptions()
                 {
@@ -439,16 +441,29 @@ namespace AccountDownloaderLibrary
                     if (!ProcessRecord(record))
                         continue;
 
-                    recordProcessing.Post(new RecordJob(ownerId, record, status));
+                    RecordProcessor.Post(new RecordJob(ownerId, record, status));
                 }
 
                 // wait a bit if there's a lot of tasks
-                while (recordProcessing.InputCount > 16)
-                    await Task.Delay(100, cancellationToken);
+                while (RecordProcessor.InputCount > 16)
+                {
+                    if (cancellationToken.IsCancellationRequested)
+                        break;
+
+                    // await Task.delay will throw an exception if the cancellation token is cancelled
+                    // see: https://stackoverflow.com/questions/20509158/taskcanceledexception-when-calling-task-delay-with-a-cancellationtoken-in-an-key
+                    try
+                    {
+                        await Task.Delay(100, cancellationToken);
+                    } catch
+                    {
+                        // no-op
+                    }
+                }
             }
 
-            recordProcessing.Complete();
-            await recordProcessing.Completion.ConfigureAwait(false);
+            RecordProcessor.Complete();
+            await RecordProcessor.Completion.ConfigureAwait(false);
 
             SetProgressMessage($"Downloaded {count} records.");
         }
