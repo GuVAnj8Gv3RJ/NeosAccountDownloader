@@ -193,6 +193,7 @@ Below is a list of all of the awesome people who have helped to contribute to th
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/EIA485"><img src="https://avatars.githubusercontent.com/u/17285570?v=4?s=100" width="100px;" alt="EIA485"/><br /><sub><b>EIA485</b></sub></a><br /><a href="https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/commits?author=EIA485" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ClimberJ"><img src="https://avatars.githubusercontent.com/u/98227175?v=4?s=100" width="100px;" alt="ClimberJ"/><br /><sub><b>ClimberJ</b></sub></a><br /><a href="#translation-ClimberJ" title="Translation">🌍</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/DaichiOkano"><img src="https://avatars.githubusercontent.com/u/49420867?v=4?s=100" width="100px;" alt="DaichiOkano"/><br /><sub><b>DaichiOkano</b></sub></a><br /><a href="#translation-DaichiOkano" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/EuphieEuphoria"><img src="https://avatars.githubusercontent.com/u/101027344?v=4?s=100" width="100px;" alt="EuphieEuphoria"/><br /><sub><b>EuphieEuphoria</b></sub></a><br /><a href="https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/issues?q=author%3AEuphieEuphoria" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
