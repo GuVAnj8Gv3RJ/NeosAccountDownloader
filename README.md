@@ -194,6 +194,7 @@ Below is a list of all of the awesome people who have helped to contribute to th
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ClimberJ"><img src="https://avatars.githubusercontent.com/u/98227175?v=4?s=100" width="100px;" alt="ClimberJ"/><br /><sub><b>ClimberJ</b></sub></a><br /><a href="#translation-ClimberJ" title="Translation">🌍</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/DaichiOkano"><img src="https://avatars.githubusercontent.com/u/49420867?v=4?s=100" width="100px;" alt="DaichiOkano"/><br /><sub><b>DaichiOkano</b></sub></a><br /><a href="#translation-DaichiOkano" title="Translation">🌍</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/EuphieEuphoria"><img src="https://avatars.githubusercontent.com/u/101027344?v=4?s=100" width="100px;" alt="EuphieEuphoria"/><br /><sub><b>EuphieEuphoria</b></sub></a><br /><a href="https://github.com/GuVAnj8Gv3RJ/NeosAccountDownloader/issues?q=author%3AEuphieEuphoria" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Alex-2Pi"><img src="https://avatars.githubusercontent.com/u/35408350?v=4?s=100" width="100px;" alt="Alex-2Pi"/><br /><sub><b>Alex-2Pi</b></sub></a><br /><a href="#translation-Alex-2Pi" title="Translation">🌍</a></td>
     </tr>
   </tbody>
 </table>

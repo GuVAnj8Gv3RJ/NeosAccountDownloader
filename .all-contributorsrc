@@ -190,6 +190,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "Alex-2Pi",
+      "name": "Alex-2Pi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/35408350?v=4",
+      "profile": "https://github.com/Alex-2Pi",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "commitType": "docs"
