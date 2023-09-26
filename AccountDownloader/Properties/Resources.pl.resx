@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Errors.NoMainWindow" xml:space="preserve">
+    <value>Nie można zlokalizować okna głównego.</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Właściciel</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>O nas</value>
+  </data>
+  <data name="StorageRequired" xml:space="preserve">
+    <value>Pobieranie będzie wymagało co najmniej {0} miejsca na pliki.</value>
+  </data>
+  <data name="Errors.CannotSelectFolder" xml:space="preserve">
+    <value>Nie można wybrać folderów. Wprowadź jeden ręcznie.</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Ustawienia</value>
+  </data>
+  <data name="WhatDownload" xml:space="preserve">
+    <value>Co chciałbyś pobrać?</value>
+  </data>
+  <data name="CompleteQuestion" xml:space="preserve">
+    <value>Pobieranie zostało zakończone. Czy chcesz rozpocząć kolejne?</value>
+  </data>
+  <data name="Errors.UnexpectedLoginError" xml:space="preserve">
+    <value>Nieoczekiwany błąd podczas logowania.</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Błąd</value>
+  </data>
+  <data name="Errors.DownloadFailure" xml:space="preserve">
+    <value>Pobieranie nie powiodło się z powodu: {0}. Aby uzyskać więcej informacji, zapoznaj się z plikami dziennika i/lub spróbuj ponownie.</value>
+  </data>
+  <data name="GetStarted" xml:space="preserve">
+    <value>Rozpocznij</value>
+  </data>
+  <data name="OTPPrompt" xml:space="preserve">
+    <value>Wprowadź hasło jednorazowe z aplikacji uwierzytelniającej.</value>
+  </data>
+  <data name="SelectFolder" xml:space="preserve">
+    <value>Wybierz Folder</value>
+  </data>
+  <data name="Errors.DownloadCancelled" xml:space="preserve">
+    <value>Pobieranie konta anulowane!</value>
+  </data>
+  <data name="WouldYouLikeToStartAnotherDownload" xml:space="preserve">
+    <value>Czy chcesz rozpocząć kolejne pobieranie?</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Nazwa użytkownika</value>
+  </data>
+  <data name="DownloadCompleteRecordFailureDescription" xml:space="preserve">
+    <value>Podczas pobierania nie udało się uzyskać niektórych rekordów lub zasobów. Możesz znaleźć ich szczegóły poniżej lub zobaczyć dzienniki, aby uzyskać więcej informacji.</value>
+  </data>
+  <data name="DownloadComplete" xml:space="preserve">
+    <value>Pobieranie zakończone!</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Informacje</value>
+  </data>
+  <data name="OpenFolder_UnsupportedPlatform" xml:space="preserve">
+    <value>Otwieranie folderu nie jest obsługiwane na tej platformie. Możesz ręcznie przejść do folderu pod adresem: {0}</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Kontynuować</value>
+  </data>
+  <data name="CloudVariableDefinitions" xml:space="preserve">
+    <value>Definicje zmiennych chmurowych</value>
+  </data>
+  <data name="NoGroupsFound" xml:space="preserve">
+    <value>Nie znaleziono żadnych grup.</value>
+  </data>
+  <data name="Skipped" xml:space="preserve">
+    <value>Pominięte</value>
+  </data>
+  <data name="WithContributionsFrom" xml:space="preserve">
+    <value>Z wkładami od:</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Kontakty</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Jesteś pewny?</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Nie</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Anulować</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Tak</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Pobieranie</value>
+  </data>
+  <data name="CloudVariableValues" xml:space="preserve">
+    <value>Wartości zmiennych chmury</value>
+  </data>
+  <data name="RecordId" xml:space="preserve">
+    <value>Identyfikator rekordu</value>
+  </data>
+  <data name="GroupsQuestion" xml:space="preserve">
+    <value>Jaki rodzaj zawartości powinniśmy pobrać?</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Zaloguj sie</value>
+  </data>
+  <data name="DownloadRate" xml:space="preserve">
+    <value>Szybkość (rekordów na minutę)</value>
+  </data>
+  <data name="Disclaimer" xml:space="preserve">
+    <value>Chociaż dokładamy wszelkich starań, aby pobrać wszystko z Twojego konta, w tym narzędziu może brakować lub utracić część danych. W związku z tym nie możemy zaoferować żadnej gwarancji ani rękojmi na możliwości tej aplikacji. Jest to zgodne z Licencją, ale to dodatkowe zastrzeżenie zamieszczono w nadziei na przejrzystość.</value>
+  </data>
+  <data name="UserRecords" xml:space="preserve">
+    <value>Elementy użytkownika</value>
+  </data>
+  <data name="OpenFolder_Failed" xml:space="preserve">
+    <value>Nie udało się otworzyć folderu.</value>
+  </data>
+  <data name="Errors.BlankUsername" xml:space="preserve">
+    <value>Nazwa użytkownika nie może pozostać pusta.</value>
+  </data>
+  <data name="DownloadReport" xml:space="preserve">
+    <value>Pobierz raport</value>
+  </data>
+  <data name="Errors.BlankPassword" xml:space="preserve">
+    <value>Hasło nie może być puste.</value>
+  </data>
+  <data name="AssetHash" xml:space="preserve">
+    <value>Hash</value>
+  </data>
+  <data name="Errors.NoFolderSelected" xml:space="preserve">
+    <value>Nie wybrano folderu.</value>
+  </data>
+  <data name="Errors.UnknownError" xml:space="preserve">
+    <value>Nieznany błąd</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Narzędzie pobierania konta Neos</value>
+  </data>
+  <data name="OTPWatermark" xml:space="preserve">
+    <value>Jednorazowe hasło</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nazwa</value>
+  </data>
+  <data name="LoginPrompt" xml:space="preserve">
+    <value>Proszę zalogować się na swoje konto Neos.</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Hasło</value>
+  </data>
+  <data name="OpenDownloadFolder" xml:space="preserve">
+    <value>Otwórz Folder Pobierania</value>
+  </data>
+  <data name="UserMetadata" xml:space="preserve">
+    <value>Metadane Użytkownika</value>
+  </data>
+  <data name="RecordPath" xml:space="preserve">
+    <value>ścieżka zapisu</value>
+  </data>
+  <data name="DownloadCompleteDescription" xml:space="preserve">
+    <value>Pobieranie zostało zakończone. Poniżej znajduje się raport zawierający szczegółowe statystyki z pobrania. Kopia tego została również zapisana w plikach dziennika.</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Pomoc</value>
+  </data>
+  <data name="StartDownload" xml:space="preserve">
+    <value>Rozpocznij Pobieranie</value>
+  </data>
+  <data name="Assets" xml:space="preserve">
+    <value>Zasoby</value>
+  </data>
+  <data name="OpenLogFolder" xml:space="preserve">
+    <value>Otwórz folder dziennika</value>
+  </data>
+  <data name="AreYouSureDownloadCancel" xml:space="preserve">
+    <value>Czy na pewno chcesz anulować pobieranie?</value>
+  </data>
+  <data name="GroupsAdminIndicator" xml:space="preserve">
+    <value>(admin)</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="FailureReason" xml:space="preserve">
+    <value>Przyczyna niepowodzenia</value>
+  </data>
+  <data name="InventoryWorlds" xml:space="preserve">
+    <value>Ekwipunek i światy</value>
+  </data>
+  <data name="MessageHistory" xml:space="preserve">
+    <value>Historia Wiadomości</value>
+  </data>
+  <data name="WhereDownload" xml:space="preserve">
+    <value>Gdzie chcesz go pobrać?</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Trwa</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Język</value>
+  </data>
+  <data name="GettingStartedDescription" xml:space="preserve">
+    <value>To narzędzie ma na celu pobranie całej zawartości konta Neos. W zależności od ilości treści znajdujących się na Twoim koncie może to chwilę potrwać. Staraj się nie przerywać tego procesu, gdy już się rozpoczął. Po prostu pozostaw go uruchomionego, aż poinformuje Cię, że został ukończony.</value>
+  </data>
+</root>
