@@ -67,7 +67,7 @@
     <PackageReference Include="ReactiveUI.Fody" Version="19.4.1" />
     <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
 
-    <PackageReference Include="Splat" Version="14.7.1" />
+    <PackageReference Include="Splat" Version="14.8.6" />
 
     <!-- Logging -->
     <PackageReference Include="Serilog" Version="3.0.2-dev-02063" />
