@@ -64,7 +64,7 @@
 
     <!-- Reactive UI Stuff-->
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.4" />
-    <PackageReference Include="ReactiveUI.Fody" Version="19.4.1" />
+    <PackageReference Include="ReactiveUI.Fody" Version="19.5.1" />
     <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
 
     <PackageReference Include="Splat" Version="14.8.6" />
