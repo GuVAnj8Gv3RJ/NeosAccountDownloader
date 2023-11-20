@@ -52,7 +52,7 @@ namespace AccountDownloader.Views
             this.Closing += MainWindow_Closing;
         }
 
-        private async Task OpenFolderLocation(InteractionContext<string, Unit> obj)
+        private async Task OpenFolderLocation(IInteractionContext<string, Unit> obj)
         {
             obj.SetOutput(Unit.Default);
             var res = IOService.OpenFolderDialog(obj.Input);
@@ -99,16 +99,16 @@ namespace AccountDownloader.Views
             this.Close();
         }
 
-        private async Task ShowInfoBox(InteractionContext<MessageBoxRequest, Unit> message)
+        private async Task ShowInfoBox(IInteractionContext<MessageBoxRequest, Unit> message)
         {
             await ShowBox(message, BoxType.Info);
         }
-        private async Task ShowErrorBox(InteractionContext<MessageBoxRequest, Unit> message)
+        private async Task ShowErrorBox(IInteractionContext<MessageBoxRequest, Unit> message)
         {
             await ShowBox(message, BoxType.Error);
         }
 
-        private async Task ShowBox(InteractionContext<MessageBoxRequest, Unit> message, BoxType type)
+        private async Task ShowBox(IInteractionContext<MessageBoxRequest, Unit> message, BoxType type)
         {
             // Always, set the output before we show the box.
             message.SetOutput(Unit.Default);
@@ -133,7 +133,7 @@ namespace AccountDownloader.Views
             await box.ShowWindowDialogAsync(this);
         }
 
-        private async Task ShowYesNoBox(InteractionContext<MessageBoxRequest, InteractionResult<YesNo>> message)
+        private async Task ShowYesNoBox(IInteractionContext<MessageBoxRequest, InteractionResult<YesNo>> message)
         {
             var messageBoxStandardWindow = MessageBoxManager.GetMessageBoxCustom(new MessageBoxCustomParams()
             {
@@ -157,7 +157,7 @@ namespace AccountDownloader.Views
             message.SetOutput(InteractionResult<YesNo>.WithResult(res));
         }
 
-        public async Task ShowAboutWindow(InteractionContext<Unit, Unit> obj)
+        public async Task ShowAboutWindow(IInteractionContext<Unit, Unit> obj)
         {
             obj.SetOutput(Unit.Default);
 

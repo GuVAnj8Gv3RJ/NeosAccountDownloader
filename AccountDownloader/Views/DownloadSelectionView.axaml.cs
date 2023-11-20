@@ -31,7 +31,7 @@ public partial class DownloadSelectionView : ReactiveUserControl<DownloadSelecti
         AvaloniaXamlLoader.Load(this);
     }
 
-    private async Task ShowOpenFolderDialog(InteractionContext<FolderPickerOpenOptions, InteractionResult<Uri>> interaction)
+    private async Task ShowOpenFolderDialog(IInteractionContext<FolderPickerOpenOptions, InteractionResult<Uri>> interaction)
     {
         Window? w = null;
 
