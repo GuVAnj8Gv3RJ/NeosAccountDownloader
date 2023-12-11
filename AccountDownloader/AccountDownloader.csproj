@@ -50,8 +50,8 @@
     <Content Include="Assets\AppIcon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.0.5" />
-    <PackageReference Include="Avalonia.Desktop" Version="11.0.5" />
+    <PackageReference Include="Avalonia" Version="11.0.6" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.6" />
 
     <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.0.5" />
     <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.5" />
